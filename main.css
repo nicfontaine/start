@@ -101,7 +101,17 @@ iframe {
   background: rgba(0,0,0,0.1);
 }
 
-.search-icon {
+#input-search-icon {
+  position: absolute;
+  left: 23px;
+  transform: translateY(-50%);
+  top: 48%;
+  opacity: 0.18;
+  filter: none;
+  z-index: 10;
+}
+
+/*.search-icon {
   position: absolute;
   left: 23px;
   transform: translateY(-50%);
@@ -109,9 +119,10 @@ iframe {
   opacity: 0.18;
   filter: none;
   z-index: 10;
-}
+}*/
 
-.search-icon:before {
+/*.search-icon:before {*/
+#input-search-icon i.fa {
   font-size: 30px;
 }
 
