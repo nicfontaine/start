@@ -9,18 +9,15 @@ body {
   text-align: center;
   padding: 20px;
   padding-right: 0;
-  /*background: #B0A0C8;*/
-  /*background: #9885B6;*/
-
   /*background: #9D8ABA;*/
-  /*background: hsl(264,26%,64%);*/
 }
 
 .page-pattern {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   background: url('fresh_snow_@2X.png');
-  opacity: 0.15;
+  opacity: 0.2;
+  filter: brightness(80%);
 }
 
 .container-main {
