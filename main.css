@@ -1,0 +1,235 @@
+/*** MAIN ***/
+
+html {
+  /*cursor: none;*/
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  padding: 20px;
+  padding-right: 0;
+  /*background: #B0A0C8;*/
+  /*background: #9885B6;*/
+
+  /*background: #9D8ABA;*/
+  /*background: hsl(264,26%,64%);*/
+}
+
+.page-pattern {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: url('fresh_snow_@2X.png');
+  opacity: 0.15;
+}
+
+.container-main {
+  max-width: 550px;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  opacity: 0;
+  animation: fadeAllIn 0.7s forwards;
+}
+
+@keyframes fadeAllIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+iframe {
+  border: none;
+  margin: 0 auto;
+}
+
+/*** SEARCH ***/
+
+.search-container {
+  padding: 0 10px;
+  position: relative;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+#search-input {
+  width: 22%;
+  border: none;
+  outline: 0;
+  /*background: #A192B6;*/
+  background: rgba(0,0,0,0.07);
+  padding: 17px;
+  box-sizing: border-box;
+  /*color: #BBB5C5;*/
+  /*color: hsl(263,12%,74%);*/
+  color: #ddd;
+  font-size: 20px;
+  letter-spacing: 1px;
+  padding-left: 57px;
+  border-radius: 4px;
+  animation: searchLoad 0.3s ease-in forwards 0.2s;
+}
+
+@keyframes searchLoad {
+  from { width: 22%; }
+  to { width: 100%; }
+}
+
+#search-input:focus {
+  box-shadow: inset 0 -1px 7px rgba(0,0,0,0.01);
+  border-bottom: 2px solid rgba(0,0,0,0.15);
+  padding-bottom: 15px;
+  /*background: #9B8DB0;*/
+  background: rgba(0,0,0,0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: 23px;
+  transform: translateY(-50%);
+  top: 50%;
+  opacity: 0.18;
+  filter: none;
+  z-index: 10;
+}
+
+.search-icon:before {
+  font-size: 30px;
+}
+
+/** *LINKS ***/
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  padding-left: 0;
+}
+
+ul li {
+  list-style: none;
+  flex: 1;
+  padding: 10px;
+  justify-content: space-between;
+  flex-basis: 110px;
+  height: 110px;
+}
+
+ul li a {
+  /*background: #B5A2CC;*/
+  position: relative;
+  display: block;
+  border-radius: 4px;
+  height: 100%;
+  vertical-align: center;
+  /*box-shadow: 0 1px 2px rgba(0,0,0,0.2);*/
+  /*line-height: 105px;*/
+  line-height: 0;
+  color: #eee;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(0);
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  will-change: auto;
+  border: 1px solid rgba(0,0,0,0.08);
+  z-index: 1;
+  transition: opacity 0.3s;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0) scale(1.0, 1.0);
+}
+
+ul li a.show {
+  opacity: 1;
+}
+
+ul li a .fa {
+  font-size: 45px;
+  opacity: 0.8;
+  top: 45%;
+  transform: translateY(-50%) rotate(0.0001deg);
+  transform-origin: 50% 50%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 5;
+}
+
+ul li a span {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 20%;
+  color: rgba(0,0,0,0.15);
+  z-index: 5;
+  font-size: 13px;
+}
+
+ul li a:after {
+  content: '';
+  width: 150px;
+  height: 150px;
+  /*background: #CFB2D4;*/
+  background: rgba(255,255,255,0.18);
+  position: absolute;
+  /*bottom: -130%;*/
+  z-index: 2;
+  transition: all 0.2s;
+  opactiy: 0;
+  transform: rotate(0deg);
+  bottom: -150%;
+  right: -100%;
+}
+
+/*ul li:hover a*/
+
+ul li a:focus {
+  /*background: #BBA8CF;*/
+  filter: brightness(105%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+  outline: none;
+  border: none;
+}
+
+ul li a:focus:after {
+  transform: rotate(-45deg);
+  bottom: -100%;
+  right: -90%;
+  opacity: 0.5;
+}
+
+/*** DOTS ***/
+
+#dot-container {
+  display: none;
+}
+
+.section-no-dots {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin-top: 9px;
+}
+
+.no-dot {
+  margin: 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.no-dot:last-child {
+  margin-right: 0;
+}
+
+.no-dot-sel {
+  background: rgba(255,255,255,0.24);
+}
