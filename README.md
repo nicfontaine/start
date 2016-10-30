@@ -2,10 +2,12 @@
 
 > Select a base colour palette, change your search pages, drop in your favourite sites & icons
 
-### Usage
 - Cursor is hidden, everything can be done w/ a keyboard (can be changed at top of ``` main.css ```)
 
 - Auto focus is on search input.
+  
+
+### Usage
 
 1. Use L & R Arrow keys to change search sites.
 2. Up Arrow to pull previous searches
