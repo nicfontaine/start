@@ -39,6 +39,9 @@ var searchPl = ['> duckduckgo', '> google'];
 var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 ```
 
+### To-Do
+- weather updates
+
 ### More
 Check out my website at [nicfontaine.com](https://nicfontaine.com)  
 Twitter: [@ngpfontaine](https://twitter.com/ngpfontaine)
