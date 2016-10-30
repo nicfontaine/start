@@ -434,17 +434,31 @@ function searchSwitch(dir) {
 
 	// SWAP PLACEHOLDER
 	searchInputDom.placeholder = searchPl[searchPlInc];
-	// console.log(searchPlInc);
 
 	// REC PREV SEARCH INPUT
 	searchInputHolder = searchInputCall;
-	clearSearch();
 	dotChange();
 
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
-		searchInputDom.value = searchInputHolder;
+		// DON'T RESET W/ DELAY IF INPUT VALUE IS BLANK
+		if (typeof searchInputDom.value !== 'undefined' && searchInputDom.value.length === 0) {
+
+			// SEARCH VALUE IS ONLY WHITE SPACE, RESET
+			if (!searchInputCall.replace(/\s/g, '').length) {
+				console.log('just white space, reset');
+				clearSearch();
+				searchInputHolder = '';
+			}
+			// THERE WAS A VALUE, REASSIGN IT
+			else {
+				searchInputDom.value = searchInputHolder;
+			}
+
+		}
 	},500);
+
+	clearSearch();
 
 }
 
