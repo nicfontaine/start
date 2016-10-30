@@ -6,7 +6,7 @@
 
 - Auto focus is on search input.
 
-![Original Form](https://nicfontaine.com/startp_startp_01.png)
+![Original Form](https://nicfontaine.com/startp/startp_01.png)
 
 
 ### Usage
