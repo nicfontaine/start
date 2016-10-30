@@ -52,6 +52,22 @@ var searchUrlArray = [
 	'https://en.wikipedia.org/wiki/'
 ];
 
+// SET TO FALSE IF YOU'D RATHER JUST HAVE THE MAGNIFYING GLASS ICON
+var searchIconSwap = true;
+
+var searchIconArray = [
+	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
+	'<i class="fa fa-google" aria-hidden="true"></i>',
+	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
+	'<i class="fa fa-youtube" aria-hidden="true"></i>',
+	'<i class="fa fa-soundcloud" aria-hidden="true"></i>',
+	'<i class="fa fa-reddit" aria-hidden="true"></i>',
+	'<i class="fa fa-reddit" aria-hidden="true"></i>',
+	'<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
+	'<i class="fa fa-linux" aria-hidden="true"></i>',
+	'<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
+];
+
 /*************************************************/
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
@@ -68,6 +84,10 @@ var searchLogged = [];
 var searchNoTimes = 0;
 
 searchInputDom.focus();
+
+// SETTING SEARCH ICON
+var inputSearchIconDom = document.getElementById('input-search-icon');
+inputSearchIconDom.innerHTML = searchIconArray[0];
 
 // TOGGLE VAR TO TELL WHERE FOCUS IS
 // SEARCH, OR LINKS
@@ -434,7 +454,7 @@ function clearSearch() {
 	searchNoRepeat = 0;
 }
 
-// (NOTE) PROB SHOULD MOVE L/R LOGIC INTO FUNCTION CAUSE WE'RE JUST REPEATING OURSELVES THERE
+// SWITCH SEARCH L & R W/ INPUT PARAMS
 function searchSwitch(dir) {
 
 	if (dir === 'l') {
@@ -462,6 +482,8 @@ function searchSwitch(dir) {
 		}
 
 	}
+
+	inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
 
 	// SWAP PLACEHOLDER
 	searchInputDom.placeholder = searchPl[searchPlInc];
