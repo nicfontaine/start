@@ -233,6 +233,14 @@ for (i=0; i<linksNo; i++) {
 // LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
 console.log('row: ' + rNum + ', ' + rLength[rNum] + ' cells ');
 
+// RE-FOCUS SEARCH ON TAB
+document.addEventListener('keydown', function(e) {
+	if (e.keyCode == '9') {
+		e.preventDefault();
+		focusSearch();
+	}
+});
+
 //
 // MOVE THROUGH LINKS
 //
@@ -240,7 +248,7 @@ console.log('row: ' + rNum + ', ' + rLength[rNum] + ' cells ');
 document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
   // KEY LEFT
-  if (e.which == 37) {
+  if (e.keyCode == '37') {
     e.preventDefault();
 
     // INC ONLY IF 1 OR GREATER
@@ -258,7 +266,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   }
 
   // KEY RIGHT
-  if (e.which == 39) {
+  if (e.keyCode == '39') {
     e.preventDefault();
 
     if (linkFocus < linksNo-1) {
@@ -274,7 +282,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   }
 
   // KEY UP
-  if (e.which == 38) {
+  if (e.keyCode == '38') {
     e.preventDefault();
 
 		if (linkFocus-rLength[0] > -1) {
@@ -291,7 +299,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   }
 
   // KEY DOWN
-  if (e.which == 40) {
+  if (e.keyCode == '40') {
     e.preventDefault();
 
 		// IF THE NEXT linkFocus WILL BE LESS THAN THE LAST INDEX OF rLength
@@ -401,7 +409,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 	}
 
 	// KEY DOWN
-	if (e.which == 40) {
+	if (e.keyCode == '40') {
 		e.preventDefault();
 		searchInputDom.blur();
 		linkFocus = 0;
@@ -410,7 +418,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 	}
 
 	// KEY LEFT
-	if (e.which == 37) {
+	if (e.keyCode == '37') {
 		e.preventDefault();
 
 		searchSwitch('l');
@@ -418,7 +426,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 	}
 
 	//KEY RIGHT
-	if (e.which == 39) {
+	if (e.keyCode == '39') {
 		e.preventDefault();
 
 		searchSwitch('r');
