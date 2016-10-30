@@ -19,7 +19,9 @@
 ### About
 - Tile nav isn't grid based, so you can add or remove any and change their size, or container width and arrow navigation will stay intact. (NOTE) may get a little weird with odd numbers that leave like 1 tile on a row or something.
 
-- I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever you prefer, or flip through there and grab whatever works.
+- I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever icons you prefer (you'll have to style them), or flip through there and grab whatever works.
+
+- Add or remove an search sites; just match up placeholder and url slug at the same index in the two array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
 
 
 ### Customize Options
