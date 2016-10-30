@@ -103,6 +103,35 @@ function colourConstructor (h,s,l) {
 	return hslCombo;
 }
 
+// DATE
+
+var dateDom = document.getElementById('date-d');
+var timeDom = document.getElementById('date-t');
+
+var dateD = new Date();
+dateDom.innerHTML = dateD.toDateString();
+
+// TIME
+
+function clock() {
+
+	var dateT = new Date();
+	dateH = dateT.getHours();
+	if (dateH > 12) {
+		dateH-=12;
+	}
+	dateM = dateT.getMinutes();
+	dateS = dateT.getSeconds();
+	if (dateS.toString().length < 2) {
+		dateS = '0' + dateS.toString();
+	}
+	timeDom.innerHTML = dateH + ':' + dateM + ':' + dateS;
+
+	setTimeout(clock,1000);
+
+}
+clock();
+
 //
 // LET'S FUCK WIT DIS LINK GRID THING
 //
