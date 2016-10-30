@@ -133,7 +133,7 @@ ul li a {
   position: relative;
   overflow: hidden;
   will-change: auto;
-  border: 1px solid rgba(0,0,0,0.08);
+  /*border: 1px solid rgba(0,0,0,0.08);*/
   z-index: 1;
   transition: opacity 0.3s;
   -webkit-backface-visibility: hidden;
@@ -189,7 +189,8 @@ ul li a:focus {
   filter: brightness(105%);
   box-shadow: 0 2px 5px rgba(0,0,0,0.35);
   outline: none;
-  border: none;
+  border: none !important;
+  margin-top: -1px;
 }
 
 ul li a:focus:after {
