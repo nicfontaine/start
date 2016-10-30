@@ -10,6 +10,10 @@
 
 <body onclick='focusSearch();'>
 
+  <nav>
+    <span id='ip'></span>
+  </nav>
+
   <div class='page-pattern'></div>
 
   <div class='container-main'>
@@ -104,6 +108,14 @@
   </div>
 
   <div id="dot-container"><div class="no-dot"></div></div>
+
+  <script type="text/javascript" src="https://l2.io/ip.js?var=myip"></script>
+      <script>
+          function systemip(){
+          document.getElementById("ip").innerHTML = 'IP: ' + myip;
+          }
+          systemip();
+      </script>
 
 </body>
 
