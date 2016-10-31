@@ -141,6 +141,9 @@ function clock() {
 		dateH-=12;
 	}
 	dateM = dateT.getMinutes();
+	if (dateM.toString().length < 2) {
+		dateM = '0' + dateM.toString();
+	}
 	dateS = dateT.getSeconds();
 	if (dateS.toString().length < 2) {
 		dateS = '0' + dateS.toString();
