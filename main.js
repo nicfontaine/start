@@ -124,13 +124,11 @@ function colourConstructor (h,s,l) {
 }
 
 // DATE
-
 var dateDom = document.getElementById('date-d');
 var timeDom = document.getElementById('date-t');
 
 var dateD = new Date();
 dateDom.innerHTML = dateD.toDateString();
-
 // TIME
 
 function clock() {
@@ -214,7 +212,7 @@ for (i=0; i<linksNo; i++) {
 	else {
 
 		// LOG EACH ROW
-		console.log('row: ' + rNum + ', ' + rLength[rNum] + ' cells ');
+		console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
 
 		// MOVE TO NEW ROW
 		rNum++;
@@ -224,17 +222,45 @@ for (i=0; i<linksNo; i++) {
 		rOffset[rNum] = links[i].offsetTop;
 
 		// RESET COUNTER
-		rLinkCount+=1;
+		// rLinkCount+=1;
+		rLinkCount++;
 
 		// GOTTEN TO NEW OFFSET LINE, SO WE ADD 1 TO NEW ROW ARRAY INDEX
-		rLength[rNum] = 1;
+		// rLength[rNum] = 1;
+
+		// INDEXES ARE TOTALS, KEEP ADDING TOTAL LINK COUNT
+		rLength[rNum] = rLinkCount;
 
 	}
 
 }
 
 // LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
-console.log('row: ' + rNum + ', ' + rLength[rNum] + ' cells ');
+console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
+
+//
+// WINDOW RESIZING
+//
+
+var hasResized = false;
+var resizeTimer;
+window.onresize = function() {
+
+	if (!hasResized) {
+		hasResized = true;
+	}
+
+  windowIW = window.innerWidth;
+
+	// DISABLE IF USER IS STILL RESIZING, SO NOT CONSTANTLY FIRING
+	clearTimeout(resizeTimer);
+	resizeTimer = setTimeout(function() {
+
+		console.log('resizing');
+
+	}, 250);
+
+}
 
 // RE-FOCUS SEARCH ON TAB
 document.addEventListener('keydown', function(e) {
@@ -249,6 +275,8 @@ document.addEventListener('keydown', function(e) {
 //
 
 document.getElementById('ul-links').addEventListener('keydown', function (e) {
+
+	console.log(linkFocus);
 
   // KEY LEFT
   if (e.keyCode == '37') {
@@ -307,9 +335,13 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
 		// IF THE NEXT linkFocus WILL BE LESS THAN THE LAST INDEX OF rLength
 		if (linkFocus+rLength[0] < rLength[rLength.length-1]) {
+			// GO DOWN A ROW LENGTH
 			linkFocus += rLength[0];
 			focusLink();
 		}
+
+		// (NOTE) NEED TO CHECK FOR ORPHAN ROWS W/ FEWER INDICES
+		// SO YOU CAN STILL GO DOWN, EVEN W/ ONE WIDE TILE
 
 		else {
 			// linkFocus = linkFocus - rNum*rLength[0];
@@ -533,6 +565,8 @@ function searchSwitch(dir) {
 for (i=0; i<searchPl.length; i++) {
 	var itmDot = document.getElementById('dot-container').lastChild;
 	var clnDot = itmDot.cloneNode(true);
+
+	clnDot.innerHTML = searchIconArray[i];
 	dotSectionDomArray[0].appendChild(clnDot);
 }
 
