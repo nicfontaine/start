@@ -61,11 +61,6 @@ nav span:last-child {
   background-size: cover;
 }
 
-#weather-breezy {
-  background: url(./weather/breezy.png) no-repeat center center fixed;
-  background-size: cover;
-}
-
 #weather-cloudy {
   background: url(./weather/cloudy.png) no-repeat center center fixed;
   background-size: cover;
@@ -76,12 +71,10 @@ nav span:last-child {
   background-size: cover;
 }
 
-#weather-rain-and-snow {
-  background: url(./weather/rain-and-snow.png) no-repeat center center fixed;
+#weather-snow {
+  background: url(./weather/snow.png) no-repeat center center fixed;
   background-size: cover;
 }
-
-
 
 .container-main {
   max-width: 550px;
