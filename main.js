@@ -463,11 +463,11 @@ searchInputDom.addEventListener('keydown', function(e) {
 	}
 
 	// KEY BACKSPACE
-	if (e.keyCode == '8') {
-		e.preventDefault();
-		// JUST CLEAR IT ALL TO KEEP SIMPLE & QUICK
-		clearSearch();
-	}
+	// if (e.keyCode == '8') {
+	// 	e.preventDefault();
+	// 	// JUST CLEAR IT ALL TO KEEP SIMPLE & QUICK
+	// 	clearSearch();
+	// }
 
 	// KEY UP
 	if (e.keyCode == '38') {
