@@ -35,7 +35,7 @@ nav span:last-child {
   top: 0; right: 0; bottom: 0; left: 0;
   /*background: url('fresh_snow_@2X.png');*/
   /*background: url('./weather/rain.png');*/
-  opacity: 0.3;
+  /*opacity: 0.3;*/
   background-size: cover !important;
   /*filter: brightness(80%);*/
 }
@@ -48,7 +48,7 @@ nav span:last-child {
 }
 
 #weather-bg div.show {
-  opacity: 0.8;
+  opacity: 0.3;
 }
 
 #weather-sunny {
