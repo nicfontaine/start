@@ -4,7 +4,7 @@
 
 - Cursor is hidden, everything can be done w/ a keyboard (can be changed at top of ``` main.css ```)
 
-- Auto focus is on search input.
+- Auto focus is on search input; if you lose focus for some reason just use Tab key or click anywhere.
 
 ![img preview](https://nicfontaine.com/startp/startp_01.png)
 
@@ -14,7 +14,6 @@
 1. Use L & R Arrow keys to change search sites.
 2. Up Arrow to pull previous searches
 3. Down Arrow (to leave search focus), then any Arrow keys to navigate tiles.
-4. That's it.
 
 ---
 
@@ -25,6 +24,7 @@
 
 - Add or remove an search sites; just match up placeholder and url slug at the same index in the two array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
 
+- Weather data (weather type and temp) is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please.
 
 ### Customize Options
 - A few vars in ``` main.js ```:
@@ -37,10 +37,17 @@ var searchPl = ['> duckduckgo', '> google'];
 
 // SEARCH SITE URLS (run a search & grab the url minus query string [if it uses one..])
 var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
+
+// WEATHER LOCATION, woeid
+var myWoeid = '12797161';
 ```
 
 ### To-Do
-- weather updates
+- onclick swap for list of search icon dots
+
+- set weather location var by user's ip/zip
+
+- source/cite images
 
 ### More
 Check out my website at [nicfontaine.com](https://nicfontaine.com)  
