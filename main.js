@@ -68,6 +68,9 @@ var searchIconArray = [
 	'<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
 ];
 
+// WOEID FOR WEATHER
+var myWoeid = '12797161';
+
 /*************************************************/
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
@@ -583,4 +586,72 @@ function dotChange() {
 	}
 	// ADD TO CURRENT IN ROTATION
 	noDotEachDom[searchPlInc].classList.add('no-dot-sel');
+}
+
+//
+// WEATHER
+//
+
+var weatherBgDom = document.getElementById('weather-bg');
+var weatherImgArray = weatherBgDom.getElementsByTagName('div');
+var weatherImgNo = weatherImgArray.length;
+var weatherCurrent;
+
+$(document).ready(function() {
+	function getWeather() {
+		$.simpleWeather({
+			woeid: myWoeid,
+			unit: 'f',
+			success: function(weather) {
+				console.log('getWeather(); ' + weather.currently);
+				weatherCurrent = weather.currently;
+				weatherSwap(weatherCurrent);
+				// Sunny
+				// Partly Cloudy
+				// Mostly Cloudy
+				// Breezy
+				// Cloudy
+				// Windy
+				// Thunderstorms
+				// Rain and Snow
+				// Snow
+				// Scattered Thunderstorms
+				// Rain
+				// Scattered Showers
+				// Mostly Sunny
+			},
+		});
+
+		// REFRESH EVERY 20 SEC
+		setTimeout(getWeather,20000);
+
+	}
+	// INIT
+	getWeather();
+});
+
+function weatherSwap(e) {
+	img = '';
+
+	if (e === 'Sunny' || e === 'Mostly Sunny') {
+		img = 'weather-sunny';
+	}
+	else if (e === 'Rain' || e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
+		img = 'weather-rain';
+	}
+	else if (e === 'Partly Cloudy' || e === 'Mostly Cloudy' || e === 'Cloudy') {
+		img = 'weather-cloudy';
+	}
+	else {
+		alert(e + ' - I havent coded for this, need to add it');
+	}
+
+	// HIDE OTHERS
+	for (i=0; i<weatherImgNo; i++) {
+		weatherImgArray[i].className = '';
+	}
+
+	// ASSIGN
+	document.getElementById(img).className = 'show';
+
 }

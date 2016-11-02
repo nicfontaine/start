@@ -30,13 +30,58 @@ nav span:last-child {
   border-right: 0;
 }
 
-.page-pattern {
+#weather-bg {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
-  background: url('fresh_snow_@2X.png');
-  opacity: 0.2;
-  filter: brightness(80%);
+  /*background: url('fresh_snow_@2X.png');*/
+  /*background: url('./weather/rain.png');*/
+  opacity: 0.3;
+  background-size: cover !important;
+  /*filter: brightness(80%);*/
 }
+
+#weather-bg div {
+  opacity: 0;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transition: opacity 5s;
+}
+
+#weather-bg div.show {
+  opacity: 0.8;
+}
+
+#weather-sunny {
+  background: url(./weather/sun.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+#weather-rain {
+  background: url(./weather/rain.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+#weather-breezy {
+  background: url(./weather/breezy.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+#weather-cloudy {
+  background: url(./weather/cloudy.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+#weather-windy {
+  background: url(./weather/windy.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+#weather-rain-and-snow {
+  background: url(./weather/rain-and-snow.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+
 
 .container-main {
   max-width: 550px;
