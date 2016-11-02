@@ -69,7 +69,8 @@ var searchIconArray = [
 ];
 
 // WOEID FOR WEATHER
-var myWoeid = '12797161';
+// (NOTE) USING GEOLOCATION NOW TO AUTO-SET, JUST ACCEPT LOCATION DATA
+// var myWoeid = '12797161';
 
 /*************************************************/
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
@@ -431,16 +432,6 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 	}
 
-	// KEY TAB
-	// (NOTE) NEED THIS STILL?
-	// if (e.keyCode == '9') {
-	// 	e.preventDefault();
-	// 	searchInputDom.blur();
-	// 	linkFocus = 0;
-	// 	toggleTab = 'links';
-	// 	focusLink();
-	// }
-
 	// KEY TAB, ANNOYING. LETS DISABLE IT
 	if (e.keyCode == '9') {
 		e.preventDefault();
@@ -599,44 +590,93 @@ var weatherCurrent;
 var weatherTemp;
 var tempDom = document.getElementById('temp');
 
+// $(document).ready(function() {
+// 	function getWeather() {
+// 		$.simpleWeather({
+// 			woeid: myWoeid,
+// 			unit: 'f',
+// 			success: function(weather) {
+// 				weatherCurrent = weather.currently;
+// 				weatherTemp = weather.temp;
+// 				console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
+// 				weatherSwap(weatherCurrent,weatherTemp);
+// 				// Sunny
+// 				// Partly Cloudy
+// 				// Mostly Cloudy
+// 				// Breezy
+// 				// Cloudy
+// 				// Windy
+// 				// Thunderstorms
+// 				// Rain and Snow
+// 				// Snow
+// 				// Scattered Thunderstorms
+// 				// Rain
+// 				// Scattered Showers
+// 				// Mostly Sunny
+// 			}
+// 		});
+//
+// 		// REFRESH EVERY 20 SEC
+// 		setTimeout(getWeather,20000);
+//
+// 	}
+// 	// INIT
+// 	getWeather();
+// });
+
+/* Where in the world are you? */
 $(document).ready(function() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    loadWeather(position.coords.latitude+','+position.coords.longitude); //load weather using your lat/lng coordinates
+		console.log('load geolocation coords: ' + position.coords.latitude+','+position.coords.longitude);
+  });
+});
+
+var initWeatherLoad = true;
+
+function loadWeather(location, woeid) {
 	function getWeather() {
-		$.simpleWeather({
-			woeid: myWoeid,
-			unit: 'f',
-			success: function(weather) {
-				weatherCurrent = weather.currently;
-				weatherTemp = weather.temp;
-				console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
-				weatherSwap(weatherCurrent,weatherTemp);
-				// Sunny
-				// Partly Cloudy
-				// Mostly Cloudy
-				// Breezy
-				// Cloudy
-				// Windy
-				// Thunderstorms
-				// Rain and Snow
-				// Snow
-				// Scattered Thunderstorms
-				// Rain
-				// Scattered Showers
-				// Mostly Sunny
-			},
-		});
+	  $.simpleWeather({
+	    location: location,
+	    woeid: woeid,
+	    unit: 'f',
+				success: function(weather) {
+					weatherCurrent = weather.currently;
+					weatherTemp = weather.temp;
+					console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
+					weatherSwap(weatherCurrent,weatherTemp);
+					// Sunny
+					// Partly Cloudy
+					// Mostly Cloudy
+					// Breezy
+					// Cloudy
+					// Windy
+					// Thunderstorms
+					// Rain and Snow
+					// Snow
+					// Scattered Thunderstorms
+					// Rain
+					// Scattered Showers
+					// Mostly Sunny
+				}
+	  });
 
 		// REFRESH EVERY 20 SEC
 		setTimeout(getWeather,20000);
 
+		}
+	// INIT, ONCE
+	if (initWeatherLoad) {
+		getWeather();
+		initWeatherLoad = false;
 	}
-	// INIT
-	getWeather();
-});
+
+}
 
 function weatherSwap(e,t) {
 	img = '';
 
-	if (e === 'Sunny' || e === 'Mostly Sunny') {
+	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear') {
 		img = 'weather-sunny';
 	}
 	else if (e === 'Rain' || e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
