@@ -676,7 +676,7 @@ function loadWeather(location, woeid) {
 function weatherSwap(e,t) {
 	img = '';
 
-	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear') {
+	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear') {
 		img = 'weather-sunny';
 	}
 	else if (e === 'Rain' || e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
