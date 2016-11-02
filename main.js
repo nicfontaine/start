@@ -596,6 +596,8 @@ var weatherBgDom = document.getElementById('weather-bg');
 var weatherImgArray = weatherBgDom.getElementsByTagName('div');
 var weatherImgNo = weatherImgArray.length;
 var weatherCurrent;
+var weatherTemp;
+var tempDom = document.getElementById('temp');
 
 $(document).ready(function() {
 	function getWeather() {
@@ -603,9 +605,10 @@ $(document).ready(function() {
 			woeid: myWoeid,
 			unit: 'f',
 			success: function(weather) {
-				console.log('getWeather(); ' + weather.currently);
 				weatherCurrent = weather.currently;
-				weatherSwap(weatherCurrent);
+				weatherTemp = weather.temp;
+				console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
+				weatherSwap(weatherCurrent,weatherTemp);
 				// Sunny
 				// Partly Cloudy
 				// Mostly Cloudy
@@ -630,7 +633,7 @@ $(document).ready(function() {
 	getWeather();
 });
 
-function weatherSwap(e) {
+function weatherSwap(e,t) {
 	img = '';
 
 	if (e === 'Sunny' || e === 'Mostly Sunny') {
@@ -663,5 +666,6 @@ function weatherSwap(e) {
 
 	// ASSIGN
 	document.getElementById(img).className = 'show';
+	tempDom.innerHTML = t + '&deg; F';
 
 }
