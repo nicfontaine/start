@@ -44,7 +44,7 @@ var searchUrlArray = [
 	'https://www.google.com/#q=',
 	'https://www.google.com/maps/search/',
 	'https://www.youtube.com/results?search_query=',
-	'https://soundcloud.com/search?q=ryan%20hemsworth',
+	'https://soundcloud.com/search?q=',
 	'https://www.reddit.com/search?q=',
 	'https://www.reddit.com/r/',
 	'https://stackoverflow.com/search?q=',
