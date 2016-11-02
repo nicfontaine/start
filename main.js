@@ -642,9 +642,19 @@ function weatherSwap(e) {
 	else if (e === 'Partly Cloudy' || e === 'Mostly Cloudy' || e === 'Cloudy') {
 		img = 'weather-cloudy';
 	}
+	else if (e === 'Snow' || e === 'Rain and Snow') {
+		img = 'weather-snow';
+	}
+	else if (e === 'Windy' || e === 'Breezy') {
+		img = 'weather-windy';
+	}
+
 	else {
 		alert(e + ' - I havent coded for this, need to add it');
 	}
+
+	// ASSIGN HERE TO TEST AN IMG
+	// img = 'weather-windy';
 
 	// HIDE OTHERS
 	for (i=0; i<weatherImgNo; i++) {
