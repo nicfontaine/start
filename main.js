@@ -151,11 +151,11 @@ function colourConstructor (h,s,l) {
 }
 
 // DATE
-var dateDom = document.getElementById('date-d');
-var timeDom = document.getElementById('date-t');
+var navDateDom = document.getElementById('date-d');
+var navTimeDom = document.getElementById('date-t');
 
 var dateD = new Date();
-dateDom.innerHTML = dateD.toDateString();
+navDateDom.innerHTML = dateD.toDateString();
 // TIME
 
 function clock() {
@@ -173,7 +173,7 @@ function clock() {
 	if (dateS.toString().length < 2) {
 		dateS = '0' + dateS.toString();
 	}
-	timeDom.innerHTML = dateH + ':' + dateM + ':' + dateS;
+	navTimeDom.innerHTML = dateH + ':' + dateM + ':' + dateS;
 
 	setTimeout(clock,1000);
 
@@ -611,7 +611,9 @@ var weatherImgArray = weatherBgDom.getElementsByTagName('div');
 var weatherImgNo = weatherImgArray.length;
 var weatherCurrent;
 var weatherTemp;
-var tempDom = document.getElementById('temp');
+var navTempDom = document.getElementById('temp');
+var navCityDom = document.getElementById('city');
+var weatherCity;
 
 // $(document).ready(function() {
 // 	function getWeather() {
@@ -666,7 +668,10 @@ function loadWeather(location, woeid) {
 				success: function(weather) {
 					weatherCurrent = weather.currently;
 					weatherTemp = weather.temp;
-					console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
+					weatherCity = weather.city + ', ' + weather.region;
+					console.clear();
+					console.log('geo coords: ' + location);
+					console.log('weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
 					weatherSwap(weatherCurrent,weatherTemp);
 					// Sunny
 					// Partly Cloudy
@@ -729,6 +734,8 @@ function weatherSwap(e,t) {
 
 	// ASSIGN
 	document.getElementById(img).className = 'show';
-	tempDom.innerHTML = t + '&deg; F';
+	navTempDom.innerHTML = t + '&deg; F';
+
+	navCityDom.innerHTML = weatherCity;
 
 }
