@@ -2,7 +2,7 @@
 
 > Select a base colour palette, change your search pages, drop in your favourite sites & icons
 
-- Cursor is hidden, everything can be done w/ a keyboard (can be changed at top of ``` main.css ```)
+- Cursor hides with delay, everything can be done w/ a keyboard
 
 - Auto focus is on search input; if you lose focus for some reason just use Tab key or click anywhere.
 
@@ -43,9 +43,11 @@ var myWoeid = '12797161';
 ```
 
 ### To-Do
-- onclick swap for list of search icon dots
+- refactor tile grid on window resize
 
-- set weather location var by user's ip/zip
+- var for cursor hide/show preferences
+
+- onclick swap for list of search icon dots
 
 - source/cite images
 
