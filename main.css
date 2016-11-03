@@ -5,11 +5,14 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
   text-align: center;
   padding: 20px;
   padding-right: 0;
   /*background: #9D8ABA;*/
+}
+
+body {
+  font-family: 'Jaldi', sans-serif;
 }
 
 nav {
@@ -19,6 +22,8 @@ nav {
   background: rgba(0,0,0,0.1);
   color: rgba(255,255,255,0.4);
   font-size: 12px;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 600;
 }
 
 nav span {
@@ -124,6 +129,13 @@ iframe {
   padding-left: 57px;
   border-radius: 4px;
   animation: searchLoad 0.3s ease-in forwards 0.2s;
+  /*font-weight: 700;*/
+  /*letter-spacing: 2px;*/
+
+  font-family: 'Jaldi', sans-serif;
+  letter-spacing: 1px;
+  font-size: 24px
+
 }
 
 @keyframes searchLoad {
@@ -234,7 +246,8 @@ ul li a span {
   bottom: 20%;
   color: rgba(0,0,0,0.15);
   z-index: 5;
-  font-size: 13px;
+  font-size: 15px;
+  letter-spacing: 1px;
 }
 
 ul li a:after {
