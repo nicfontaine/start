@@ -76,6 +76,29 @@ var searchIconArray = [
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
 
+// HIDE CURSOR AFTER DELAY
+var cursorToggleShow = true;
+var cursorTimer;
+document.addEventListener('mousemove', function() {
+	if (!cursorToggleShow) {
+		cursorToggleShow = true;
+  	document.getElementsByTagName('html')[0].style.cursor = 'auto';
+		console.log('showing cursor');
+	}
+	else {
+		// DISABLE IF MOUSE IS STILL MOVING
+		clearTimeout(cursorTimer);
+		cursorToggleShow = true;
+		// HIDE AFTER DELAY, & ALLOW SHOW BY SETTING TOGGLE TO FALSE
+		cursorTimer = setTimeout(function() {
+			document.getElementsByTagName('html')[0].style.cursor = 'none';
+			console.log('hiding cursor');
+			cursorToggleShow = false;
+		}, 250);
+
+	}
+});
+
 var searchInputDom = document.getElementById('search-input');
 var searchInputCall;
 var searchInputHolder;
