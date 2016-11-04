@@ -625,19 +625,6 @@ var weatherCity;
 // 				weatherTemp = weather.temp;
 // 				console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
 // 				weatherSwap(weatherCurrent,weatherTemp);
-// 				// Sunny
-// 				// Partly Cloudy
-// 				// Mostly Cloudy
-// 				// Breezy
-// 				// Cloudy
-// 				// Windy
-// 				// Thunderstorms
-// 				// Rain and Snow
-// 				// Snow
-// 				// Scattered Thunderstorms
-// 				// Rain
-// 				// Scattered Showers
-// 				// Mostly Sunny
 // 			}
 // 		});
 //
@@ -686,7 +673,11 @@ function loadWeather(location, woeid) {
 					// Rain
 					// Scattered Showers
 					// Mostly Sunny
-				}
+				},
+				error: function(error) {
+      		// SOME ERROR NOTIFICATION HERE
+					console.log('weather error');
+    		}
 	  });
 
 		// REFRESH EVERY 20 SEC
@@ -736,6 +727,7 @@ function weatherSwap(e,t) {
 	document.getElementById(img).className = 'show';
 	navTempDom.innerHTML = t + '&deg; F';
 
+	// (NOTE) NEED TO PUT THIS OUT OF LOOP, SHOULDN'T UPDATE W/ WEATHER
 	navCityDom.innerHTML = weatherCity;
 
 }
