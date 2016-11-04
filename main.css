@@ -71,6 +71,11 @@ nav span:last-child {
   background-size: cover;
 }
 
+#weather-partly-cloudy {
+  background: url(./images/partly-cloudy.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
 #weather-windy {
   background: url(./images/windy.png) no-repeat center center fixed;
   background-size: cover;
