@@ -155,7 +155,7 @@ iframe {
   position: absolute;
   left: 23px;
   transform: translateY(-50%);
-  top: 48%;
+  top: 50%;
   opacity: 0.18;
   filter: none;
   z-index: 10;
