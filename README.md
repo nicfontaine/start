@@ -6,7 +6,7 @@
 
 - Auto focus is on search input; if you lose focus for some reason just use Tab key or click anywhere.
 
-![img preview](https://nicfontaine.com/start/startp_01.png)
+![img preview](https://github.com/ngpfontaine/startp/blob/master/start_screen_01.png)
 
 
 ### Usage
