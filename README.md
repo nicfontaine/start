@@ -37,9 +37,6 @@ var searchPl = ['> duckduckgo', '> google'];
 
 // SEARCH SITE URLS (run a search & grab the url minus query string [if it uses one..])
 var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
-
-// WEATHER LOCATION, woeid
-var myWoeid = '12797161';
 ```
 
 ### To-Do
