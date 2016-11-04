@@ -25,6 +25,7 @@ var cpbl = 64;
 // PLACEHOLDER TITLES HERE
 // (NOTE) USE WHATEVER FORMAT YOU WANT HERE, DOESN'T MATTER
 var searchPl = [
+	' > url',
 	' > duckduckgo',
 	' > google',
 	' > google maps',
@@ -40,6 +41,7 @@ var searchPl = [
 // URL SLUGS HERE (THEY CORRESPOND TO TITLES ABOVE)
 // (NOTE) RUN A SEARCH SOMEWHERE, GRAB IT'S URL, & CUT THE QUERY STRING (IF IT USES ONE..)
 var searchUrlArray = [
+	'',
 	'https://duckduckgo.com/?q=',
 	'https://www.google.com/#q=',
 	'https://www.google.com/maps/search/',
@@ -56,6 +58,7 @@ var searchUrlArray = [
 var searchIconSwap = true;
 
 var searchIconArray = [
+	'<i class="fa fa-globe" aria-hidden="true"></i>',
 	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
 	'<i class="fa fa-google" aria-hidden="true"></i>',
 	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
@@ -701,8 +704,11 @@ function weatherSwap(e,t) {
 	else if (e === 'Rain' || e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
 		img = 'weather-rain';
 	}
-	else if (e === 'Partly Cloudy' || e === 'Mostly Cloudy' || e === 'Cloudy') {
+	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
 		img = 'weather-cloudy';
+	}
+	else if (e === 'Partly Cloudy') {
+		img = 'weather-partly-cloudy';
 	}
 	else if (e === 'Snow' || e === 'Rain and Snow') {
 		img = 'weather-snow';
