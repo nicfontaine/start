@@ -48,6 +48,8 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 
 - source/cite images
 
+- more specific images
+
 ### More
 Check out my website at [nicfontaine.com](https://nicfontaine.com)  
 Twitter: [@ngpfontaine](https://twitter.com/ngpfontaine)
