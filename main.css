@@ -39,7 +39,7 @@ nav span:last-child {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   /*background: url('fresh_snow_@2X.png');*/
-  /*background: url('./weather/rain.png');*/
+  /*background: url('./images/rain.png');*/
   /*opacity: 0.3;*/
   background-size: cover !important;
   /*filter: brightness(80%);*/
@@ -57,27 +57,27 @@ nav span:last-child {
 }
 
 #weather-sunny {
-  background: url(./weather/sun.png) no-repeat center center fixed;
+  background: url(./imagessun.png) no-repeat center center fixed;
   background-size: cover;
 }
 
 #weather-rain {
-  background: url(./weather/rain.png) no-repeat center center fixed;
+  background: url(./images/rain.png) no-repeat center center fixed;
   background-size: cover;
 }
 
 #weather-cloudy {
-  background: url(./weather/cloudy.png) no-repeat center center fixed;
+  background: url(./images/cloudy.png) no-repeat center center fixed;
   background-size: cover;
 }
 
 #weather-windy {
-  background: url(./weather/windy.png) no-repeat center center fixed;
+  background: url(./images/windy.png) no-repeat center center fixed;
   background-size: cover;
 }
 
 #weather-snow {
-  background: url(./weather/snow.png) no-repeat center center fixed;
+  background: url(./images/snow.png) no-repeat center center fixed;
   background-size: cover;
 }
 
