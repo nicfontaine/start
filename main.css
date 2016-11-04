@@ -57,7 +57,7 @@ nav span:last-child {
 }
 
 #weather-sunny {
-  background: url(./imagessun.png) no-repeat center center fixed;
+  background: url(./images/sun.png) no-repeat center center fixed;
   background-size: cover;
 }
 
