@@ -66,13 +66,13 @@ nav span:last-child {
   background-size: cover;
 }
 
-#weather-cloudy {
-  background: url(./images/cloudy.png) no-repeat center center fixed;
+#weather-showers {
+  background: url(./images/showers.png) no-repeat center center fixed;
   background-size: cover;
 }
 
-#weather-partly-cloudy {
-  background: url(./images/partly-cloudy.png) no-repeat center center fixed;
+#weather-cloudy {
+  background: url(./images/cloudy.png) no-repeat center center fixed;
   background-size: cover;
 }
 
