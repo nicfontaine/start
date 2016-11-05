@@ -451,7 +451,15 @@ searchInputDom.addEventListener('keydown', function(e) {
 		}
 		// JUST SEARCH INPUT AS FULL URL
 		else {
-			window.open(searchInputCall);
+			// NO HTTP OR HTTPS, NEED TO MAKE IT A REAL URL
+			if (searchInputCall.indexOf('https://') === -1 && searchInputCall.indexOf('http://') === -1) {
+				window.open('http://' + searchInputCall);
+			}
+			// VALID, FULL URL
+			else {
+				window.open(searchInputCall);
+			}
+
 		}
 
 		searchInputDom.value = '';
