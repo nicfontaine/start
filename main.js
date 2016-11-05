@@ -445,7 +445,14 @@ searchInputDom.addEventListener('keydown', function(e) {
 	// KEY ENTER
 	if (e.keyCode == '13' && searchInputCall !== '') {
 		console.log('var searchInputCall = ' + searchInputCall);
-		window.open(searchUrlArray[searchPlInc] + searchInputCall);
+		// IF NOT FIRST INDEX - URL SEARCH
+		if (searchPlInc > 0) {
+			window.open(searchUrlArray[searchPlInc] + searchInputCall);
+		}
+		// JUST SEARCH INPUT AS FULL URL
+		else {
+			window.open(searchInputCall);
+		}
 
 		searchInputDom.value = '';
 
@@ -701,14 +708,14 @@ function weatherSwap(e,t) {
 	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear') {
 		img = 'weather-sunny';
 	}
-	else if (e === 'Rain' || e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
+	else if (e === 'Rain') {
 		img = 'weather-rain';
 	}
-	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
-		img = 'weather-cloudy';
+	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
+		img = 'weather-showers';
 	}
-	else if (e === 'Partly Cloudy') {
-		img = 'weather-partly-cloudy';
+	else if (e === 'Partly Cloudy' || e === 'Mostly Cloudy' || e === 'Cloudy') {
+		img = 'weather-cloudy';
 	}
 	else if (e === 'Snow' || e === 'Rain and Snow') {
 		img = 'weather-snow';
