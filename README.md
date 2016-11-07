@@ -1,7 +1,7 @@
 # Start Page
 
 > Select colour tone, change your search pages, drop in your favourite sites & icons, share geolocation for local weather data
-    
+
 ![img preview](https://github.com/ngpfontaine/startp/blob/master/extra/start_screen_01.png)
 
 
@@ -38,10 +38,10 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 ```
 
 ### Sources
-*weather*
-(to-do)
+***Weather***   
+- (to-do...)
 
-*scripts*
+***Scripts***
 - simpleWeather.js (url)
 
 - l2.io (url)
