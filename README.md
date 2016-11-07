@@ -2,16 +2,16 @@
 
 > Select colour tone, change your search pages, drop in your favourite sites & icons, share geolocation for local weather data
 
-- Cursor hides with delay, everything can be done w/ a keyboard
-
 ![img preview](https://github.com/ngpfontaine/startp/blob/master/extra/start_screen_01.png)
 
 
 ### Usage
 
-1. Use L & R Arrow keys to change search sites.
-2. Up Arrow to pull previous searches
-3. Down Arrow (to leave search focus), then any Arrow keys to navigate tiles.
+1. Cursor hides with delay, everything can be done w/ a keyboard
+2. Use L & R Arrow keys to change search sites.
+3. Up Arrow to pull previous searches
+4. Down Arrow (to leave search focus), then any Arrow keys to navigate tiles.
+
 
 ---
 
