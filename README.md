@@ -1,10 +1,8 @@
 # Start Page
 
-> Select a base colour palette, change your search pages, drop in your favourite sites & icons
+> Select colour tone, change your search pages, drop in your favourite sites & icons, share geolocation for local weather data
 
 - Cursor hides with delay, everything can be done w/ a keyboard
-
-- Auto focus is on search input; if you lose focus for some reason just use Tab key or click anywhere.
 
 ![img preview](https://github.com/ngpfontaine/startp/blob/master/extra/start_screen_01.png)
 
@@ -39,6 +37,17 @@ var searchPl = ['> duckduckgo', '> google'];
 var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 ```
 
+### Sources
+*weather*
+(to-do)
+
+*scripts*
+- simpleWeather.js (url)
+
+- l2.io (url)
+
+- FA Icons (url) (other srcs)
+
 ### To-Do
 - refactor tile grid on window resize
 
@@ -46,7 +55,7 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 
 - onclick swap for list of search icon dots
 
-- source/cite images
+- source/cite images, scripts
 
 - more specific images
 
