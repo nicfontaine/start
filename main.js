@@ -9,7 +9,7 @@
 //
 
 // HUE, 0-360
-var cpbh = 264;
+var cpbh = 195;
 
 // SATURATION, 0-100 (%)
 var cpbs = 28;
