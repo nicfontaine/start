@@ -39,7 +39,7 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 
 ### Sources
 ***Weather***   
-    
+
 - [simpleWeather.js](http://simpleweatherjs.com/)
 
 ***Scripts***
@@ -49,6 +49,8 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 ***Vis***
 
 - [FA Icons](http://fontawesome.io/get-started/)
+
+----
 
 ### To-Do
 - use other icons
