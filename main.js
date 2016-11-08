@@ -11,11 +11,15 @@
 // HUE, 0-360
 var cpbh = 195;
 
+// (NOTE TO-DO) LIGHT/DARK MODE
+// var cMode = 'dark';
+var cMode = 'light';
+
 // SATURATION, 0-100 (%)
 var cpbs = 28;
 
 // LIGHTNESS, 0-100 (%)
-// (NOTE) LOOKS KINDA SHITTY IF YOU CHANGE
+// (NOTE) PROB LEAVE AS-IS
 var cpbl = 64;
 
 //
@@ -70,6 +74,10 @@ var searchIconArray = [
 	'<i class="fa fa-linux" aria-hidden="true"></i>',
 	'<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
 ];
+
+// (NOTE TO-DO) CURSOR DISPLAY PREF
+// var cursorHide = false;
+var cursorHide = true;
 
 // WOEID FOR WEATHER
 // (NOTE) USING GEOLOCATION NOW TO AUTO-SET, JUST ACCEPT LOCATION DATA
