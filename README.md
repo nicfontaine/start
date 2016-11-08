@@ -20,7 +20,7 @@
 
 - I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever icons you prefer (you'll have to style them), or flip through there and grab whatever works.
 
-- Add or remove an search sites; just match up placeholder and url slug at the same index in the two array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
+- Add or remove any search sites; just match up placeholder and url slug at the same index in the two array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
 
 - Weather data (weather type and temp) is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please.
 
