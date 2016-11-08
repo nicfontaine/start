@@ -39,19 +39,25 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 
 ### Sources
 ***Weather***   
-- (to-do...)
+    
+- [simpleWeather.js](http://simpleweatherjs.com/)
 
 ***Scripts***
-- simpleWeather.js (url)
 
-- l2.io (url)
+- [l2.io](https://l2.io/) for IP Addr
 
-- FA Icons (url) (other srcs)
+***Vis***
+
+- [FA Icons](http://fontawesome.io/get-started/)
 
 ### To-Do
+- use other icons
+
 - refactor tile grid on window resize
 
-- var for cursor hide/show preferences
+- `var` for cursor hide/show preferences
+
+- `var` for light/dark mode
 
 - onclick swap for list of search icon dots
 
