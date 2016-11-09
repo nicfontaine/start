@@ -37,7 +37,6 @@ var searchPl = [
 	' > google maps',
 	' > youtube',
 	' > soundcloud',
-	' > reddit',
 	' > /r/',
 	' > stackoverflow',
 	' > aur',
@@ -53,12 +52,19 @@ var searchUrlArray = [
 	'https://www.google.com/maps/search/',
 	'https://www.youtube.com/results?search_query=',
 	'https://soundcloud.com/search?q=',
-	'https://www.reddit.com/search?q=',
 	'https://www.reddit.com/r/',
 	'https://stackoverflow.com/search?q=',
 	'https://aur.archlinux.org/packages/?O=0&K=',
 	'https://en.wikipedia.org/wiki/'
 ];
+
+// SOME EXTRA URL SLUGS
+// https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=
+// https://thepiratebay.org/search/
+// https://www.bing.com/search?q=
+// https://www.reddit.com/search?q=
+// https://www.etsy.com/search?q=
+
 
 // SET TO FALSE IF YOU'D RATHER JUST HAVE THE MAGNIFYING GLASS ICON
 var searchIconSwap = true;
@@ -70,7 +76,6 @@ var searchIconArray = [
 	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
 	'<i class="fa fa-youtube" aria-hidden="true"></i>',
 	'<i class="fa fa-soundcloud" aria-hidden="true"></i>',
-	'<i class="fa fa-reddit" aria-hidden="true"></i>',
 	'<i class="fa fa-reddit" aria-hidden="true"></i>',
 	'<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
 	'<i class="fa fa-linux" aria-hidden="true"></i>',
