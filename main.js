@@ -9,18 +9,20 @@
 //
 
 // HUE, 0-360
-var cpbh = 195;
+var cpbh = 200;
 
 // (NOTE TO-DO) LIGHT/DARK MODE
 // var cMode = 'dark';
 var cMode = 'light';
 
 // SATURATION, 0-100 (%)
-var cpbs = 28;
+// var cpbs = 28;
+var cpbs = 20;
 
 // LIGHTNESS, 0-100 (%)
 // (NOTE) PROB LEAVE AS-IS
-var cpbl = 64;
+// var cpbl = 64;
+var cpbl = 50;
 
 //
 // SEARCH OPTIONS
