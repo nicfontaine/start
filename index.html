@@ -5,6 +5,7 @@
   <title>Start Page</title>
   <link rel="stylesheet" href="main.css" />
   <meta charset="utf-8">
+  <meta name='theme-color' content='#333'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
 
   <link type='text/css' rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -15,11 +16,7 @@
 <body onclick='focusSearch();'>
 
   <nav>
-    <span id='date-d'></span>
-    <span id='ip'></span>
-    <span id='date-t'></span>
-    <span id='city'></span>
-    <span id='temp'></span>
+    <span id='date-d'></span><span id='ip'></span><span id='date-t'></span><span id='city'></span><span id='temp'></span>
   </nav>
 
   <div id='weather-bg'>
@@ -34,7 +31,7 @@
   <div class='container-main'>
 
   <div class='search-container'>
-
+  <div id='search-pre' class='search-pre-blinking'></div>
     <div id='input-search-icon'><i class="fa fa-search search-icon" aria-hidden="true"></i></div><input id='search-input' placeholder=''></input>
 
     <div class="section-no-dots"></div>
@@ -106,9 +103,9 @@
       <i class="fa fa-sun-o" aria-hidden="true"></i>
       <span>weather</span>
     </a></li>
-    <li><a href='https://nicfontaine.com' target='_blank'>
-      <i class="fa fa-globe" aria-hidden="true"></i>
-      <span>website</span>
+    <li><a href='https://www.dropbox.com/home' target='_blank'>
+      <i class="fa fa-dropbox" aria-hidden='true'></i>
+      <span>dropbox</span>
     </a></li>
     <li><a href='https://lastpass.com/' target='_blank'>
       <i class="fa fa-key" aria-hidden="true"></i>
@@ -122,7 +119,7 @@
       <i class="fa fa-university" aria-hidden="true"></i>
       <span>bank</span>
     </a></li>
-    
+
     <!-- <li><a href='#' target='_blank'>link</a></li>
     <li><a href='#' target='_blank'>link</a></li>
     <li><a href='#' target='_blank'>link</a></li>
