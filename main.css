@@ -163,12 +163,21 @@ iframe {
   /*letter-spacing: 2px;*/
 
   font-family: 'Jaldi', sans-serif;
-  letter-spacing: 1px;
+  /*font-family: 'Source Code Pro', monospace;*/
+  /*letter-spacing: 1px;*/
   font-size: 24px;
 
   /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
   color: transparent;
   text-shadow: 0px 0px 0 #fff;
+}
+
+::placeholder {
+  font-style: italic;
+}
+
+:-moz-placeholder {
+  font-style: italic;
 }
 
 @keyframes searchLoad {
