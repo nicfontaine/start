@@ -17,7 +17,7 @@ var cMode = 'light';
 
 // SATURATION, 0-100 (%)
 // var cpbs = 28;
-var cpbs = 20;
+var cpbs = 18;
 
 // LIGHTNESS, 0-100 (%)
 // (NOTE) PROB LEAVE AS-IS
@@ -30,19 +30,19 @@ var cpbl = 50;
 
 // PLACEHOLDER TITLES HERE
 // (NOTE) USE WHATEVER FORMAT YOU WANT HERE, DOESN'T MATTER
-// (NOTE) JUST LEAVE THE FIRST INDEX ' > url' , THAT'S SPECIAL
+// (NOTE) JUST LEAVE THE FIRST INDEX 'url' , THAT'S SPECIAL
 // (NOTE TO-DO) CHANGE LATER TO SEARCH FOR 'url' IN INDEX OR SOMETHING
 var searchPl = [
-	' > url',
-	' > duckduckgo',
-	' > google',
-	' > google maps',
-	' > youtube',
-	' > soundcloud',
-	' > /r/',
-	' > stackoverflow',
-	' > aur',
-	' > wikipedia'
+	'url',
+	'duckduckgo',
+	'google',
+	'google maps',
+	'youtube',
+	'soundcloud',
+	'/r/',
+	'stackoverflow',
+	'aur',
+	'wikipedia'
 ];
 
 // URL SLUGS HERE (THEY CORRESPOND TO TITLES ABOVE)
@@ -123,6 +123,7 @@ var searchInputDom = document.getElementById('search-input');
 var searchInputCall;
 var searchInputHolder;
 var searchNoRepeat = 0;
+var searchPreDom = document.getElementById('search-pre');
 
 // INIT INPUT PLACEHOLDER W/ FIRST SEARCH OF ARRAY
 searchInputDom.placeholder = searchPl[0];
@@ -151,8 +152,8 @@ var linkFocusOffTop;
 
 var cpMods = {
 	linkBgHue: cpbh*1.01,
-	linkBgSat: cpbs*1.12,
-	linkBgLight: cpbl*1.14,
+	linkBgSat: cpbs*1.14,
+	linkBgLight: cpbl*1.18,
 }
 
 // ASSIGN BODY BG COLOUR
@@ -371,7 +372,8 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 		else {
 			// linkFocus = linkFocus + rNum*rLength[0];
 			toggleTab = 'search';
-			searchInputDom.focus();
+			// searchInputDom.focus();
+			focusSearch();
 		}
 
   }
@@ -431,6 +433,8 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
 function focusLink() {
 
+	searchPreDom.className = '';
+
 	// FOCUS
   if (linkFocus >= 0 && linkFocus < linksNo) {
   	links[linkFocus].focus();
@@ -453,6 +457,7 @@ function focusLink() {
 
 function focusSearch() {
 	searchInputDom.focus();
+	searchPreDom.className = 'search-pre-blinking';
 }
 
 searchInputDom.addEventListener('keydown', function(e) {
