@@ -6,7 +6,7 @@ html {
 
 body {
   text-align: center;
-  padding: 20px;
+  /*padding: 20px;*/
   padding-right: 0;
   /*background: #9D8ABA;*/
 }
@@ -24,6 +24,7 @@ nav {
   font-size: 12px;
   font-family: 'Source Code Pro', monospace;
   font-weight: 600;
+  z-index: 10;
 }
 
 nav span {
@@ -87,12 +88,12 @@ nav span:last-child {
 }
 
 .container-main {
-  max-width: 550px;
+  max-width: 600px;
   margin: 0 auto;
   position: absolute;
   right: 0;
   left: 0;
-  top: 50%;
+  top: 53%;
   transform: translateY(-50%);
   text-align: center;
   opacity: 0;
@@ -118,20 +119,44 @@ iframe {
   margin-bottom: 40px;
 }
 
+#search-pre {
+  position: absolute;
+  top: 49%;
+  transform: translateY(-50%);
+  left: 82px;
+  color: #eee;
+  font-size: 30px;
+  opacity: 0.2;
+  width: 3px;
+  height: 45%;
+  background: #fff;
+}
+
+.search-pre-blinking {
+  animation: searchPreBlinking 0.8s infinite linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes searchPreBlinking {
+  0% { opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+
 #search-input {
   width: 22%;
   border: none;
   outline: 0;
   /*background: #A192B6;*/
   background: rgba(0,0,0,0.07);
-  padding: 17px;
+  padding: 11px;
   box-sizing: border-box;
   /*color: #BBB5C5;*/
   /*color: hsl(263,12%,74%);*/
   color: #ddd;
   font-size: 20px;
   letter-spacing: 1px;
-  padding-left: 57px;
+  padding-left: 87px;
   border-radius: 4px;
   animation: searchLoad 0.3s ease-in forwards 0.2s;
   /*font-weight: 700;*/
@@ -139,8 +164,11 @@ iframe {
 
   font-family: 'Jaldi', sans-serif;
   letter-spacing: 1px;
-  font-size: 24px
+  font-size: 24px;
 
+  /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
+  color: transparent;
+  text-shadow: 0px 0px 0 #fff;
 }
 
 @keyframes searchLoad {
@@ -151,16 +179,16 @@ iframe {
 #search-input:focus {
   box-shadow: inset 0 -1px 7px rgba(0,0,0,0.01);
   border-bottom: 2px solid rgba(0,0,0,0.15);
-  padding-bottom: 15px;
+  padding-bottom: 9px;
   /*background: #9B8DB0;*/
   background: rgba(0,0,0,0.1);
 }
 
 #input-search-icon {
   position: absolute;
-  left: 23px;
+  left: 37px;
   transform: translateY(-50%);
-  top: 50%;
+  top: 51%;
   opacity: 0.18;
   filter: none;
   z-index: 10;
@@ -199,8 +227,8 @@ ul li {
   flex: 1;
   padding: 10px;
   justify-content: space-between;
-  flex-basis: 110px;
-  height: 110px;
+  flex-basis: 100px;
+  height: 100px;
 }
 
 ul li a {
@@ -343,7 +371,7 @@ ul li a:focus:after {
 @media (max-height: 700px) {
 
   ul li {
-    height: 90px;
+    height: 100px;
     flex-basis: 90px;
   }
 
@@ -357,4 +385,24 @@ ul li a:focus:after {
   }
 
 
+}
+
+@media (max-width: 500px) {
+
+  .search-container, #date-t, #date-d {
+    display: none;
+  }
+
+  nav { background: #333; }
+  nav span { padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
+
+  .container-main {
+    position: relative;
+    transform: none;
+    padding-top: 13px;
+  }
+
+  #weather-bg {
+    position: fixed;
+  }
 }
