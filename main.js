@@ -460,6 +460,10 @@ function focusSearch() {
 	searchPreDom.className = 'search-pre-blinking';
 }
 
+var cursorMoveEnable = false;
+var searchPreMoveDst = 103;
+var searchPreMoveInc = 0;
+
 searchInputDom.addEventListener('keydown', function(e) {
 
 	searchInputCall = searchInputDom.value.toLowerCase();
@@ -517,7 +521,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 	}
 
-	//KEY RIGHT
+	// KEY RIGHT
 	if (e.keyCode == '39') {
 		e.preventDefault();
 
@@ -525,12 +529,46 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 	}
 
-	// KEY BACKSPACE
-	// if (e.keyCode == '8') {
-	// 	e.preventDefault();
-	// 	// JUST CLEAR IT ALL TO KEEP SIMPLE & QUICK
-	// 	clearSearch();
-	// }
+	if (cursorMoveEnable) {
+		// NOT BACKSPACE, CTRL, SHFT, ALT, TAB
+		if (e.keyCode === '8' || e.keyCode == '17' || e.keyCode === '16' || e.keyCode === '18' ||  e.keyCode === '91') {
+			console.log('null key');
+		}
+
+		else {
+
+			console.log('typing key, add');
+			searchPreMoveInc++;
+			searchPreMoveDst += 15;
+			searchPreDom.style.left = searchPreMoveDst + 'px';
+
+		}
+
+		// KEY BACKSPACE
+		if (e.keyCode == '8') {
+
+			console.log('backspace key');
+
+			searchPreMoveInc--;
+
+			// JUMP WHEN GET BACK TO 0
+			if (searchPreMoveInc === 1) {
+				searchPreDom.style.left = '82px';
+			}
+			else if (searchPreMoveInc < 0) {
+				searchPreMoveInc = 0;
+				searchPreMoveDst = '0';
+			}
+			else {
+				searchPreMoveDst -= 30;
+				searchPreDom.style.left = searchPreMoveDst + 'px';
+			}
+
+			console.log(searchPreMoveInc + ' searchPreMoveInc');
+
+		}
+
+	}
 
 	// KEY UP
 	if (e.keyCode == '38') {
