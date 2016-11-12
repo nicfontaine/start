@@ -662,6 +662,8 @@ for (i=0; i<searchPl.length; i++) {
 	var clnDot = itmDot.cloneNode(true);
 
 	clnDot.innerHTML = searchIconArray[i];
+	// ASSIGN ONCLICK, SWAP FUNCTION
+	clnDot.onclick = searchIconClickSwap;
 	dotSectionDomArray[0].appendChild(clnDot);
 }
 
@@ -680,6 +682,10 @@ function dotChange() {
 	noDotEachDom[searchPlInc].classList.add('no-dot-sel');
 }
 
+function searchIconClickSwap() {
+	console.log('searchIconClickSwap();');
+}
+
 //
 // WEATHER
 //
@@ -689,6 +695,7 @@ var weatherImgArray = weatherBgDom.getElementsByTagName('div');
 var weatherImgNo = weatherImgArray.length;
 var weatherCurrent;
 var weatherTemp;
+var navTop = document.getElementById('nav-weather');
 var navTempDom = document.getElementById('temp');
 var navCityDom = document.getElementById('city');
 var weatherCity;
@@ -805,6 +812,7 @@ function weatherSwap(e,t) {
 	}
 
 	// ASSIGN
+	navTop.className = 'show';
 	document.getElementById(img).className = 'show';
 	navTempDom.innerHTML = t + '&deg; F';
 
