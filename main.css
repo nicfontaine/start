@@ -26,6 +26,12 @@ nav {
   font-family: 'Source Code Pro', monospace;
   font-weight: 600;
   z-index: 10;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+#nav-weather.show {
+  opacity: 1;
 }
 
 nav span {
@@ -406,7 +412,10 @@ ul li a:focus:after {
     height: 100vh;
   }
 
-  .search-container, #date-t, #date-d {
+  .search-container {
+  }
+
+  #date-t, #date-d {
     display: none;
   }
 
@@ -415,6 +424,7 @@ ul li a:focus:after {
     position: absolute;
     right: 0; left: 0; top: 0;
     font-family: 'Jaldi', sans-serif;
+    letter-spacing: 1px;
   }
   nav span { padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
 
@@ -425,7 +435,8 @@ ul li a:focus:after {
 
     overflow-y: scroll;
     transform: none;
-    padding-top: 20px;
+    padding: 0 10px;
+    padding-top: 55px;
   }
 
   #weather-bg {
@@ -448,4 +459,11 @@ ul li a:focus:after {
   ul li a span {
     color: rgba(0,0,0,0.28);
   }
+
+  .no-dot {
+    padding: 3px 4px;
+    margin: 0 3px;
+    cursor: pointer;
+  }
+
 }
