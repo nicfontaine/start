@@ -123,7 +123,7 @@ var searchInputDom = document.getElementById('search-input');
 var searchInputCall;
 var searchInputHolder;
 var searchNoRepeat = 0;
-var searchPreDom = document.getElementById('search-pre');
+// var searchPreDom = document.getElementById('search-pre');
 
 // INIT INPUT PLACEHOLDER W/ FIRST SEARCH OF ARRAY
 searchInputDom.placeholder = searchPl[0];
@@ -406,24 +406,6 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 		e.preventDefault();
 	}
 
-	// KEY TAB
-	// (NOTE) NOW THAT WE HAVE UP/DOWN BTW LINKS & SEARCH, DO WE NEED TAB?
-	// if (e.keyCode == 9) {
-	//
-	// 	// TOGGLE IN ACTION, CHECK IF WE WERE AT LINKS
-	// 	if(toggleTab === 'links') {
-	// 		e.preventDefault();
-	// 		toggleTab = 'search';
-	// 		searchInputDom.focus();
-	// 	}
-	// 	// NOT, WE'RE AT SEARCH. FOCUS FIRST LINK
-	// 	else {
-	// 		links[0].focus();
-	// 		toggleTab = 'links';
-	// 	}
-	//
-	// }
-
 });
 
 
@@ -433,7 +415,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
 function focusLink() {
 
-	searchPreDom.className = '';
+	// searchPreDom.className = '';
 
 	// FOCUS
   if (linkFocus >= 0 && linkFocus < linksNo) {
@@ -457,23 +439,95 @@ function focusLink() {
 
 function focusSearch() {
 	searchInputDom.focus();
-	searchPreDom.className = 'search-pre-blinking';
+	// searchPreDom.className = 'search-pre-blinking';
 }
 
 var cursorMoveEnable = false;
 var searchPreMoveDst = 103;
 var searchPreMoveInc = 0;
 
+var inputFake = document.getElementById('input-fake');
+var rejectArray = ['16', '18', '8', '17', '37', '38', '40', '39'];
+var keyCtrlDown = false;
+
+searchInputDom.addEventListener('keyup', function(e) {
+  if (e.keyCode === 17) {
+    keyCtrlDown = false;
+  }
+});
+
+// CTRL + BACKSPACE
 searchInputDom.addEventListener('keydown', function(e) {
 
 	searchInputCall = searchInputDom.value.toLowerCase();
+	keyCtrlDown;
+	// CTRL
+	if (e.which === 17) {
+		keyCtrlDown = true;
+	}
+
+	// CTRL KEY IS DOWN, WAIT FOR COMBO TO TRIGGER
+	if (keyCtrlDown) {
+
+		// BACKSPACE
+		if (e.which === 8) {
+			console.log('backspace');
+			// p = p.replace(/&nbsp;/g, ' ');
+			p = p.replace(/\s\s+/g, ' ');
+			l = p.lastIndexOf(' ');
+			p = p.substring(0,l);
+			inputFake.innerHTML = p;
+		}
+
+		// (NOTE) NEED TO TAKE CARE OF CTRL+A
+		// KEY A
+		// else if (e.which === 65) {
+		// 	clearSearch();
+		// 	inputFake.innerHTML = '';
+		// }
+
+	}
+
+});
+
+searchInputDom.addEventListener('keypress', function(e) {
+
+	// CACHE VALUE OF SPAN
+	p = inputFake.innerHTML;
+	// IF NOT IN ARRAY
+	if (rejectArray.indexOf(e.keyCode.toString()) < 0) {
+
+		// SPACE
+		if (e.keyCode === 32) {
+			// p = p + '&nbsp;';
+			p = p + ' ';
+			inputFake.innerHTML = p;
+		}
+		else {
+			k = e.which;
+			// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
+			inputFake.innerHTML = p + String.fromCharCode(k).toLowerCase();
+			// inputFake.innerHTML = p + keyboardMap[e.keyCode].toLowerCase();
+		}
+
+	}
+
+	// BACKSPACE
+	else if (e.keyCode === 8) {
+		inputFake.innerHTML = p.substring(0,p.length-1);
+	}
+
 
 	// KEY ENTER
 	if (e.keyCode == '13' && searchInputCall !== '') {
 		console.log('var searchInputCall = ' + searchInputCall);
 		// IF NOT FIRST INDEX - URL SEARCH
 		if (searchPlInc > 0) {
-			window.open(searchUrlArray[searchPlInc] + searchInputCall);
+			// window.open(searchUrlArray[searchPlInc] + searchInputCall);
+			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
+			// q = searchInputCall.replace(/&nbsp;/g, ' ');
+			q = searchInputCall.replace(/\s\s+/g, ' ');
+			window.open(searchUrlArray[searchPlInc] + q);
 		}
 		// JUST SEARCH INPUT AS FULL URL
 		else {
@@ -487,6 +541,8 @@ searchInputDom.addEventListener('keydown', function(e) {
 			}
 
 		}
+
+		inputFake.innerHTML = '';
 
 		searchInputDom.value = '';
 
@@ -529,53 +585,13 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 	}
 
-	if (cursorMoveEnable) {
-		// NOT BACKSPACE, CTRL, SHFT, ALT, TAB
-		if (e.keyCode === '8' || e.keyCode == '17' || e.keyCode === '16' || e.keyCode === '18' ||  e.keyCode === '91') {
-			console.log('null key');
-		}
-
-		else {
-
-			console.log('typing key, add');
-			searchPreMoveInc++;
-			searchPreMoveDst += 15;
-			searchPreDom.style.left = searchPreMoveDst + 'px';
-
-		}
-
-		// KEY BACKSPACE
-		if (e.keyCode == '8') {
-
-			console.log('backspace key');
-
-			searchPreMoveInc--;
-
-			// JUMP WHEN GET BACK TO 0
-			if (searchPreMoveInc === 1) {
-				searchPreDom.style.left = '82px';
-			}
-			else if (searchPreMoveInc < 0) {
-				searchPreMoveInc = 0;
-				searchPreMoveDst = '0';
-			}
-			else {
-				searchPreMoveDst -= 30;
-				searchPreDom.style.left = searchPreMoveDst + 'px';
-			}
-
-			console.log(searchPreMoveInc + ' searchPreMoveInc');
-
-		}
-
-	}
-
 	// KEY UP
 	if (e.keyCode == '38') {
 		searchNoRepeat++;
 		// UNTIL WE'VE GONE THROUGH ALL LOGGED SEARCHES
 		if (typeof searchLogged[searchNoTimes-searchNoRepeat] !== 'undefined') {
 			searchInputDom.value = searchLogged[searchNoTimes-searchNoRepeat];
+			inputFake.innerHTML = searchLogged[searchNoTimes-searchNoRepeat];
 		}
 		// CLEAR INPUT, & RESET LOG CALL INC - ALLOWS LOOPING THROUGH CALLS
 		else {
@@ -588,6 +604,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 function clearSearch() {
 	// RESET SEARCH INPUT
 	searchInputDom.value = '';
+	inputFake.innerHTML = '';
 	// RESET NO OF CONSECUTIVE SEARCH LOG CALLS
 	searchNoRepeat = 0;
 }
@@ -624,12 +641,14 @@ function searchSwitch(dir) {
 	inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
 
 	// SWAP PLACEHOLDER
+	// (NOTE) NEED TO FIX PLACEHOLDER W/ NEW inputFake
 	searchInputDom.placeholder = searchPl[searchPlInc];
 
 	// REC PREV SEARCH INPUT
 	searchInputHolder = searchInputCall;
 	dotChange();
 
+	// (NOTE) DOESN'T TRIGGER IF MOVE MULTIPLE L/R QUICKLY
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
 		// DON'T RESET W/ DELAY IF INPUT VALUE IS BLANK
@@ -644,6 +663,7 @@ function searchSwitch(dir) {
 			// THERE WAS A VALUE, REASSIGN IT
 			else {
 				searchInputDom.value = searchInputHolder;
+				inputFake.innerHTML = searchInputHolder;
 			}
 
 		}
@@ -780,7 +800,7 @@ function loadWeather(location, woeid) {
 function weatherSwap(e,t) {
 	img = '';
 
-	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear') {
+	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear' || e === 'Partly Cloudy') {
 		img = 'weather-sunny';
 	}
 	else if (e === 'Rain') {
@@ -789,7 +809,7 @@ function weatherSwap(e,t) {
 	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
 		img = 'weather-showers';
 	}
-	else if (e === 'Partly Cloudy' || e === 'Mostly Cloudy' || e === 'Cloudy') {
+	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
 		img = 'weather-cloudy';
 	}
 	else if (e === 'Snow' || e === 'Rain and Snow') {
