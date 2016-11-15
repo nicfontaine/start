@@ -172,11 +172,14 @@ iframe {
   /*font-family: 'Source Code Pro', monospace;*/
   /*letter-spacing: 1px;*/
   font-size: 24px;
-
-  /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
   color: transparent;
+  text-shadow: 0px 0px 0 rgba(255,255,255,0.3);
+}
 
-  /*text-shadow: 0px 0px 0 #fff;*/
+.search-hide {
+  /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
+  /*color: transparent !important;*/
+  text-shadow: none !important;
 }
 
 #input-fake {
@@ -190,7 +193,7 @@ iframe {
   font-family: 'Jaldi', sans-serif;
   color: #ddd;
   position: absolute;
-  left: 85px;
+  left: 82px;
   height: 100%;
   box-sizing: border-box;
 }

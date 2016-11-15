@@ -471,8 +471,10 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 		// BACKSPACE
 		if (e.which === 8) {
-			console.log('backspace');
+			console.log('ctrl + backspace');
 			// p = p.replace(/&nbsp;/g, ' ');
+			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
+			// (NOTE) WHY IS var p AVAILABLE HERE?
 			p = p.replace(/\s\s+/g, ' ');
 			l = p.lastIndexOf(' ');
 			p = p.substring(0,l);
@@ -491,6 +493,9 @@ searchInputDom.addEventListener('keydown', function(e) {
 });
 
 searchInputDom.addEventListener('keypress', function(e) {
+
+	// HIDE PLACEHOLDER WHEN TYPING
+	searchInputDom.classList.add('search-hide');
 
 	// CACHE VALUE OF SPAN
 	p = inputFake.innerHTML;
@@ -515,6 +520,10 @@ searchInputDom.addEventListener('keypress', function(e) {
 	// BACKSPACE
 	else if (e.keyCode === 8) {
 		inputFake.innerHTML = p.substring(0,p.length-1);
+		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
+		if (p.length <= 1) {
+			searchInputDom.classList.remove('search-hide');
+		}
 	}
 
 
@@ -641,8 +650,9 @@ function searchSwitch(dir) {
 	inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
 
 	// SWAP PLACEHOLDER
-	// (NOTE) NEED TO FIX PLACEHOLDER W/ NEW inputFake
 	searchInputDom.placeholder = searchPl[searchPlInc];
+	// SHOW PLACEHOLDER
+	searchInputDom.classList.remove('search-hide');
 
 	// REC PREV SEARCH INPUT
 	searchInputHolder = searchInputCall;
@@ -664,6 +674,8 @@ function searchSwitch(dir) {
 			else {
 				searchInputDom.value = searchInputHolder;
 				inputFake.innerHTML = searchInputHolder;
+				// HIDE PLACEHOLDER
+				searchInputDom.classList.add('search-hide');
 			}
 
 		}
