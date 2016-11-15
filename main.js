@@ -695,7 +695,8 @@ for (i=0; i<searchPl.length; i++) {
 
 	clnDot.innerHTML = searchIconArray[i];
 	// ASSIGN ONCLICK, SWAP FUNCTION
-	clnDot.onclick = searchIconClickSwap;
+	// (NOTE) DON'T NEED W/ NEW CALLBACK
+	// clnDot.onclick = searchIconClickSwap;
 	dotSectionDomArray[0].appendChild(clnDot);
 }
 
@@ -714,9 +715,21 @@ function dotChange() {
 	noDotEachDom[searchPlInc].classList.add('no-dot-sel');
 }
 
-function searchIconClickSwap() {
-	console.log('searchIconClickSwap();');
+var dotChildren = document.getElementsByClassName('section-no-dots')[0].children;
+var lDotChildren = dotChildren.length;
+
+// CALLBACK FOR DOT CLICKING
+for (var i=0; i<lDotChildren; i++) {
+	(function(index){
+		dotChildren[i].onclick = function() {
+			console.log(index + ' index was clicked');
+		}
+	})(i);
 }
+
+// function searchIconClickSwap() {
+// 	console.log('searchIconClickSwap();');
+// }
 
 //
 // WEATHER
