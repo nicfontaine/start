@@ -207,6 +207,7 @@ iframe {
   left: 82px;
   height: 100%;
   box-sizing: border-box;
+  top: 0;
 }
 
 #input-fake:after {
