@@ -174,6 +174,7 @@ function colourConstructor (h,s,l) {
 // DATE
 var navDateDom = document.getElementById('date-d');
 var navTimeDom = document.getElementById('date-t');
+var timeLargeDom = document.getElementById('time-large');
 
 var dateD = new Date();
 navDateDom.innerHTML = dateD.toDateString();
@@ -195,6 +196,7 @@ function clock() {
 		dateS = '0' + dateS.toString();
 	}
 	navTimeDom.innerHTML = dateH + ':' + dateM + ':' + dateS;
+	timeLargeDom.innerHTML = dateH + ':' + dateM;
 
 	setTimeout(clock,1000);
 
@@ -374,6 +376,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 			toggleTab = 'search';
 			// searchInputDom.focus();
 			focusSearch();
+			searchInputDom.classList.remove('search-hide');
 		}
 
   }
@@ -479,6 +482,10 @@ searchInputDom.addEventListener('keydown', function(e) {
 			l = p.lastIndexOf(' ');
 			p = p.substring(0,l);
 			inputFake.innerHTML = p;
+		}
+		// DISABLE COMBO'S LIKE CTRL+A
+		else {
+			e.preventDefault();
 		}
 
 		// (NOTE) NEED TO TAKE CARE OF CTRL+A
@@ -723,6 +730,21 @@ for (var i=0; i<lDotChildren; i++) {
 	(function(index){
 		dotChildren[i].onclick = function() {
 			console.log(index + ' index was clicked');
+			// DISABLE THE UN-FOCUS FLASH ON CLICK PRESS
+			focusSearch();
+			// RE-ASSIGN INCREMENTAL PLACEHOLDER VAR
+			searchPlInc = index;
+
+			inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
+			// SWAP PLACEHOLDER
+			searchInputDom.placeholder = searchPl[searchPlInc];
+			// SHOW PLACEHOLDER
+			searchInputDom.classList.remove('search-hide');
+			// REMOVE SEL CLASS FROM ALL
+			for (i=0; i<noDotEachDom.length; i++) {
+				noDotEachDom[i].className = 'no-dot';
+			}
+			noDotEachDom[searchPlInc].classList.add('no-dot-sel');
 		}
 	})(i);
 }
