@@ -3,14 +3,51 @@
 
 <head>
   <title>Start Page</title>
-  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="main.min.css" />
   <meta charset="utf-8">
   <meta name='theme-color' content='#333'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-  <link type='text/css' rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Jaldi:400,700" rel="stylesheet">
+  <!-- <link type='text/css' rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600" rel="stylesheet"> -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Jaldi:400,700" rel="stylesheet"> -->
+
+  <script>
+    var cb = function() {
+    var l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';
+    var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+    webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cb);
+    else window.addEventListener('load', cb);
+  </script>
+
+  <script>
+    var cc = function() {
+    var l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600';
+    var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+    webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cc);
+    else window.addEventListener('load', cc);
+  </script>
+
+  <script>
+    var cd = function() {
+    var l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css?family=Jaldi:400,700';
+    var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+    webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cd);
+    else window.addEventListener('load', cd);
+  </script>
+
 </head>
 
 <body onclick='focusSearch();'>
@@ -90,10 +127,22 @@
       <i class="fa fa-file-code-o"></i>
       <span>pastebin</span>
     </a></li>
-    <li><a href='http://10fastfingers.com/typing-test/english' target='_blank'>
+    <li><a href='http://htmlcompressor.com/compressor/' target='_blank'>
+      <i class="fa fa-html5"></i>
+      <span>compressor</span>
+    </a></li>
+    <li><a href='https://cssminifier.com/' target='_blank'>
+      <i class="fa fa-css3"></i>
+      <span>css minifier</span>
+    </a></li>
+    <li><a href='https://jscompress.com/' target='_blank'>
+      <i class="fa fa-code"></i>
+      <span>js compress</span>
+    </a></li>
+    <!-- <li><a href='http://10fastfingers.com/typing-test/english' target='_blank'>
       <i class="fa fa-keyboard-o" aria-hidden="true"></i>
       <span>10 ff</span>
-    </a></li>
+    </a></li> -->
     <li><a href='https://hangouts.google.com' target='_blank'>
       <i class="fa fa-quote-right" aria-hidden="true"></i>
       <span>hangouts</span>
@@ -110,18 +159,18 @@
       <i class="fa fa-dropbox" aria-hidden='true'></i>
       <span>dropbox</span>
     </a></li>
-    <li><a href='https://lastpass.com/' target='_blank'>
+    <!-- <li><a href='https://lastpass.com/' target='_blank'>
       <i class="fa fa-key" aria-hidden="true"></i>
       <span>lastpass</span>
-    </a></li>
+    </a></li> -->
     <li><a href='https://everhelper.me/client/' target='_blank'>
       <i class="fa fa-bookmark-o" aria-hidden="true"></i>
       <span>everhelper</span>
     </a></li>
-    <li><a href='https://www.wellsfargo.com/' target='_blank'>
+    <!-- <li><a href='https://www.wellsfargo.com/' target='_blank'>
       <i class="fa fa-university" aria-hidden="true"></i>
       <span>bank</span>
-    </a></li>
+    </a></li> -->
 
     <!-- <li><a href='#' target='_blank'>link</a></li>
     <li><a href='#' target='_blank'>link</a></li>
@@ -151,6 +200,6 @@
 
 </body>
 
-<script src="main.js"></script>
+<script src="main.min.js"></script>
 
 </html>
