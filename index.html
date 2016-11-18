@@ -3,7 +3,7 @@
 
 <head>
   <title>Start Page</title>
-  <link rel="stylesheet" href="main.min.css" />
+  <link rel="stylesheet" href="./main.min.css" />
   <meta charset="utf-8">
   <meta name='theme-color' content='#333'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -14,9 +14,19 @@
 
   <script>
     var cb = function() {
-    var l = document.createElement('link'); l.rel = 'stylesheet';
-    l.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';
-    var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+    var l01 = document.createElement('link');
+    l01.rel = 'stylesheet';
+    l01.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';
+    var l02 = document.createElement('link');
+    l02.rel = 'stylesheet';
+    l02.href = 'https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600';
+    var l03 = document.createElement('link');
+    l03.rel = 'stylesheet';
+    l03.href = 'https://fonts.googleapis.com/css?family=Jaldi:400,700';
+
+    var h = document.getElementsByTagName('head')[0];
+    // h.parentNode.insertBefore(l, h);
+    h.appendChild(l01);h.appendChild(l02);h.appendChild(l03);
     };
     var raf = requestAnimationFrame || mozRequestAnimationFrame ||
     webkitRequestAnimationFrame || msRequestAnimationFrame;
@@ -24,7 +34,7 @@
     else window.addEventListener('load', cb);
   </script>
 
-  <script>
+<!--   <script>
     var cc = function() {
     var l = document.createElement('link'); l.rel = 'stylesheet';
     l.href = 'https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600';
@@ -47,7 +57,7 @@
     if (raf) raf(cd);
     else window.addEventListener('load', cd);
   </script>
-
+ -->
 </head>
 
 <body onclick='focusSearch();'>
@@ -57,12 +67,12 @@
   </nav>
 
   <div id='weather-bg'>
-    <div id='weather-sunny'></div>
-    <div id='weather-rain'></div>
-    <div id='weather-showers'></div>
-    <div id='weather-cloudy'></div>
-    <div id='weather-windy'></div>
-    <div id='weather-snow'></div>
+    <div id=''></div>
+    <div id=''></div>
+    <div id=''></div>
+    <div id=''></div>
+    <div id=''></div>
+    <div id=''></div>
   </div>
 
   <div class='container-main'>
@@ -200,6 +210,6 @@
 
 </body>
 
-<script src="main.js"></script>
+<script src="main.min.js"></script>
 
 </html>
