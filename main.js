@@ -473,6 +473,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 		// SPACE
 	if (e.keyCode === 32) {
 		// p = p + '&nbsp;';
+		e.preventDefault();
 		p = inputFake.innerHTML;
 		p = p + '\xa0';
 		inputFake.innerHTML = p;
@@ -486,9 +487,9 @@ searchInputDom.addEventListener('keydown', function(e) {
 			console.log('ctrl + backspace');
 			// IF NOT DISABLED, TAKES AN ADDITIONAL LETTER OFF THE END xD
 			e.preventDefault();
-			// p = p.replace(/&nbsp;/g, ' ');
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-			p = p.replace(/\s\s+/g, ' ');
+			p = p.replace(/&nbsp;/g, ' ');
+			// p = p.replace(/\s\s+/g, ' ');
 			l = p.lastIndexOf(' ');
 
 			// IF STRING ENDS IN ' ' REMOVE IT BEFORE REMOVING LAST WORD
@@ -688,7 +689,8 @@ function searchSwitch(dir) {
 	searchInputDom.classList.remove('search-hide');
 
 	// REC PREV SEARCH INPUT
-	searchInputHolder = searchInputCall;
+	// searchInputHolder = searchInputCall;
+	searchInputHolder = inputFake.innerHTML;
 	dotChange();
 
 	// (NOTE) DOESN'T TRIGGER IF MOVE MULTIPLE L/R QUICKLY
