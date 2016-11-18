@@ -103,7 +103,7 @@ document.addEventListener('mousemove', function() {
 	if (!cursorToggleShow) {
 		cursorToggleShow = true;
   	document.getElementsByTagName('html')[0].style.cursor = 'auto';
-		console.log('showing cursor');
+		// console.log('showing cursor');
 	}
 	else {
 		// DISABLE IF MOUSE IS STILL MOVING
@@ -112,10 +112,9 @@ document.addEventListener('mousemove', function() {
 		// HIDE AFTER DELAY, & ALLOW SHOW BY SETTING TOGGLE TO FALSE
 		cursorTimer = setTimeout(function() {
 			document.getElementsByTagName('html')[0].style.cursor = 'none';
-			console.log('hiding cursor');
+			// console.log('hiding cursor');
 			cursorToggleShow = false;
-		}, 250);
-
+		}, 300);
 	}
 });
 
@@ -455,6 +454,7 @@ var rejectArray = ['16', '18', '8', '17'];
 var keyCtrlDown = false;
 
 searchInputDom.addEventListener('keyup', function(e) {
+	// CTRL
   if (e.keyCode === 17) {
     keyCtrlDown = false;
   }
@@ -470,31 +470,49 @@ searchInputDom.addEventListener('keydown', function(e) {
 		keyCtrlDown = true;
 	}
 
+		// SPACE
+	if (e.keyCode === 32) {
+		// p = p + '&nbsp;';
+		p = inputFake.innerHTML;
+		p = p + '\xa0';
+		inputFake.innerHTML = p;
+	}
+
 	// CTRL KEY IS DOWN, WAIT FOR COMBO TO TRIGGER
 	if (keyCtrlDown) {
 
 		// BACKSPACE
 		if (e.which === 8) {
 			console.log('ctrl + backspace');
+			// IF NOT DISABLED, TAKES AN ADDITIONAL LETTER OFF THE END xD
+			e.preventDefault();
 			// p = p.replace(/&nbsp;/g, ' ');
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-			// (NOTE) WHY IS var p AVAILABLE HERE?
 			p = p.replace(/\s\s+/g, ' ');
 			l = p.lastIndexOf(' ');
-			p = p.substring(0,l);
-			inputFake.innerHTML = p;
-		}
-		// DISABLE COMBO'S LIKE CTRL+A
-		// else {
-		// 	e.preventDefault();
-		// }
 
-		// (NOTE) NEED TO TAKE CARE OF CTRL+A
+			// IF STRING ENDS IN ' ' REMOVE IT BEFORE REMOVING LAST WORD
+			if (l === p.length-1) {
+				p = p.substring(0,p.length-2);
+				// RE LOG
+				l = p.lastIndexOf(' ');
+			}
+			// SET p W/O LAST WORD
+			p = p.substring(0,l);				
+			// SPACE IS BEING REMOVED FOR SOME REASON, ADD IT BACK
+			if (p.length > 0) {
+				p+=' ';
+			}
+			inputFake.innerHTML = p;
+
+		}
+
 		// KEY A
-		// else if (e.which === 65) {
-		// 	clearSearch();
-		// 	inputFake.innerHTML = '';
-		// }
+		if (e.which === 65) {
+			// DISABLE ANNOYING CTRL+A HIGHLIGHT
+			e.preventDefault();
+			console.log('key a');
+		}
 
 	}
 
@@ -505,25 +523,27 @@ searchInputDom.addEventListener('keypress', function(e) {
 	// HIDE PLACEHOLDER WHEN TYPING
 	searchInputDom.classList.add('search-hide');
 
-	console.log(e.charCode + ' e.keyCode');
-
 	// CACHE VALUE OF SPAN
 	p = inputFake.innerHTML;
+
 	// IF NOT IN ARRAY
 	if (rejectArray.indexOf(e.keyCode.toString()) < 0) {
 
 		// SPACE
-		if (e.keyCode === 32) {
-			// p = p + '&nbsp;';
-			p = p + ' ';
-			inputFake.innerHTML = p;
-		}
-		else {
+		// if (e.keyCode === 32) {
+		// 	// p = p + '&nbsp;';
+		// 	p = p + '\xa0';
+		// 	inputFake.innerHTML = p;
+		// }
+		// else {
 			k = e.which;
 			// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
 			inputFake.innerHTML = p + String.fromCharCode(k).toLowerCase();
+			// UPDATE W/ LAST ADDED LETTER
+			p = inputFake.innerHTML;
+			// console.log(p);
 			// inputFake.innerHTML = p + keyboardMap[e.keyCode].toLowerCase();
-		}
+		// }
 
 	}
 
@@ -692,7 +712,7 @@ function searchSwitch(dir) {
 			}
 
 		}
-	},500);
+	},200);
 
 	clearSearch();
 
@@ -773,26 +793,17 @@ var navTempDom = document.getElementById('temp');
 var navCityDom = document.getElementById('city');
 var weatherCity;
 
-// $(document).ready(function() {
-// 	function getWeather() {
-// 		$.simpleWeather({
-// 			woeid: myWoeid,
-// 			unit: 'f',
-// 			success: function(weather) {
-// 				weatherCurrent = weather.currently;
-// 				weatherTemp = weather.temp;
-// 				console.log('getWeather(); ' + 'weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
-// 				weatherSwap(weatherCurrent,weatherTemp);
-// 			}
-// 		});
-//
-// 		// REFRESH EVERY 20 SEC
-// 		setTimeout(getWeather,20000);
-//
-// 	}
-// 	// INIT
-// 	getWeather();
-// });
+// LAZY LOAD WEATHER IMGS
+var weatherImgNameArray = ['sunny','rain','showers','cloudy','windy','snow'];
+var weatherImgNameArrayLength = weatherImgNameArray.length;
+
+// window.onload = function() {
+function weatherImgLazy() {
+	for (var i=0; i<weatherImgNameArrayLength; i++) {
+		weatherImgArray[i].id = 'weather-' + weatherImgNameArray[i];
+	}	
+}
+// };
 
 /* Where in the world are you? */
 $(document).ready(function() {
@@ -817,7 +828,11 @@ function loadWeather(location, woeid) {
 					console.clear();
 					console.log('geo coords: ' + location);
 					console.log('weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
-					weatherSwap(weatherCurrent,weatherTemp);
+
+					// LAZY LOAD WEATHER IMGS WHEN DATA IS PULLED
+					weatherImgLazy();
+
+					weatherSwap(weatherCurrent,weatherTemp);						
 					// Sunny
 					// Partly Cloudy
 					// Mostly Cloudy
