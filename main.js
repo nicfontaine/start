@@ -470,12 +470,15 @@ searchInputDom.addEventListener('keydown', function(e) {
 		keyCtrlDown = true;
 	}
 
-		// SPACE
+	// SPACE
 	if (e.keyCode === 32) {
 		// p = p + '&nbsp;';
 		e.preventDefault();
 		p = inputFake.innerHTML;
-		p = p + '\xa0';
+		// p = p + '\xa0';
+		// p+= '\x20';
+		p += String.fromCharCode(160);
+		// p = p + ' ';
 		inputFake.innerHTML = p;
 	}
 
@@ -505,6 +508,12 @@ searchInputDom.addEventListener('keydown', function(e) {
 				p+=' ';
 			}
 			inputFake.innerHTML = p;
+
+			// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
+			if (p.length < 1) {
+				clearSearch();
+				searchInputDom.classList.remove('search-hide');
+			}
 
 		}
 
@@ -550,9 +559,13 @@ searchInputDom.addEventListener('keypress', function(e) {
 
 	// BACKSPACE
 	else if (e.keyCode === 8) {
-		inputFake.innerHTML = p.substring(0,p.length-1);
+		// CONVERT ALL BREAKING SPACE ENTITIES BACK TO SPACE CHARS
+		// OTHERWISE, WE DELETE THE SEMICOLON & IT ALL FUCKS UP
+		p = p.replace(/&nbsp;/g, '\xa0');
+		p = p.substring(0,p.length-1);
+		inputFake.innerHTML = p;
 		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
-		if (p.length <= 1) {
+		if (p.length < 1) {
 			searchInputDom.classList.remove('search-hide');
 		}
 	}
@@ -560,13 +573,14 @@ searchInputDom.addEventListener('keypress', function(e) {
 
 	// KEY ENTER
 	if (e.keyCode == '13' && searchInputCall !== '') {
-		console.log('var searchInputCall = ' + searchInputCall);
+		// console.log('var searchInputCall = ' + searchInputCall);
 		// IF NOT FIRST INDEX - URL SEARCH
 		if (searchPlInc > 0) {
 			// window.open(searchUrlArray[searchPlInc] + searchInputCall);
 			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
-			// q = searchInputCall.replace(/&nbsp;/g, ' ');
-			q = searchInputCall.replace(/\s\s+/g, ' ');
+			q = inputFake.innerHTML.replace(/&nbsp;/g, '\xa0');
+			// q = searchInputCall.replace(/\s\s+/g, ' ');
+			console.log(q);
 			window.open(searchUrlArray[searchPlInc] + q);
 		}
 		// JUST SEARCH INPUT AS FULL URL
@@ -603,7 +617,6 @@ searchInputDom.addEventListener('keypress', function(e) {
 });
 
 // JUST FOR ARROW KEYS, TY CHROME AND IE!
-
 searchInputDom.addEventListener('keydown', function(e) {
 
 	// KEY DOWN
