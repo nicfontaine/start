@@ -450,7 +450,8 @@ var searchPreMoveDst = 103;
 var searchPreMoveInc = 0;
 
 var inputFake = document.getElementById('input-fake');
-var rejectArray = ['16', '18', '8', '17', '37', '38', '40', '39'];
+// var rejectArray = ['16', '18', '8', '17', '37', '38', '40', '39'];
+var rejectArray = ['16', '18', '8', '17'];
 var keyCtrlDown = false;
 
 searchInputDom.addEventListener('keyup', function(e) {
@@ -484,9 +485,9 @@ searchInputDom.addEventListener('keydown', function(e) {
 			inputFake.innerHTML = p;
 		}
 		// DISABLE COMBO'S LIKE CTRL+A
-		else {
-			e.preventDefault();
-		}
+		// else {
+		// 	e.preventDefault();
+		// }
 
 		// (NOTE) NEED TO TAKE CARE OF CTRL+A
 		// KEY A
@@ -503,6 +504,8 @@ searchInputDom.addEventListener('keypress', function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING
 	searchInputDom.classList.add('search-hide');
+
+	console.log(e.charCode + ' e.keyCode');
 
 	// CACHE VALUE OF SPAN
 	p = inputFake.innerHTML;
@@ -576,6 +579,12 @@ searchInputDom.addEventListener('keypress', function(e) {
 		e.preventDefault();
 	}
 
+});
+
+// JUST FOR ARROW KEYS, TY CHROME AND IE!
+
+searchInputDom.addEventListener('keydown', function(e) {
+
 	// KEY DOWN
 	if (e.keyCode == '40') {
 		e.preventDefault();
@@ -588,7 +597,6 @@ searchInputDom.addEventListener('keypress', function(e) {
 	// KEY LEFT
 	if (e.keyCode == '37') {
 		e.preventDefault();
-
 		searchSwitch('l');
 
 	}
@@ -596,9 +604,7 @@ searchInputDom.addEventListener('keypress', function(e) {
 	// KEY RIGHT
 	if (e.keyCode == '39') {
 		e.preventDefault();
-
 		searchSwitch('r');
-
 	}
 
 	// KEY UP
@@ -614,8 +620,8 @@ searchInputDom.addEventListener('keypress', function(e) {
 			clearSearch();
 		}
 	}
-
-});
+	
+})
 
 function clearSearch() {
 	// RESET SEARCH INPUT
