@@ -196,7 +196,7 @@ iframe {
 #input-fake {
   display: inline-block;
   padding: 10px 20px 10px 0;
-  position: relative;
+  /*position: relative;*/
   color: transparent;
   text-shadow: 0 0 0 #444;
   font-size: 24px;
@@ -368,14 +368,8 @@ ul li a:after {
   right: -100%;*/
 }
 
-/****************************************/
-/*** (NOTE) IF YOU WANT MOUSE INPUT,  ***/
-/*** SWAP THE TWO LINES BELOW         ***/
-/*** SO THE TILES HAVE A HOVER EFFECT ***/
-/****************************************/
-
-/*ul li a:focus, ul li:hover a*/
-ul li a:focus {
+ul li a:focus, ul li:hover a {
+/*ul li a:focus {*/
   /*background: #BBA8CF;*/
   filter: brightness(105%);
   box-shadow: 0 2px 5px rgba(0,0,0,0.35);
