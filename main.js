@@ -596,7 +596,7 @@ searchInputDom.addEventListener('keypress', function(e) {
 			// q = searchInputCall.replace(/\s\s+/g, ' ');
 			console.log(q);
 			window.open(searchUrlArray[searchPlInc] + q);
-			// LOG SEARCHES
+			// LOG SEARCHES W/ q
 			searchLogged.push(q);
 		}
 
