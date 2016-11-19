@@ -212,7 +212,7 @@ iframe {
 
 #input-fake:after {
   content: '';
-  width: 8px;
+  width: 7px;
   height: 48%;
   right: 10px;
   position: absolute;
