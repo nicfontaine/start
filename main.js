@@ -375,7 +375,10 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 			toggleTab = 'search';
 			// searchInputDom.focus();
 			focusSearch();
-			searchInputDom.classList.remove('search-hide');
+			// ONLY SHOW IF BLANK
+			if (searchInputCall.length === 0) {
+				searchInputDom.classList.remove('search-hide');				
+			}
 		}
 
   }
