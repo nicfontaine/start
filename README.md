@@ -20,9 +20,11 @@
 
 - I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever icons you prefer (you'll have to style them), or flip through there and grab whatever works.
 
-- Add or remove any search sites; just match up placeholder and url slug at the same index in the two array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
+- Add or remove any search sites; just match up placeholder, url slug, and mini icon at the same index in the three array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
 
-- Weather data (weather type and temp) is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please.
+- Mini search icons are clickable, and touch swipe within the search box is enabled to change search sites.
+
+- Weather imgs are lazy loaded after weather data comes back from the server, so it may take a few seconds to display. New data is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please. All of the possible weather descriptions I have seen thus far are listed in comments
 
 ### Customize Options
 - A few vars in ``` main.js ```:
@@ -31,10 +33,13 @@
 var cpbh = 264;
 
 // SEARCH PLACEHOLDERS (use whatever string you want to display)
-var searchPl = ['> duckduckgo', '> google'];
+var searchPl = [' duckduckgo', ' google'];
 
 // SEARCH SITE URLS (run a search & grab the url minus query string [if it uses one..])
 var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
+
+// SEARCH SITE ICONS (place in some corresponding icons)
+var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 ```
 
 ### Sources
@@ -53,19 +58,21 @@ var searchUrlArray = ['https://duckduckgo.com/?q=', 'https://google.com/#q='];
 ----
 
 ### To-Do
+- web app manifest & service worker
+
+- large clock readout (just need to style)
+
+- ctrl + backspace highlight word, delete w/ timeout style
+
 - use other icons
 
 - refactor tile grid on window resize
 
-- `var` for cursor hide/show preferences
-
 - `var` for light/dark mode
-
-- onclick swap for list of search icon dots
 
 - source/cite images, scripts
 
-- more specific images
+- more specific weather images
 
 ### More
 Check out my website at [nicfontaine.com](https://nicfontaine.com)  
