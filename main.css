@@ -217,7 +217,7 @@ iframe {
   right: 10px;
   position: absolute;
   background: rgba(0,0,0,0.2);
-  top: 48%;
+  top: 50%;
   transform: translateY(-50%);
   opacity: 0;
   animation: cursorBlink 0.8s linear infinite;
