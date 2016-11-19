@@ -948,6 +948,7 @@ function handleTouchMove(evt) {
 
   if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
     if ( xDiff > 0 ) {
+    	console.log(xDiff);
     	/* left swipe */ 
     	searchSwitch('r');
     } else {
