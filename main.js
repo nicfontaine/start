@@ -30,8 +30,8 @@ var cpbl = 50;
 
 // PLACEHOLDER TITLES HERE
 // (NOTE) USE WHATEVER FORMAT YOU WANT HERE, DOESN'T MATTER
-// (NOTE) JUST LEAVE THE FIRST INDEX 'url' , THAT'S SPECIAL
-// (NOTE TO-DO) CHANGE LATER TO SEARCH FOR 'url' IN INDEX OR SOMETHING
+// (NOTE) YOU CAN MOVE 'url' TO WHATEVER INDEX OR REMOVE, JUST LEAVE IT'S NAME...
+// (NOTE) ...IT HAS A SPECIFIC CASE THAT SEARCHES FOR IT BY NAME
 var searchPl = [
 	'url',
 	'duckduckgo',
@@ -573,18 +573,8 @@ searchInputDom.addEventListener('keypress', function(e) {
 
 	// KEY ENTER
 	if (e.keyCode == '13' && searchInputCall !== '') {
-		// console.log('var searchInputCall = ' + searchInputCall);
-		// IF NOT FIRST INDEX - URL SEARCH
-		if (searchPlInc > 0) {
-			// window.open(searchUrlArray[searchPlInc] + searchInputCall);
-			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
-			q = inputFake.innerHTML.replace(/&nbsp;/g, '\xa0');
-			// q = searchInputCall.replace(/\s\s+/g, ' ');
-			console.log(q);
-			window.open(searchUrlArray[searchPlInc] + q);
-		}
-		// JUST SEARCH INPUT AS FULL URL
-		else {
+		// SEARCH AS URL
+		if (searchPl[searchPlInc] === 'url') {
 			// NO HTTP OR HTTPS, NEED TO MAKE IT A REAL URL
 			if (searchInputCall.indexOf('https://') === -1 && searchInputCall.indexOf('http://') === -1) {
 				window.open('http://' + searchInputCall);
@@ -593,7 +583,14 @@ searchInputDom.addEventListener('keypress', function(e) {
 			else {
 				window.open(searchInputCall);
 			}
-
+		}
+		// COMBINE W/ URL SLUG
+		else {
+			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
+			q = inputFake.innerHTML.replace(/&nbsp;/g, '\xa0');
+			// q = searchInputCall.replace(/\s\s+/g, ' ');
+			console.log(q);
+			window.open(searchUrlArray[searchPlInc] + q);
 		}
 
 		inputFake.innerHTML = '';
@@ -937,7 +934,7 @@ function handleTouchStart(evt) {
 
 function handleTouchMove(evt) {
   if ( ! xDown || ! yDown ) {
-      return;
+		return;
   }
 
   var xUp = evt.touches[0].clientX;                                    
