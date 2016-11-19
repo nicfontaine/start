@@ -586,6 +586,8 @@ searchInputDom.addEventListener('keypress', function(e) {
 			else {
 				window.open(searchInputCall);
 			}
+			// LOG SEARCHES
+			searchLogged.push(searchInputCall);
 		}
 		// COMBINE W/ URL SLUG
 		else {
@@ -594,14 +596,15 @@ searchInputDom.addEventListener('keypress', function(e) {
 			// q = searchInputCall.replace(/\s\s+/g, ' ');
 			console.log(q);
 			window.open(searchUrlArray[searchPlInc] + q);
+			// LOG SEARCHES
+			searchLogged.push(q);
 		}
 
 		inputFake.innerHTML = '';
 
 		searchInputDom.value = '';
 
-		// LOG SEARCHES, & ITER NUMBER OF TIMES, FOR LOOKUP
-		searchLogged.push(searchInputCall);
+		// ITER NUMBER OF TIMES, FOR ARRAY LOOKUP
 		searchNoTimes++;
 
 		searchNoRepeat = 0;
