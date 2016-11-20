@@ -1,5 +1,3 @@
-// TEST
-
 /*********************************************/
 /****     EDIT SETTINGS VIA VARIABLES     ****/
 /*********************************************/
@@ -30,9 +28,9 @@ var cpbl = 50;
 
 // PLACEHOLDER TITLES HERE
 // (NOTE) USE WHATEVER FORMAT YOU WANT HERE, DOESN'T MATTER
-// (NOTE) YOU CAN MOVE 'url' TO WHATEVER INDEX OR REMOVE, JUST LEAVE IT'S NAME...
+// (NOTE) YOU CAN MOVE 'url' TO ANY INDEX OR REMOVE, JUST LEAVE IT'S NAME...
 // (NOTE) ...IT HAS A SPECIFIC CASE THAT SEARCHES FOR IT BY NAME
-var searchPl = [
+var searchPlaceholders = [
 	'url',
 	'duckduckgo',
 	'google',
@@ -47,7 +45,7 @@ var searchPl = [
 
 // URL SLUGS HERE (THEY CORRESPOND TO TITLES ABOVE)
 // (NOTE) RUN A SEARCH SOMEWHERE, GRAB IT'S URL, & CUT THE QUERY STRING (IF IT USES ONE..)
-var searchUrlArray = [
+var searchUrls = [
 	'',
 	'https://duckduckgo.com/?q=',
 	'https://www.google.com/#q=',
@@ -68,10 +66,10 @@ var searchUrlArray = [
 // https://www.etsy.com/search?q=
 
 
-// SET TO FALSE IF YOU'D RATHER JUST HAVE THE MAGNIFYING GLASS ICON
+// SET TO FALSE IF YOU'D RATHER HAVE THE MAGNIFYING GLASS ICON FOR EVERY SEARCH
 var searchIconSwap = true;
 
-var searchIconArray = [
+var searchIcons = [
 	'<i class="fa fa-globe" aria-hidden="true"></i>',
 	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
 	'<i class="fa fa-google" aria-hidden="true"></i>',
@@ -84,14 +82,6 @@ var searchIconArray = [
 	'<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
 ];
 
-// (NOTE TO-DO) CURSOR DISPLAY PREF
-// var cursorHide = false;
-var cursorHide = true;
-
-// WOEID FOR WEATHER
-// (NOTE) USING GEOLOCATION NOW TO AUTO-SET, JUST ACCEPT LOCATION DATA
-// var myWoeid = '12797161';
-
 /*************************************************/
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
@@ -103,7 +93,6 @@ document.addEventListener('mousemove', function() {
 	if (!cursorToggleShow) {
 		cursorToggleShow = true;
   	document.getElementsByTagName('html')[0].style.cursor = 'auto';
-		// console.log('showing cursor');
 	}
 	else {
 		// DISABLE IF MOUSE IS STILL MOVING
@@ -112,33 +101,38 @@ document.addEventListener('mousemove', function() {
 		// HIDE AFTER DELAY, & ALLOW SHOW BY SETTING TOGGLE TO FALSE
 		cursorTimer = setTimeout(function() {
 			document.getElementsByTagName('html')[0].style.cursor = 'none';
-			// console.log('hiding cursor');
 			cursorToggleShow = false;
-		}, 300);
+		}, 400);
 	}
 });
 
-var searchInputDom = document.getElementById('search-input');
-var searchInputCall;
-var searchInputHolder;
-var searchNoRepeat = 0;
-// var searchPreDom = document.getElementById('search-pre');
+// SEARCH OBJ
+var si = {
+	link: searchUrls,
+	pl: searchPlaceholders,
+	plInc: 0, // searchPlInc
+	numSearched: 0, // searchNoTimes
+	lookupRepeat: 0, // searchNoRepeat
+	icon: searchIcons,
+	inputD: document.getElementById('search-input'), // searchInputDom
+	log: [], // searchLogged
+	iconD: document.getElementById('input-search-icon'), // inputSearchIconDom
+	swapIcons: searchIconSwap,
+	val: '', // searchInputCall
+	valHolder: '', // searchInputHolder
+}
 
-// INIT INPUT PLACEHOLDER W/ FIRST SEARCH OF ARRAY
-searchInputDom.placeholder = searchPl[0];
-var searchPlInc = 0;
-var searchLogged = [];
-var searchNoTimes = 0;
+// -------------------------------
 
-searchInputDom.focus();
+// INIT INPUT PLACEHOLDER TEXT W/ FIRST SEARCH OF ARRAY
+si.inputD.placeholder = si.pl[0];
 
-// SETTING SEARCH ICON
-var inputSearchIconDom = document.getElementById('input-search-icon');
-inputSearchIconDom.innerHTML = searchIconArray[0];
-
-// TOGGLE VAR TO TELL WHERE FOCUS IS
-// SEARCH, OR LINKS
-var toggleTab = 'search';
+si.inputD.focus();
+// ONLY ALLOW IF USER CHOOSES THIS FUNCTIONALITY
+if (si.swapIcons) { si.iconD.innerHTML = si.icon[0]; }
+else {
+	si.iconD.innerHTML = '<i class="fa fa-search search-icon" aria-hidden="true"></i>';	
+}
 
 var links = document.getElementById('ul-links').getElementsByTagName('a');
 var linksNo = links.length;
@@ -151,8 +145,8 @@ var linkFocusOffTop;
 
 var cpMods = {
 	linkBgHue: cpbh*1.01,
-	linkBgSat: cpbs*1.14,
-	linkBgLight: cpbl*1.18,
+	linkBgSat: cpbs*1.16,
+	linkBgLight: cpbl*1.19,
 }
 
 // ASSIGN BODY BG COLOUR
@@ -202,27 +196,6 @@ function clock() {
 }
 clock();
 
-//
-// LET'S FUCK WIT DIS LINK GRID THING
-//
-
-// ROW NUMBER WE'RE ON
-var rNum = 0;
-// TOTAL ROW COUNT, NOT STATIC
-var rNumTotal = 1;
-
-// VERTICAL OFFSET OF ROWS
-var rOffset = [];
-// NUMBER OF LINKS IN EACH ROW, END COUNTING INDEX WHEN OFFSET CHANGES
-var rLength = [];
-// USED TO COUNT THROUGH ROWS, & ASSIGN TO ARRAYS. NOT STATIC
-var rLinkCount = 0;
-
-// INIT ROW 1 YVal FROM FIRST CELL
-// START US OFF W/ THE FIRST ONE, TO COMPARE TO
-// YES, WE NEED THIS
-rOffset[rNum] = links[0].offsetTop;
-
 var dotSectionDomArray = document.getElementsByClassName('section-no-dots');
 
 // SHOW LINKS ON LOAD, IN SERIES
@@ -239,53 +212,60 @@ function timeoutShow() {
 timeoutShow();
 
 //
-// COUNT ROW OFFSETS, AND NO IN ROWS TO SET UP/DOWN MOVE LOGIC
+// LET'S FUCK WIT DIS LINK GRID THING
 //
 
-for (i=0; i<linksNo; i++) {
+// ROW NUMBER WE'RE ON
+var rNum;
+// TOTAL ROW COUNT, NOT STATIC
+var rNumTotal;
+// VERTICAL OFFSET OF ROWS
+var rOffset = [];
+// NUMBER OF LINKS IN EACH ROW, END COUNTING INDEX WHEN OFFSET CHANGES
+var rLength = [];
+// USED TO COUNT THROUGH ROWS, & ASSIGN TO ARRAYS. NOT STATIC
+var rLinkCount;
 
-	// IF LINK OFFSET MATCHES rOffset VALUE AT rNUM INDEX
-	// WILL CHANGE WHEN WE HIT NEW ROW, & rNUM ADDS ONE
-	if (links[i].offsetTop === rOffset[rNum]) {
-		rLinkCount++;
+function countEm() {
+	// RESET THESE WHENEVER CALLED
+	rNum = 0;
+	rNumTotal = 1;
+	rOffset = [];
+	rLength = [];
+	rLinkCount = 0;
+	// INIT ROW 1 YVal FROM FIRST CELL
+	// START US OFF W/ THE FIRST ONE, TO COMPARE TO
+	// YES, WE NEED THIS
+	rOffset[rNum] = links[0].offsetTop;
 
-		// OVERRITE W/ INCREMENTING VAL
-		rLength[rNum] = rLinkCount;
-
-		// JUST KEEP RE-ASSIGNING THE VERTICAL OFFSET
-		rOffset[rNum] = links[i].offsetTop;
-
+	for (i=0; i<linksNo; i++) {
+		// IF LINK OFFSET MATCHES rOffset VALUE AT rNUM INDEX
+		// WILL CHANGE WHEN WE HIT NEW ROW, & rNUM ADDS ONE
+		if (links[i].offsetTop === rOffset[rNum]) {
+			rLinkCount++;
+			// OVERRITE W/ INCREMENTING VAL
+			rLength[rNum] = rLinkCount;
+			// JUST KEEP RE-ASSIGNING THE VERTICAL OFFSET
+			rOffset[rNum] = links[i].offsetTop;
+		}
+		// RESET LINK COUNT WHEN GET TO NEXT LINE
+		else {
+			// LOG EACH ROW
+			console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
+			// MOVE TO NEW ROW, & ADD TO TOTAL ROW COUNT
+			rNum++;
+			rNumTotal++;
+			rOffset[rNum] = links[i].offsetTop;
+			// RESET COUNTER
+			rLinkCount++;
+			// INDEXES ARE TOTALS, KEEP ADDING TOTAL LINK COUNT
+			rLength[rNum] = rLinkCount;
+		}
 	}
-
-	// RESET LINK COUNT WHEN GET TO NEXT LINE
-	else {
-
-		// LOG EACH ROW
-		console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
-
-		// MOVE TO NEW ROW
-		rNum++;
-		// ADD TO TOTAL ROWS
-		rNumTotal++;
-
-		rOffset[rNum] = links[i].offsetTop;
-
-		// RESET COUNTER
-		// rLinkCount+=1;
-		rLinkCount++;
-
-		// GOTTEN TO NEW OFFSET LINE, SO WE ADD 1 TO NEW ROW ARRAY INDEX
-		// rLength[rNum] = 1;
-
-		// INDEXES ARE TOTALS, KEEP ADDING TOTAL LINK COUNT
-		rLength[rNum] = rLinkCount;
-
-	}
-
+	// LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
+	console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
 }
-
-// LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
-console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
+countEm();
 
 //
 // WINDOW RESIZING
@@ -304,9 +284,9 @@ window.onresize = function() {
 	// DISABLE IF USER IS STILL RESIZING, SO NOT CONSTANTLY FIRING
 	clearTimeout(resizeTimer);
 	resizeTimer = setTimeout(function() {
-
 		console.log('resizing');
-
+		// REFACTOR GRID
+		countEm();
 	}, 250);
 
 }
@@ -324,8 +304,6 @@ document.addEventListener('keydown', function(e) {
 //
 
 document.getElementById('ul-links').addEventListener('keydown', function (e) {
-
-	console.log(linkFocus);
 
   // KEY LEFT
   if (e.keyCode == '37') {
@@ -372,15 +350,12 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
 		else {
 			// linkFocus = linkFocus + rNum*rLength[0];
-			toggleTab = 'search';
-			// searchInputDom.focus();
 			focusSearch();
 			// ONLY SHOW IF BLANK
-			if (searchInputCall.length === 0) {
-				searchInputDom.classList.remove('search-hide');				
+			if (si.val.length === 0) {
+				si.inputD.classList.remove('search-hide');				
 			}
 		}
-
   }
 
   // KEY DOWN
@@ -400,7 +375,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 		else {
 			// linkFocus = linkFocus - rNum*rLength[0];
 			toggleTab = 'search';
-			searchInputDom.focus();
+			si.inputD.focus();
 		}
 
   }
@@ -419,23 +394,11 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 //
 
 function focusLink() {
-
-	// searchPreDom.className = '';
-
 	// FOCUS
   if (linkFocus >= 0 && linkFocus < linksNo) {
   	links[linkFocus].focus();
     linkFocusOffTop = links[linkFocus].offsetTop;
   }
-
-	// (NOTE) DON'T THINK WE NEED THIS NOW THAT WE GO FROM [0] TO .length I.E. BEG TO END
-  // IT'S NEG, BLUR ALL
-  // else {
-  // 	for (i=0; i<linksNo; i++) {
-  //   	links[i].blur();
-  //   }
-  // }
-
 }
 
 //
@@ -443,8 +406,7 @@ function focusLink() {
 //
 
 function focusSearch() {
-	searchInputDom.focus();
-	// searchPreDom.className = 'search-pre-blinking';
+	si.inputD.focus();
 }
 
 var cursorMoveEnable = false;
@@ -452,11 +414,10 @@ var searchPreMoveDst = 103;
 var searchPreMoveInc = 0;
 
 var inputFake = document.getElementById('input-fake');
-// var rejectArray = ['16', '18', '8', '17', '37', '38', '40', '39'];
 var rejectArray = ['16', '18', '8', '17'];
 var keyCtrlDown = false;
 
-searchInputDom.addEventListener('keyup', function(e) {
+si.inputD.addEventListener('keyup', function(e) {
 	// CTRL
   if (e.keyCode === 17) {
     keyCtrlDown = false;
@@ -464,24 +425,20 @@ searchInputDom.addEventListener('keyup', function(e) {
 });
 
 // CTRL + BACKSPACE
-searchInputDom.addEventListener('keydown', function(e) {
+si.inputD.addEventListener('keydown', function(e) {
 
-	searchInputCall = searchInputDom.value.toLowerCase();
+	si.val = si.inputD.value.toLowerCase();
 	keyCtrlDown;
 	// CTRL
 	if (e.which === 17) {
 		keyCtrlDown = true;
 	}
 
-	// SPACE
+		// SPACE
 	if (e.keyCode === 32) {
 		// p = p + '&nbsp;';
-		e.preventDefault();
 		p = inputFake.innerHTML;
-		// p = p + '\xa0';
-		// p+= '\x20';
-		p += String.fromCharCode(160);
-		// p = p + ' ';
+		p = p + '\xa0';
 		inputFake.innerHTML = p;
 	}
 
@@ -493,9 +450,9 @@ searchInputDom.addEventListener('keydown', function(e) {
 			console.log('ctrl + backspace');
 			// IF NOT DISABLED, TAKES AN ADDITIONAL LETTER OFF THE END xD
 			e.preventDefault();
+			// p = p.replace(/&nbsp;/g, ' ');
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-			p = p.replace(/&nbsp;/g, ' ');
-			// p = p.replace(/\s\s+/g, ' ');
+			p = p.replace(/\s\s+/g, ' ');
 			l = p.lastIndexOf(' ');
 
 			// IF STRING ENDS IN ' ' REMOVE IT BEFORE REMOVING LAST WORD
@@ -512,12 +469,6 @@ searchInputDom.addEventListener('keydown', function(e) {
 			}
 			inputFake.innerHTML = p;
 
-			// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
-			if (p.length < 1) {
-				clearSearch();
-				searchInputDom.classList.remove('search-hide');
-			}
-
 		}
 
 		// KEY A
@@ -531,10 +482,10 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 });
 
-searchInputDom.addEventListener('keypress', function(e) {
+si.inputD.addEventListener('keypress', function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING
-	searchInputDom.classList.add('search-hide');
+	si.inputD.classList.add('search-hide');
 
 	// CACHE VALUE OF SPAN
 	p = inputFake.innerHTML;
@@ -562,53 +513,48 @@ searchInputDom.addEventListener('keypress', function(e) {
 
 	// BACKSPACE
 	else if (e.keyCode === 8) {
-		// CONVERT ALL BREAKING SPACE ENTITIES BACK TO SPACE CHARS
-		// OTHERWISE, WE DELETE THE SEMICOLON & IT ALL FUCKS UP
-		p = p.replace(/&nbsp;/g, '\xa0');
-		p = p.substring(0,p.length-1);
-		inputFake.innerHTML = p;
+		inputFake.innerHTML = p.substring(0,p.length-1);
 		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
-		if (p.length < 1) {
-			searchInputDom.classList.remove('search-hide');
+		if (p.length <= 1) {
+			si.inputD.classList.remove('search-hide');
 		}
 	}
 
 
 	// KEY ENTER
-	if (e.keyCode == '13' && searchInputCall !== '') {
-		// SEARCH AS URL
-		if (searchPl[searchPlInc] === 'url') {
+	if (e.keyCode == '13' && si.val !== '') {
+		console.log('var si.val = ' + si.val);
+		// IF NOT FIRST INDEX - URL SEARCH
+		if (si.plInc > 0) {
+			// window.open(si.link[si.plInc] + si.val);
+			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
+			// q = si.val.replace(/&nbsp;/g, ' ');
+			q = si.val.replace(/\s\s+/g, ' ');
+			window.open(si.link[si.plInc] + q);
+		}
+		// JUST SEARCH INPUT AS FULL URL
+		else {
 			// NO HTTP OR HTTPS, NEED TO MAKE IT A REAL URL
-			if (searchInputCall.indexOf('https://') === -1 && searchInputCall.indexOf('http://') === -1) {
-				window.open('http://' + searchInputCall);
+			if (si.val.indexOf('https://') === -1 && si.val.indexOf('http://') === -1) {
+				window.open('http://' + si.val);
 			}
 			// VALID, FULL URL
 			else {
-				window.open(searchInputCall);
+				window.open(si.val);
 			}
-			// LOG SEARCHES
-			searchLogged.push(searchInputCall);
-		}
-		// COMBINE W/ URL SLUG
-		else {
-			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
-			q = inputFake.innerHTML.replace(/&nbsp;/g, '\xa0');
-			// q = searchInputCall.replace(/\s\s+/g, ' ');
-			console.log(q);
-			window.open(searchUrlArray[searchPlInc] + q);
-			// LOG SEARCHES W/ q
-			searchLogged.push(q);
+
 		}
 
 		inputFake.innerHTML = '';
 
-		searchInputDom.value = '';
+		si.inputD.value = '';
 
-		// ITER NUMBER OF TIMES, FOR ARRAY LOOKUP
-		searchNoTimes++;
+		// LOG SEARCHES, & ITER NUMBER OF TIMES, FOR LOOKUP
+		si.log.push(si.val);
+		si.numSearched++;
 
-		searchNoRepeat = 0;
-		// searchPlInc++;
+		si.lookupRepeat = 0;
+		// si.plInc++;
 
 	}
 
@@ -620,12 +566,13 @@ searchInputDom.addEventListener('keypress', function(e) {
 });
 
 // JUST FOR ARROW KEYS, TY CHROME AND IE!
-searchInputDom.addEventListener('keydown', function(e) {
+
+si.inputD.addEventListener('keydown', function(e) {
 
 	// KEY DOWN
 	if (e.keyCode == '40') {
 		e.preventDefault();
-		searchInputDom.blur();
+		si.inputD.blur();
 		linkFocus = 0;
 		toggleTab = 'links';
 		focusLink();
@@ -635,6 +582,7 @@ searchInputDom.addEventListener('keydown', function(e) {
 	if (e.keyCode == '37') {
 		e.preventDefault();
 		searchSwitch('l');
+
 	}
 
 	// KEY RIGHT
@@ -645,11 +593,11 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 	// KEY UP
 	if (e.keyCode == '38') {
-		searchNoRepeat++;
+		si.lookupRepeat++;
 		// UNTIL WE'VE GONE THROUGH ALL LOGGED SEARCHES
-		if (typeof searchLogged[searchNoTimes-searchNoRepeat] !== 'undefined') {
-			searchInputDom.value = searchLogged[searchNoTimes-searchNoRepeat];
-			inputFake.innerHTML = searchLogged[searchNoTimes-searchNoRepeat];
+		if (typeof si.log[si.numSearched-si.lookupRepeat] !== 'undefined') {
+			si.inputD.value = si.log[si.numSearched-si.lookupRepeat];
+			inputFake.innerHTML = si.log[si.numSearched-si.lookupRepeat];
 		}
 		// CLEAR INPUT, & RESET LOG CALL INC - ALLOWS LOOPING THROUGH CALLS
 		else {
@@ -661,10 +609,10 @@ searchInputDom.addEventListener('keydown', function(e) {
 
 function clearSearch() {
 	// RESET SEARCH INPUT
-	searchInputDom.value = '';
+	si.inputD.value = '';
 	inputFake.innerHTML = '';
 	// RESET NO OF CONSECUTIVE SEARCH LOG CALLS
-	searchNoRepeat = 0;
+	si.lookupRepeat = 0;
 }
 
 // SWITCH SEARCH L & R W/ INPUT PARAMS
@@ -673,12 +621,12 @@ function searchSwitch(dir) {
 	if (dir === 'l') {
 
 		// DEC SEARCH NO IF GREATER THAN 0
-		if (searchPlInc > 0) {
-			searchPlInc--;
+		if (si.plInc > 0) {
+			si.plInc--;
 		}
 		// GO TO END
 		else {
-			searchPlInc = searchPl.length-1;
+			si.plInc = si.pl.length-1;
 		}
 
 	}
@@ -686,46 +634,45 @@ function searchSwitch(dir) {
 	else if (dir === 'r') {
 
 		// INC SEARCH NO IF LESS THAN ARRAY LENGTH
-		if (searchPlInc < searchPl.length-1) {
-			searchPlInc++;
+		if (si.plInc < si.pl.length-1) {
+			si.plInc++;
 		}
 		// BACK TO START
 		else {
-			searchPlInc = 0;
+			si.plInc = 0;
 		}
 
 	}
 
-	inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
+	si.iconD.innerHTML = si.icon[si.plInc];
 
 	// SWAP PLACEHOLDER
-	searchInputDom.placeholder = searchPl[searchPlInc];
+	si.inputD.placeholder = si.pl[si.plInc];
 	// SHOW PLACEHOLDER
-	searchInputDom.classList.remove('search-hide');
+	si.inputD.classList.remove('search-hide');
 
 	// REC PREV SEARCH INPUT
-	// searchInputHolder = searchInputCall;
-	searchInputHolder = inputFake.innerHTML;
+	si.valHolder = si.val;
 	dotChange();
 
 	// (NOTE) DOESN'T TRIGGER IF MOVE MULTIPLE L/R QUICKLY
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
 		// DON'T RESET W/ DELAY IF INPUT VALUE IS BLANK
-		if (typeof searchInputDom.value !== 'undefined' && searchInputDom.value.length === 0) {
+		if (typeof si.inputD.value !== 'undefined' && si.inputD.value.length === 0) {
 
 			// SEARCH VALUE IS ONLY WHITE SPACE, RESET
-			if (!searchInputCall.replace(/\s/g, '').length) {
+			if (!si.val.replace(/\s/g, '').length) {
 				console.log('just white space, reset');
 				clearSearch();
-				searchInputHolder = '';
+				si.valHolder = '';
 			}
 			// THERE WAS A VALUE, REASSIGN IT
 			else {
-				searchInputDom.value = searchInputHolder;
-				inputFake.innerHTML = searchInputHolder;
+				si.inputD.value = si.valHolder;
+				inputFake.innerHTML = si.valHolder;
 				// HIDE PLACEHOLDER
-				searchInputDom.classList.add('search-hide');
+				si.inputD.classList.add('search-hide');
 			}
 
 		}
@@ -739,11 +686,11 @@ function searchSwitch(dir) {
 // DOTS
 //
 
-for (i=0; i<searchPl.length; i++) {
+for (i=0; i<si.pl.length; i++) {
 	var itmDot = document.getElementById('dot-container').lastChild;
 	var clnDot = itmDot.cloneNode(true);
 
-	clnDot.innerHTML = searchIconArray[i];
+	clnDot.innerHTML = si.icon[i];
 	// ASSIGN ONCLICK, SWAP FUNCTION
 	// (NOTE) DON'T NEED W/ NEW CALLBACK
 	// clnDot.onclick = searchIconClickSwap;
@@ -755,14 +702,14 @@ for (i=0; i<searchPl.length; i++) {
 var noDotEachDom = dotSectionDomArray[0].getElementsByClassName('no-dot');
 noDotEachDom[0].classList.add('no-dot-sel');
 
-// SWAP SEL DOT BY searchPlInc
+// SWAP SEL DOT BY si.plInc
 function dotChange() {
 	// REMOVE SEL CLASS FROM ALL
 	for (i=0; i<noDotEachDom.length; i++) {
 		noDotEachDom[i].className = 'no-dot';
 	}
 	// ADD TO CURRENT IN ROTATION
-	noDotEachDom[searchPlInc].classList.add('no-dot-sel');
+	noDotEachDom[si.plInc].classList.add('no-dot-sel');
 }
 
 var dotChildren = document.getElementsByClassName('section-no-dots')[0].children;
@@ -776,18 +723,18 @@ for (var i=0; i<lDotChildren; i++) {
 			// DISABLE THE UN-FOCUS FLASH ON CLICK PRESS
 			focusSearch();
 			// RE-ASSIGN INCREMENTAL PLACEHOLDER VAR
-			searchPlInc = index;
+			si.plInc = index;
 
-			inputSearchIconDom.innerHTML = searchIconArray[searchPlInc];
+			si.iconD.innerHTML = si.icon[si.plInc];
 			// SWAP PLACEHOLDER
-			searchInputDom.placeholder = searchPl[searchPlInc];
+			si.inputD.placeholder = si.pl[si.plInc];
 			// SHOW PLACEHOLDER
-			searchInputDom.classList.remove('search-hide');
+			si.inputD.classList.remove('search-hide');
 			// REMOVE SEL CLASS FROM ALL
 			for (i=0; i<noDotEachDom.length; i++) {
 				noDotEachDom[i].className = 'no-dot';
 			}
-			noDotEachDom[searchPlInc].classList.add('no-dot-sel');
+			noDotEachDom[si.plInc].classList.add('no-dot-sel');
 		}
 	})(i);
 }
@@ -925,48 +872,3 @@ function weatherSwap(e,t) {
 	navCityDom.innerHTML = weatherCity;
 
 }
-
-// TOUCH SWIPES
-searchInputDom.addEventListener('touchstart', handleTouchStart, false);        
-searchInputDom.addEventListener('touchmove', handleTouchMove, false);
-
-var xDown = null;                                                        
-var yDown = null;                                                        
-
-function handleTouchStart(evt) {                                         
-  xDown = evt.touches[0].clientX;                                      
-  yDown = evt.touches[0].clientY;                                      
-};                                                
-
-function handleTouchMove(evt) {
-  if ( ! xDown || ! yDown ) {
-		return;
-  }
-
-  var xUp = evt.touches[0].clientX;                                    
-  var yUp = evt.touches[0].clientY;
-
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
-
-  if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-    if ( xDiff > 0 ) {
-    	console.log(xDiff);
-    	/* left swipe */ 
-    	searchSwitch('r');
-    } else {
-    	/* right swipe */
-    	searchSwitch('l');
-    }                       
-  }
-  else {
-    if ( yDiff > 0 ) {
-        /* up swipe */ 
-    } else { 
-        /* down swipe */
-    }                                                                 
-  }
-  /* reset values */
-  xDown = null;
-  yDown = null;                                             
-};
