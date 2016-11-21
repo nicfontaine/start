@@ -90,11 +90,13 @@ var searchIcons = [
 var cursorToggleShow = true;
 var cursorTimer;
 document.addEventListener('mousemove', function() {
-	if (!cursorToggleShow) {
+
+	!cursorToggleShow ? function() {
 		cursorToggleShow = true;
   	document.getElementsByTagName('html')[0].style.cursor = 'auto';
-	}
-	else {
+  }()
+  :
+	function() {
 		// DISABLE IF MOUSE IS STILL MOVING
 		clearTimeout(cursorTimer);
 		cursorToggleShow = true;
@@ -103,23 +105,32 @@ document.addEventListener('mousemove', function() {
 			document.getElementsByTagName('html')[0].style.cursor = 'none';
 			cursorToggleShow = false;
 		}, 400);
-	}
+	}();
+	
 });
 
 // SEARCH OBJ
 var si = {
 	link: searchUrls,
 	pl: searchPlaceholders,
-	plInc: 0, // searchPlInc
-	numSearched: 0, // searchNoTimes
-	lookupRepeat: 0, // searchNoRepeat
+	plInc: 0,
+	numSearched: 0,
+	lookupRepeat: 0,
 	icon: searchIcons,
-	inputD: document.getElementById('search-input'), // searchInputDom
-	log: [], // searchLogged
-	iconD: document.getElementById('input-search-icon'), // inputSearchIconDom
+	inputD: document.getElementById('search-input'),
+	log: [],
+	iconD: document.getElementById('input-search-icon'),
 	swapIcons: searchIconSwap,
-	val: '', // searchInputCall
-	valHolder: '', // searchInputHolder
+	val: '',
+	valHolder: '',
+	// &nbsp; TO ' ' ENCODER/DECODER
+	codec: function(input,encode) {
+		var out = encode ?
+		input.replace(/\s/g, '&nbsp;') // ENCODE TO SPACE PLACEHOLDERS
+		:
+		input.replace(/&nbsp;/g, ' '); // DECODE TO SPACES
+		return out;
+	}
 }
 
 // -------------------------------
@@ -154,7 +165,7 @@ document.getElementsByTagName('body')[0].style.background = colourConstructor(cp
 
 // CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
 var linksColCalc = colourConstructor(cpMods.linkBgHue,cpMods.linkBgSat,cpMods.linkBgLight);
-for (i=0; i<linksNo; i++) {
+for (var i=0; i<linksNo; i++) {
 	links[i].style.background = linksColCalc;
 }
 
@@ -238,7 +249,7 @@ function countEm() {
 	// YES, WE NEED THIS
 	rOffset[rNum] = links[0].offsetTop;
 
-	for (i=0; i<linksNo; i++) {
+	for (var i=0; i<linksNo; i++) {
 		// IF LINK OFFSET MATCHES rOffset VALUE AT rNUM INDEX
 		// WILL CHANGE WHEN WE HIT NEW ROW, & rNUM ADDS ONE
 		if (links[i].offsetTop === rOffset[rNum]) {
@@ -309,15 +320,8 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   if (e.keyCode == '37') {
     e.preventDefault();
 
-    // INC ONLY IF 1 OR GREATER
-    if (linkFocus >= 1) {
-    	linkFocus--;
-    }
-
-    // OTHERWISE, RESET TO -1
-    else {
-    	linkFocus = linksNo-1;
-    }
+    // // INC ONLY IF >=1, IF NOT, RESET TO -1
+    linkFocus>=1 ? linkFocus-- : linkFocus = linksNo-1;
 
 		focusLink();
 
@@ -327,13 +331,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   if (e.keyCode == '39') {
     e.preventDefault();
 
-    if (linkFocus < linksNo-1) {
-    	linkFocus++;
-    }
-
-    else {
-    	linkFocus = 0;
-    }
+    linkFocus<linksNo-1 ? linkFocus++ : linkFocus=0;
 
 		focusLink();
 
@@ -418,56 +416,76 @@ var rejectArray = ['16', '18', '8', '17'];
 var keyCtrlDown = false;
 
 si.inputD.addEventListener('keyup', function(e) {
+	// TOGGLE WHENEVER KEY IS RELEASED
+	keyUpEnable = true;
 	// CTRL
   if (e.keyCode === 17) {
     keyCtrlDown = false;
   }
+  // SOLVES FOR CTRL + BACKSPACE DELETE OF ALL OF INPUT
+  // if (si.val.length < 1) {
+  	// si.inputD.classList.remove('search-hide');
+  // }
 });
 
 // CTRL + BACKSPACE
 si.inputD.addEventListener('keydown', function(e) {
 
-	si.val = si.inputD.value.toLowerCase();
-	keyCtrlDown;
+	// DON'T OVERWRITE IF IS UP KEY
+	if (e.keyCode !== 38) {
+  	si.val = inputFake.innerHTML;
+	}
+
+	// si.val = si.inputD.value.toLowerCase();
+	// si.val = inputFake.innerHTML
+	// console.log(inputFake.innerHTML);
+	// keyCtrlDown;
 	// CTRL
 	if (e.which === 17) {
 		keyCtrlDown = true;
 	}
 
-		// SPACE
+	// SPACE
 	if (e.keyCode === 32) {
 		// p = p + '&nbsp;';
-		p = inputFake.innerHTML;
-		p = p + '\xa0';
-		inputFake.innerHTML = p;
+		e.preventDefault();
+		si.val = inputFake.innerHTML;
+		si.val = si.val + '\xa0';
+		inputFake.innerHTML = si.val;
 	}
 
 	// CTRL KEY IS DOWN, WAIT FOR COMBO TO TRIGGER
 	if (keyCtrlDown) {
+
+		// si.val = si.val.replace(/&nbsp;/g, ' ');
+		l = si.val.lastIndexOf('&nbsp;');
+		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
+		console.log(l);
 
 		// BACKSPACE
 		if (e.which === 8) {
 			console.log('ctrl + backspace');
 			// IF NOT DISABLED, TAKES AN ADDITIONAL LETTER OFF THE END xD
 			e.preventDefault();
-			// p = p.replace(/&nbsp;/g, ' ');
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-			p = p.replace(/\s\s+/g, ' ');
-			l = p.lastIndexOf(' ');
+			// si.val = si.val.replace(/\s\s+/g, ' ');
 
 			// IF STRING ENDS IN ' ' REMOVE IT BEFORE REMOVING LAST WORD
-			if (l === p.length-1) {
-				p = p.substring(0,p.length-2);
+			if (l === si.val.length-1) {
+				si.val = si.val.substring(0,si.val.length-2);
 				// RE LOG
-				l = p.lastIndexOf(' ');
+				l = si.val.lastIndexOf(' ');
 			}
-			// SET p W/O LAST WORD
-			p = p.substring(0,l);				
+			// SET si.val W/O LAST WORD
+			si.val = si.val.substring(0,l);				
 			// SPACE IS BEING REMOVED FOR SOME REASON, ADD IT BACK
-			if (p.length > 0) {
-				p+=' ';
-			}
-			inputFake.innerHTML = p;
+			// if (si.val.length > 0) {
+			// 	si.val+=' ';
+			// }
+			// (NOTE) KISS
+			inputFake.innerHTML = si.val;
+			si.val = si.val;
+			si.inputD.value = si.val;
 
 		}
 
@@ -484,27 +502,24 @@ si.inputD.addEventListener('keydown', function(e) {
 
 si.inputD.addEventListener('keypress', function(e) {
 
-	// HIDE PLACEHOLDER WHEN TYPING
-	si.inputD.classList.add('search-hide');
-
-	// CACHE VALUE OF SPAN
-	p = inputFake.innerHTML;
+	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
+	if (e.keyCode !== 38) {
+		si.inputD.classList.add('search-hide');
+	}
 
 	// IF NOT IN ARRAY
 	if (rejectArray.indexOf(e.keyCode.toString()) < 0) {
 
-		// SPACE
-		// if (e.keyCode === 32) {
-		// 	// p = p + '&nbsp;';
-		// 	p = p + '\xa0';
-		// 	inputFake.innerHTML = p;
-		// }
-		// else {
 			k = e.which;
-			// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
-			inputFake.innerHTML = p + String.fromCharCode(k).toLowerCase();
+
+			// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
+			if (keyUpEnable) {
+				// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
+				// (NOTE) THIS IS WHERE ALL LETTER ADDING FROM TYPING TAKES PLACE
+				inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();	
+			}
 			// UPDATE W/ LAST ADDED LETTER
-			p = inputFake.innerHTML;
+			si.val = inputFake.innerHTML;
 			// console.log(p);
 			// inputFake.innerHTML = p + keyboardMap[e.keyCode].toLowerCase();
 		// }
@@ -513,10 +528,15 @@ si.inputD.addEventListener('keypress', function(e) {
 
 	// BACKSPACE
 	else if (e.keyCode === 8) {
-		inputFake.innerHTML = p.substring(0,p.length-1);
+		if (!keyCtrlDown) {
+		si.val = si.val.replace(/&nbsp;/g, '\xa0');
+		// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
+		si.val = si.val.replace(/\s\s+/g, ' ');
+		inputFake.innerHTML = si.val.substring(0,si.val.length-1);
 		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
-		if (p.length <= 1) {
+		if (si.val.length <= 1) {
 			si.inputD.classList.remove('search-hide');
+		}
 		}
 	}
 
@@ -529,7 +549,9 @@ si.inputD.addEventListener('keypress', function(e) {
 			// window.open(si.link[si.plInc] + si.val);
 			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
 			// q = si.val.replace(/&nbsp;/g, ' ');
-			q = si.val.replace(/\s\s+/g, ' ');
+			// q = si.val.replace(/\s\s+/g, ' ');
+			var q = si.val.replace(/&nbsp;/g, ' ');
+			// q = si.val.replace(/\s\s+/g, ' ');
 			window.open(si.link[si.plInc] + q);
 		}
 		// JUST SEARCH INPUT AS FULL URL
@@ -542,7 +564,7 @@ si.inputD.addEventListener('keypress', function(e) {
 			else {
 				window.open(si.val);
 			}
-
+		si.inputD.classList.remove('search-hide');
 		}
 
 		inputFake.innerHTML = '';
@@ -550,7 +572,7 @@ si.inputD.addEventListener('keypress', function(e) {
 		si.inputD.value = '';
 
 		// LOG SEARCHES, & ITER NUMBER OF TIMES, FOR LOOKUP
-		si.log.push(si.val);
+		si.log.push(si.codec(si.val,false));
 		si.numSearched++;
 
 		si.lookupRepeat = 0;
@@ -566,6 +588,7 @@ si.inputD.addEventListener('keypress', function(e) {
 });
 
 // JUST FOR ARROW KEYS, TY CHROME AND IE!
+var keyUpEnable = true;
 
 si.inputD.addEventListener('keydown', function(e) {
 
@@ -593,23 +616,34 @@ si.inputD.addEventListener('keydown', function(e) {
 
 	// KEY UP
 	if (e.keyCode == '38') {
-		si.lookupRepeat++;
-		// UNTIL WE'VE GONE THROUGH ALL LOGGED SEARCHES
-		if (typeof si.log[si.numSearched-si.lookupRepeat] !== 'undefined') {
-			si.inputD.value = si.log[si.numSearched-si.lookupRepeat];
-			inputFake.innerHTML = si.log[si.numSearched-si.lookupRepeat];
-		}
-		// CLEAR INPUT, & RESET LOG CALL INC - ALLOWS LOOPING THROUGH CALLS
-		else {
-			clearSearch();
+		if (keyUpEnable) {
+			keyUpEnable = false;
+			si.lookupRepeat++;
+			// UNTIL WE'VE GONE THROUGH ALL LOGGED SEARCHES
+			console.log(si.numSearched - si.lookupRepeat);
+			if (typeof si.log[si.numSearched-si.lookupRepeat] !== 'undefined') {
+				si.inputD.value = si.log[si.numSearched-si.lookupRepeat];
+				inputFake.innerHTML = si.log[si.numSearched-si.lookupRepeat];
+				si.inputD.classList.add('search-hide');
+			}
+			// CLEAR INPUT, & RESET LOG CALL INC - ALLOWS LOOPING THROUGH CALLS
+			else {
+				clearSearch();
+				if (si.inputD.classList.contains('search-hide')) {
+					si.inputD.classList.remove('search-hide');
+				}
+				si.lookupRepeat = 0;
+			}
 		}
 	}
 	
-})
+});
 
 function clearSearch() {
+	console.log('clearSearch();');
 	// RESET SEARCH INPUT
 	si.inputD.value = '';
+	si.val = '';
 	inputFake.innerHTML = '';
 	// RESET NO OF CONSECUTIVE SEARCH LOG CALLS
 	si.lookupRepeat = 0;
@@ -655,93 +689,93 @@ function searchSwitch(dir) {
 	si.valHolder = si.val;
 	dotChange();
 
-	// (NOTE) DOESN'T TRIGGER IF MOVE MULTIPLE L/R QUICKLY
+	// (NOTE) OVERWRITES IF MOVE FASTER THAN setTimeout
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
-		// DON'T RESET W/ DELAY IF INPUT VALUE IS BLANK
-		if (typeof si.inputD.value !== 'undefined' && si.inputD.value.length === 0) {
-
-			// SEARCH VALUE IS ONLY WHITE SPACE, RESET
-			if (!si.val.replace(/\s/g, '').length) {
-				console.log('just white space, reset');
-				clearSearch();
-				si.valHolder = '';
-			}
-			// THERE WAS A VALUE, REASSIGN IT
-			else {
-				si.inputD.value = si.valHolder;
-				inputFake.innerHTML = si.valHolder;
-				// HIDE PLACEHOLDER
-				si.inputD.classList.add('search-hide');
-			}
-
+		// THERE WAS A VALUE, REASSIGN IT
+		if (si.val.replace(/\s/g, '').length > 0) {
+			si.val = si.valHolder;
+			inputFake.innerHTML = si.valHolder;
+			// HIDE PLACEHOLDER
+			si.inputD.classList.add('search-hide');
+		}
+		// SEARCH VALUE IS ONLY WHITE SPACE, RESET
+		else {
+			// console.log('just white space, reset');
+			clearSearch();
+			si.valHolder = '';
 		}
 	},200);
-
+	// ALWAYS CLEAR IT, setTimeout WILL RE-ASSIGN
 	clearSearch();
-
 }
 
 //
 // DOTS
 //
 
-for (i=0; i<si.pl.length; i++) {
-	var itmDot = document.getElementById('dot-container').lastChild;
-	var clnDot = itmDot.cloneNode(true);
+// KEEP i & len LOCAL IN IIFE
+(function dotMaker() {
+	// DECLARE OUTSIDE LOOP
+	var dotFrag = document.createDocumentFragment(),
+	itmDot = document.getElementById('dot-container').lastChild,
+	clnDot,
+	len = si.pl.length,
+	i;
+	for (i=0; i<len; i++) {
+		clnDot = itmDot.cloneNode(true);
 
-	clnDot.innerHTML = si.icon[i];
-	// ASSIGN ONCLICK, SWAP FUNCTION
-	// (NOTE) DON'T NEED W/ NEW CALLBACK
-	// clnDot.onclick = searchIconClickSwap;
-	dotSectionDomArray[0].appendChild(clnDot);
-}
+		clnDot.innerHTML = si.icon[i];
+		// dotSectionDomArray[0].appendChild(clnDot);
+		dotFrag.appendChild(clnDot);
+	}
+	// APPEND AS ONE
+	dotSectionDomArray[0].appendChild(dotFrag);
+})();
 
 // GET DOT FROM CONTAINER
 // ADD SEL CLASS TO FIRST
 var noDotEachDom = dotSectionDomArray[0].getElementsByClassName('no-dot');
 noDotEachDom[0].classList.add('no-dot-sel');
 
-// SWAP SEL DOT BY si.plInc
-function dotChange() {
+// CHANGE DOTS, LOCK VARS LOCALLY
+var dotChange = (function() {
 	// REMOVE SEL CLASS FROM ALL
-	for (i=0; i<noDotEachDom.length; i++) {
+	var i,
+		len = noDotEachDom.length;
+	for (i=0; i<len; i++) {
 		noDotEachDom[i].className = 'no-dot';
 	}
-	// ADD TO CURRENT IN ROTATION
+	// ADD TO CURRENT IN ROTATION VIA si.plInc
 	noDotEachDom[si.plInc].classList.add('no-dot-sel');
-}
+});
 
-var dotChildren = document.getElementsByClassName('section-no-dots')[0].children;
-var lDotChildren = dotChildren.length;
 
-// CALLBACK FOR DOT CLICKING
-for (var i=0; i<lDotChildren; i++) {
-	(function(index){
-		dotChildren[i].onclick = function() {
-			console.log(index + ' index was clicked');
-			// DISABLE THE UN-FOCUS FLASH ON CLICK PRESS
-			focusSearch();
-			// RE-ASSIGN INCREMENTAL PLACEHOLDER VAR
-			si.plInc = index;
-
-			si.iconD.innerHTML = si.icon[si.plInc];
-			// SWAP PLACEHOLDER
-			si.inputD.placeholder = si.pl[si.plInc];
-			// SHOW PLACEHOLDER
-			si.inputD.classList.remove('search-hide');
-			// REMOVE SEL CLASS FROM ALL
-			for (i=0; i<noDotEachDom.length; i++) {
-				noDotEachDom[i].className = 'no-dot';
-			}
-			noDotEachDom[si.plInc].classList.add('no-dot-sel');
-		}
-	})(i);
-}
-
-// function searchIconClickSwap() {
-// 	console.log('searchIconClickSwap();');
-// }
+// IIFE FOR DOT CLICKING
+(function dotClicker() {
+	var dotChildren = document.getElementsByClassName('section-no-dots')[0].children,
+		len = dotChildren.length,
+		i;
+	for (i=0; i<len; i++) {
+		(function(index){
+				dotChildren[i].addEventListener('click', function() {
+				// DISABLE THE UN-FOCUS FLASH ON CLICK PRESS
+				focusSearch();
+				// RE-ASSIGN INCREMENTAL PLACEHOLDER VAR
+				si.plInc = index;
+				// SWAP ICON, PLACEHOLDER, SHOW PLACEHOLDER
+				si.iconD.innerHTML = si.icon[si.plInc];
+				si.inputD.placeholder = si.pl[si.plInc];
+				si.inputD.classList.remove('search-hide');
+				// REMOVE SEL CLASS FROM ALL
+				for (var i=0; i<noDotEachDom.length; i++) {
+					noDotEachDom[i].className = 'no-dot';
+				}
+				noDotEachDom[si.plInc].classList.add('no-dot-sel');
+			});
+		})(i);
+	}
+})();
 
 //
 // WEATHER
@@ -749,7 +783,6 @@ for (var i=0; i<lDotChildren; i++) {
 
 var weatherBgDom = document.getElementById('weather-bg');
 var weatherImgArray = weatherBgDom.getElementsByTagName('div');
-var weatherImgNo = weatherImgArray.length;
 var weatherCurrent;
 var weatherTemp;
 var navTop = document.getElementById('nav-weather');
@@ -795,21 +828,7 @@ function loadWeather(location, woeid) {
 
 					// LAZY LOAD WEATHER IMGS WHEN DATA IS PULLED
 					weatherImgLazy();
-
 					weatherSwap(weatherCurrent,weatherTemp);						
-					// Sunny
-					// Partly Cloudy
-					// Mostly Cloudy
-					// Breezy
-					// Cloudy
-					// Windy
-					// Thunderstorms
-					// Rain and Snow
-					// Snow
-					// Scattered Thunderstorms
-					// Rain
-					// Scattered Showers
-					// Mostly Sunny
 				},
 				error: function(error) {
       		// SOME ERROR NOTIFICATION HERE
@@ -830,7 +849,12 @@ function loadWeather(location, woeid) {
 }
 
 function weatherSwap(e,t) {
-	img = '';
+	var img = '',
+		imgArray = weatherImgArray,
+		imgLen = imgArray.length,
+		i = 0;
+
+		// Sunny, Partly Cloudy, Mostly Cloudy, Breezy, Cloudy, Windy, Thunderstorms, Rain and Snow, Snow, Scattered Thunderstorms, Rain, Scattered Showers, Mostly Sunny
 
 	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear' || e === 'Partly Cloudy') {
 		img = 'weather-sunny';
@@ -850,7 +874,6 @@ function weatherSwap(e,t) {
 	else if (e === 'Windy' || e === 'Breezy') {
 		img = 'weather-windy';
 	}
-
 	else {
 		alert(e + ' - I havent coded for this, need to add it');
 	}
@@ -859,8 +882,8 @@ function weatherSwap(e,t) {
 	// img = 'weather-windy';
 
 	// HIDE OTHERS
-	for (i=0; i<weatherImgNo; i++) {
-		weatherImgArray[i].className = '';
+	for (i=0; i<imgLen; i++) {
+		imgArray[i].className = '';
 	}
 
 	// ASSIGN
