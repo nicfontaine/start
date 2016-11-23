@@ -859,7 +859,7 @@ function weatherSwap(e,t) {
 	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear' || e === 'Partly Cloudy') {
 		img = 'weather-sunny';
 	}
-	else if (e === 'Rain') {
+	else if (e === 'Rain' || e === 'Showers') {
 		img = 'weather-rain';
 	}
 	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
