@@ -347,7 +347,6 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 		}
 
 		else {
-			// linkFocus = linkFocus + rNum*rLength[0];
 			focusSearch();
 			// ONLY SHOW IF BLANK
 			if (si.val.length === 0) {
@@ -422,24 +421,32 @@ si.inputD.addEventListener('keyup', function(e) {
   if (e.keyCode === 17) {
     keyCtrlDown = false;
   }
-  // SOLVES FOR CTRL + BACKSPACE DELETE OF ALL OF INPUT
-  // if (si.val.length < 1) {
-  	// si.inputD.classList.remove('search-hide');
-  // }
 });
 
-// CTRL + BACKSPACE
 si.inputD.addEventListener('keydown', function(e) {
+
+	// BACKSPACE
+	if (e.keyCode === 8) {
+		if (!keyCtrlDown) {
+			si.val = si.val.replace(/&nbsp;/g, '\xa0');
+			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
+			si.val = si.val.replace(/\s\s+/g, ' ');
+			inputFake.innerHTML = si.val.substring(0,si.val.length-1);
+		}
+		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
+		if (si.val.length <= 1) {
+			si.inputD.classList.remove('search-hide');
+			console.log('removing');
+			si.inputD.value = '';
+		}
+	}
+
 
 	// DON'T OVERWRITE IF IS UP KEY
 	if (e.keyCode !== 38) {
   	si.val = inputFake.innerHTML;
 	}
 
-	// si.val = si.inputD.value.toLowerCase();
-	// si.val = inputFake.innerHTML
-	// console.log(inputFake.innerHTML);
-	// keyCtrlDown;
 	// CTRL
 	if (e.which === 17) {
 		keyCtrlDown = true;
@@ -460,7 +467,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		// si.val = si.val.replace(/&nbsp;/g, ' ');
 		l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
-		console.log(l);
+		console.log(l + ' is last index of &nbsp;');
 
 		// BACKSPACE
 		if (e.which === 8) {
@@ -470,23 +477,20 @@ si.inputD.addEventListener('keydown', function(e) {
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
 			// si.val = si.val.replace(/\s\s+/g, ' ');
 
-			// IF STRING ENDS IN ' ' REMOVE IT BEFORE REMOVING LAST WORD
-			if (l === si.val.length-1) {
-				si.val = si.val.substring(0,si.val.length-2);
-				// RE LOG
-				l = si.val.lastIndexOf(' ');
+			// IF STRING ENDS IN '&nbsp;' REMOVE IT BEFORE REMOVING LAST WORD
+			if (l === (si.val.length)-6) {
+				si.val = si.val.substring(0,si.val.length-6);
+				// RE LOG, NEW BREAKING SPACE INDEX
+				l = si.val.lastIndexOf('&nbsp;');
 			}
 			// SET si.val W/O LAST WORD
-			si.val = si.val.substring(0,l);				
-			// SPACE IS BEING REMOVED FOR SOME REASON, ADD IT BACK
-			// if (si.val.length > 0) {
-			// 	si.val+=' ';
-			// }
+			si.val = si.val.substring(0,l);
+			// ADD BACK SPACE CHAR TO END, OR SHOW PLACEHOLDER
+			si.val.length > 0 ? si.val += '\xa0': si.inputD.classList.remove('search-hide');
 			// (NOTE) KISS
 			inputFake.innerHTML = si.val;
-			si.val = si.val;
+			// si.val = si.val;
 			si.inputD.value = si.val;
-
 		}
 
 		// KEY A
@@ -503,7 +507,8 @@ si.inputD.addEventListener('keydown', function(e) {
 si.inputD.addEventListener('keypress', function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
-	if (e.keyCode !== 38) {
+	if (e.keyCode !== 38 && e.keyCode !== 8) {
+		console.log(e.keyCode);
 		si.inputD.classList.add('search-hide');
 	}
 
@@ -520,30 +525,16 @@ si.inputD.addEventListener('keypress', function(e) {
 			}
 			// UPDATE W/ LAST ADDED LETTER
 			si.val = inputFake.innerHTML;
-			// console.log(p);
-			// inputFake.innerHTML = p + keyboardMap[e.keyCode].toLowerCase();
-		// }
 
 	}
 
-	// BACKSPACE
-	else if (e.keyCode === 8) {
-		if (!keyCtrlDown) {
-		si.val = si.val.replace(/&nbsp;/g, '\xa0');
-		// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-		si.val = si.val.replace(/\s\s+/g, ' ');
-		inputFake.innerHTML = si.val.substring(0,si.val.length-1);
-		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
-		if (si.val.length <= 1) {
-			si.inputD.classList.remove('search-hide');
-		}
-		}
-	}
 
 
 	// KEY ENTER
 	if (e.keyCode == '13' && si.val !== '') {
 		console.log('var si.val = ' + si.val);
+		si.inputD.classList.remove('search-hide');
+		console.log('removing search hide');
 		// IF NOT FIRST INDEX - URL SEARCH
 		if (si.plInc > 0) {
 			// window.open(si.link[si.plInc] + si.val);
@@ -564,7 +555,6 @@ si.inputD.addEventListener('keypress', function(e) {
 			else {
 				window.open(si.val);
 			}
-		si.inputD.classList.remove('search-hide');
 		}
 
 		inputFake.innerHTML = '';
@@ -685,15 +675,22 @@ function searchSwitch(dir) {
 	// SHOW PLACEHOLDER
 	si.inputD.classList.remove('search-hide');
 
-	// REC PREV SEARCH INPUT
-	si.valHolder = si.val;
 	dotChange();
 
-	// (NOTE) OVERWRITES IF MOVE FASTER THAN setTimeout
+	// CACHE & CHECK FOR VAL, REASSIGN IF EXISTS
+	searchReassign();
+}
+
+function searchReassign() {
+
+	// REC PREV SEARCH INPUT
+	si.valHolder = si.val;
+
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
+		console.log(si.valHolder.replace(/&nbsp;/g, ' '));
 		// THERE WAS A VALUE, REASSIGN IT
-		if (si.val.replace(/\s/g, '').length > 0) {
+		if (si.valHolder.replace(/&nbsp;/g, ' ').length > 0) {
 			si.val = si.valHolder;
 			inputFake.innerHTML = si.valHolder;
 			// HIDE PLACEHOLDER
@@ -701,13 +698,14 @@ function searchSwitch(dir) {
 		}
 		// SEARCH VALUE IS ONLY WHITE SPACE, RESET
 		else {
-			// console.log('just white space, reset');
 			clearSearch();
 			si.valHolder = '';
 		}
 	},200);
+
 	// ALWAYS CLEAR IT, setTimeout WILL RE-ASSIGN
 	clearSearch();
+
 }
 
 //
@@ -758,9 +756,9 @@ var dotChange = (function() {
 		i;
 	for (i=0; i<len; i++) {
 		(function(index){
-				dotChildren[i].addEventListener('click', function() {
+			dotChildren[i].addEventListener('click', function() {
 				// DISABLE THE UN-FOCUS FLASH ON CLICK PRESS
-				focusSearch();
+				// focusSearch();
 				// RE-ASSIGN INCREMENTAL PLACEHOLDER VAR
 				si.plInc = index;
 				// SWAP ICON, PLACEHOLDER, SHOW PLACEHOLDER
@@ -772,6 +770,7 @@ var dotChange = (function() {
 					noDotEachDom[i].className = 'no-dot';
 				}
 				noDotEachDom[si.plInc].classList.add('no-dot-sel');
+				searchReassign();
 			});
 		})(i);
 	}

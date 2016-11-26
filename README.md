@@ -58,6 +58,8 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 ----
 
 ### To-Do
+- ctrl + backspace to del all spaces at end of word
+    
 - web app manifest & service worker
 
 - large clock readout (just need to style)
