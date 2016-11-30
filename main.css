@@ -34,7 +34,8 @@ nav {
   background: rgba(0,0,0,0.1);
   color: rgba(255,255,255,0.4);
   font-size: 12px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Jaldi', helvetica, arial, sans-serif;
+  letter-spacing: 1px;
   font-weight: 600;
   z-index: 10;
   opacity: 0;
@@ -471,8 +472,6 @@ ul li a:focus:after {
     background: #333;
     position: absolute;
     right: 0; left: 0; top: 0;
-    font-family: 'Jaldi', sans-serif;
-    letter-spacing: 1px;
   }
   nav span { padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
 
