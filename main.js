@@ -500,6 +500,11 @@ si.inputD.addEventListener('keydown', function(e) {
 			console.log('key a');
 		}
 
+		// KEY V - ENABLE PASTING)
+		if (e.which === 86) {
+
+		}
+
 	}
 
 });
