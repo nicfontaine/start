@@ -10,21 +10,32 @@ body {
   padding-right: 0;
   /*background: #9D8ABA;*/
   margin: 0;
+  overflow: hidden;
 }
 
 body {
   font-family: 'Jaldi', sans-serif;
 }
 
-#time-large {
+.time-large {
   position: absolute;
   right: 0; left: 0;
-  top: 50%;
+  top: 54%;
   transform: translateY(-50%);
-  font-size: 50vw;
+  font-size: 26vw;
+  color: rgba(255,255,255,0.08);
+}
+
+#time-large-l {
+  left: -100%;
   width: 100%;
-  color: rgba(0,0,0,0.2);
-  display: none;
+  text-align: right;
+}
+
+#time-large-r {
+  left: 100%;
+  width: 100%;
+  text-align: left;
 }
 
 nav {
@@ -511,6 +522,10 @@ ul li a:focus:after {
     padding: 3px 4px;
     margin: 0 3px;
     cursor: pointer;
+  }
+
+  .time-large {
+    display: none;
   }
 
 }

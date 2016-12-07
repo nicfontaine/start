@@ -178,7 +178,8 @@ function colourConstructor (h,s,l) {
 // DATE
 var navDateDom = document.getElementById('date-d');
 var navTimeDom = document.getElementById('date-t');
-var timeLargeDom = document.getElementById('time-large');
+var timeLargeR = document.getElementById('time-large-r');
+var timeLargeL = document.getElementById('time-large-l');
 
 var dateD = new Date();
 navDateDom.innerHTML = dateD.toDateString();
@@ -200,7 +201,11 @@ function clock() {
 		dateS = '0' + dateS.toString();
 	}
 	navTimeDom.innerHTML = dateH + ':' + dateM + ':' + dateS;
-	timeLargeDom.innerHTML = dateH + ':' + dateM;
+	if (dateH.toString().length < 2) {
+		dateH = '0' + dateH.toString();
+	}
+	timeLargeL.innerHTML = dateH;
+	timeLargeR.innerHTML = dateM;
 
 	setTimeout(clock,1000);
 
