@@ -329,15 +329,16 @@ ul li a {
   position: relative;
   overflow: hidden;
   will-change: auto;
-  /*border: 1px solid rgba(0,0,0,0.08);*/
+  border: 1px solid rgba(255,255,255,0.1);
   z-index: 1;
   transition: opacity 0.3s;
   -webkit-backface-visibility: hidden;
   transform: translateZ(0) scale(1.0, 1.0);
+  opacity: 0.8;
 }
 
 ul li a.show {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 ul li a .fa {
@@ -386,9 +387,11 @@ ul li a:focus, ul li:hover a {
   filter: brightness(105%);
   box-shadow: 0 2px 5px rgba(0,0,0,0.35);
   outline: none;
-  border: none !important;
+  /*border: none !important;*/
   /*margin-top: -1px;*/
   transform: translateY(-1px);
+  opacity: 1;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 ul li a:focus:after {
