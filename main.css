@@ -235,6 +235,11 @@ iframe {
   animation: cursorBlink 0.8s linear infinite;
 }
 
+#input-fake.input-cursor-inactive:after {
+  content: '';
+  display: none;
+}
+
 @keyframes cursorBlink {
   0% { opacity: 0; }
   49% { opacity: 0; }

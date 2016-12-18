@@ -39,7 +39,7 @@ var cpbl = 50;
 var searchPlaceholders = [
 	'url',
 	'duckduckgo',
-	'google',
+	// 'google',
 	'google maps',
 	'youtube',
 	'soundcloud',
@@ -54,7 +54,7 @@ var searchPlaceholders = [
 var searchUrls = [
 	'',
 	'https://duckduckgo.com/?q=',
-	'https://www.google.com/#q=',
+	// 'https://www.google.com/#q=',
 	'https://www.google.com/maps/search/',
 	'https://www.youtube.com/results?search_query=',
 	'https://soundcloud.com/search?q=',
@@ -78,7 +78,7 @@ var searchIconSwap = true;
 var searchIcons = [
 	'<i class="fa fa-globe" aria-hidden="true"></i>',
 	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
-	'<i class="fa fa-google" aria-hidden="true"></i>',
+	// '<i class="fa fa-google" aria-hidden="true"></i>',
 	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
 	'<i class="fa fa-youtube" aria-hidden="true"></i>',
 	'<i class="fa fa-soundcloud" aria-hidden="true"></i>',
@@ -415,6 +415,7 @@ function focusLink() {
 
 function focusSearch() {
 	si.inputD.focus();
+	inputFake.classList.remove('input-cursor-inactive');
 }
 
 var cursorMoveEnable = false;
@@ -605,6 +606,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		linkFocus = 0;
 		toggleTab = 'links';
 		focusLink();
+		inputFake.classList.add('input-cursor-inactive');
 	}
 
 	// KEY LEFT
