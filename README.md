@@ -58,7 +58,7 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 ----
 
 ### To-Do
-- ctrl + backspace to del all spaces at end of word
+- paste from clipboard
 
 - update ip address when it changes
     

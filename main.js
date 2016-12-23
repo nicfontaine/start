@@ -136,7 +136,8 @@ var si = {
 		:
 		input.replace(/&nbsp;/g, ' '); // DECODE TO SPACES
 		return out;
-	}
+	},
+	deletion: ''
 }
 
 // -------------------------------
@@ -481,7 +482,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
 
-		// BACKSPACE
+		// CTLR + BACKSPACE
 		if (e.which === 8) {
 			// console.log('ctrl + backspace');
 			e.preventDefault();
@@ -496,12 +497,26 @@ si.inputD.addEventListener('keydown', function(e) {
 				// RE LOG, NEW BREAKING SPACE INDEX
 				l = si.val.lastIndexOf('&nbsp;');
 			}
+			// CACHE DELETED VALUE
+			si.deletion = si.val.substring(l,si.val.length);
+			si.deletion = si.deletion.replace(/&nbsp;/g, '');
+
 			// SET si.val W/O LAST WORD
 			si.val = si.val.substring(0,l);
 			// ADD BACK SPACE CHAR TO END, OR SHOW PLACEHOLDER
 			si.val.length > 0 ? si.val += '\xa0': si.inputD.classList.remove('search-hide');
-			// (NOTE) KISS
-			inputFake.innerHTML = si.val;
+
+			// ADD DELETION SPAN FOR STYLE, THEN DELETE
+			inputFake.innerHTML = si.val + '<span id="deletion">' + si.deletion + '</span>';
+			si.delD = document.getElementById('deletion');
+			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
+			inputFake.classList.add('input-cursor-inactive');
+			setTimeout(function(){ si.delD.style.width = '0px'; },70);
+			setTimeout(function(){ 
+				inputFake.innerHTML = si.val;
+				inputFake.classList.remove('input-cursor-inactive');
+			},300);
+
 			// si.val = si.val;
 			si.inputD.value = si.val;
 		}
