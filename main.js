@@ -441,8 +441,10 @@ si.inputD.addEventListener('keydown', function(e) {
 	if (e.keyCode === 8) {
 		if (!keyCtrlDown) {
 			si.val = si.val.replace(/&nbsp;/g, '\xa0');
+			si.val = si.codec(si.val,false);
 			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
 			si.val = si.val.replace(/\s\s+/g, ' ');
+			// REMOVE LAST SPACE OR CHAR
 			inputFake.innerHTML = si.val.substring(0,si.val.length-1);
 		}
 		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
@@ -452,7 +454,6 @@ si.inputD.addEventListener('keydown', function(e) {
 			si.inputD.value = '';
 		}
 	}
-
 
 	// DON'T OVERWRITE IF IS UP KEY
 	if (e.keyCode !== 38) {
@@ -479,19 +480,19 @@ si.inputD.addEventListener('keydown', function(e) {
 		// si.val = si.val.replace(/&nbsp;/g, ' ');
 		l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
-		console.log(l + ' is last index of &nbsp;');
 
 		// BACKSPACE
 		if (e.which === 8) {
-			console.log('ctrl + backspace');
-			// IF NOT DISABLED, TAKES AN ADDITIONAL LETTER OFF THE END xD
+			// console.log('ctrl + backspace');
 			e.preventDefault();
-			// MERGE ANY CONTINUOUS SPACES TO 1 SPACE
-			// si.val = si.val.replace(/\s\s+/g, ' ');
 
 			// IF STRING ENDS IN '&nbsp;' REMOVE IT BEFORE REMOVING LAST WORD
 			if (l === (si.val.length)-6) {
 				si.val = si.val.substring(0,si.val.length-6);
+
+				// CONVERT TO ' ', MERGE SPACES, REMOVE ANY OFF END
+				si.val = si.codec(si.val.replace(/&nbsp;/g, '\xa0').replace(/\s\s+/g, ' '),true);
+
 				// RE LOG, NEW BREAKING SPACE INDEX
 				l = si.val.lastIndexOf('&nbsp;');
 			}
@@ -525,7 +526,7 @@ si.inputD.addEventListener('keypress', function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
 	if (e.keyCode !== 38 && e.keyCode !== 8) {
-		console.log(e.keyCode);
+		// console.log(e.keyCode);
 		si.inputD.classList.add('search-hide');
 	}
 
@@ -536,9 +537,20 @@ si.inputD.addEventListener('keypress', function(e) {
 
 			// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
 			if (keyUpEnable) {
+				// ADD CHAR IF 'CTRL' KEY ISN'T DOWN
+				if (!keyCtrlDown) {
+					inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();						
+				}
+				// 'CTRL' + KEY COMBOS
+				else {
+					// 'CTRL + V'
+					if (String.fromCharCode(k).toLowerCase() === 'v') {
+						console.log('ctrl + v, paste');
+					}
+				}
+
 				// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
 				// (NOTE) THIS IS WHERE ALL LETTER ADDING FROM TYPING TAKES PLACE
-				inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();	
 			}
 			// UPDATE W/ LAST ADDED LETTER
 			si.val = inputFake.innerHTML;
