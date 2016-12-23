@@ -196,10 +196,13 @@
 
   <script type="text/javascript" src="https://l2.io/ip.js?var=myip"></script>
       <script>
+        var ip = document.getElementById("ip")
           function systemip(){
-          document.getElementById("ip").innerHTML = 'IP: ' + myip;
+          ip.innerHTML = 'IP: ' + myip;
+          console.log('checking ip');
           }
           systemip();
+          // setTimeout(function(){ systemip(); },20000);
       </script>
 
   <script
