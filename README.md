@@ -20,7 +20,7 @@
 
 - I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever icons you prefer (you'll have to style them), or flip through there and grab whatever works.
 
-- Add or remove any search sites; just match up placeholder, url slug, and mini icon at the same index in the three array vars below. The little 'slide number dots' below will read the length of the array & increase or decrease accordingly.
+- Add or remove any search sites; just match up placeholder, url slug, and mini icon at the same index in the three array vars below. The little 'mini search icons' below will read the length of the array & increase or decrease accordingly.
 
 - Mini search icons are clickable, and touch swipe within the search box is enabled to change search sites.
 
@@ -59,10 +59,12 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 ### To-Do
 - ctrl + backspace to del all spaces at end of word
+
+- update ip address when it changes
     
 - web app manifest & service worker
 
-- large clock readout (just need to style)
+- (bug) ctrl-disable gets stuck down? disabling *a* key, or fuxxing w/ backspace
 
 - ctrl + backspace highlight word, delete w/ timeout style
 
