@@ -59,7 +59,7 @@ nav {
 
 nav span {
   padding: 0 25px;
-  border-right: 1px solid rgba(0,0,0,0.1);
+  border-right: 3px solid rgba(0,0,0,0.04);
 }
 
 nav span:last-child {
