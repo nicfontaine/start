@@ -2,7 +2,7 @@
 
 > Select colour tone, change your search pages, drop in your favourite sites & icons, share geolocation for local weather data
 
-![img preview](https://github.com/ngpfontaine/startp/blob/master/extra/start_screen_01.png)
+![img preview](https://github.com/ngpfontaine/startp/blob/master/extra/start_screen_02.png)
 
 
 ### Usage
