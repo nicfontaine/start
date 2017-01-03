@@ -242,7 +242,7 @@ iframe {
 
 #deletion {
   background: rgba(0,0,0,0.15);
-  transition: width 0.2s ease-in;
+  transition: width 0.15s linear;
   display: inline-block;
   overflow: hidden;
   position: absolute;

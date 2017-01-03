@@ -481,7 +481,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
 
-		// CTLR + BACKSPACE
+		// CTRL + BACKSPACE
 		if (e.which === 8) {
 			// console.log('ctrl + backspace');
 			e.preventDefault();
@@ -510,7 +510,7 @@ si.inputD.addEventListener('keydown', function(e) {
 			si.delD = document.getElementById('deletion');
 			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
 			inputFake.classList.add('input-cursor-inactive');
-			setTimeout(function(){ si.delD.style.width = '0px'; },70);
+			setTimeout(function(){ si.delD.style.width = '0px'; },40);
 			setTimeout(function(){ 
 				inputFake.innerHTML = si.val;
 				inputFake.classList.remove('input-cursor-inactive');
