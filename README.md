@@ -66,8 +66,6 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 - (bug) ctrl-disable gets stuck down? disabling *a* key, or fuxxing w/ backspace
 
-- ctrl + backspace highlight word, delete w/ timeout style
-
 - use other icons
 
 - refactor tile grid on window resize
