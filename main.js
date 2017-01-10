@@ -6,13 +6,13 @@
 // BASE COLOUR SETTINGS
 //
 
-function randomIntFromInterval(min,max) {
+function randomInt(min,max) {
   return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 // HUE, 0-360
-var cpbh = randomIntFromInterval(0,360);
-// var cpbh = 200;
+// var cpbh = randomInt(0,360);
+var cpbh = 200;
 
 // (NOTE TO-DO) LIGHT/DARK MODE
 // var cMode = 'dark';
@@ -160,26 +160,36 @@ var linkFocusOffTop;
 // COLOUR ASSIGNMENT, DONE HERE INSTEAD OF CSS SO WE CAN HAVE SOME SLIGHT HUE SHIFT
 //
 
-var cpMods = {
-	linkBgHue: cpbh*1.01,
-	linkBgSat: cpbs*1.16,
-	linkBgLight: cpbl*1.19,
-}
 
-// ASSIGN BODY BG COLOUR
-document.getElementsByTagName('body')[0].style.background = colourConstructor(cpbh,cpbs,cpbl);
+var colorfy = function colorfy() {
+	cpbh = randomInt(0,360);
+	cpbl = randomInt(44,54);
+	cpbs = randomInt(17,19);
 
-// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
-var linksColCalc = colourConstructor(cpMods.linkBgHue,cpMods.linkBgSat,cpMods.linkBgLight);
-for (var i=0; i<linksNo; i++) {
-	links[i].style.background = linksColCalc;
-}
+	var cpMods = {
+		linkBgHue: cpbh*1.01,
+		linkBgSat: cpbs*1.16,
+		linkBgLight: cpbl*1.19
+	}
 
-// BUILD THE HSL VALUES & RETURN
-function colourConstructor (h,s,l) {
-	var hslCombo = 'hsl(' + h + ',' + s + '%,' + l + '%)';
-	return hslCombo;
-}
+	// ASSIGN BODY BG COLOUR
+	document.getElementsByTagName('body')[0].style.background = colourConstructor(cpbh,cpbs,cpbl);
+
+	// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
+	var linksColCalc = colourConstructor(cpMods.linkBgHue,cpMods.linkBgSat,cpMods.linkBgLight);
+	for (var i=0; i<linksNo; i++) {
+		links[i].style.background = linksColCalc;
+	}
+
+	// BUILD THE HSL VALUES & RETURN
+	function colourConstructor (h,s,l) {
+		var hslCombo = 'hsl(' + h + ',' + s + '%,' + l + '%)';
+		return hslCombo;
+	}
+
+};
+colorfy();
+
 
 // DATE
 var navDateDom = document.getElementById('date-d');
@@ -313,12 +323,31 @@ window.onresize = function() {
 
 }
 
+var keyAltDown = false;
+
 // RE-FOCUS SEARCH ON TAB
 document.addEventListener('keydown', function(e) {
 	if (e.keyCode == '9') {
 		e.preventDefault();
 		focusSearch();
 	}
+	// ALT
+	if (e.keyCode == '18') {
+		keyAltDown = true;
+	}
+	// KEY  C
+	if (e.keyCode == '67' && keyAltDown) {
+		colorfy();
+	}
+
+});
+
+document.addEventListener('keyup',function(e) {
+	// ALT
+	if (e.keyCode == '18') {
+		keyAltDown = false;
+	}
+
 });
 
 //
@@ -477,6 +506,11 @@ si.inputD.addEventListener('keydown', function(e) {
 	// CTRL KEY IS DOWN, WAIT FOR COMBO TO TRIGGER
 	if (keyCtrlDown) {
 
+		// (NOTE) KINDA NOT WORKING?
+		if (e.keyCode === 36) {
+			colorfy();
+		}
+
 		// si.val = si.val.replace(/&nbsp;/g, ' ');
 		l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
@@ -520,6 +554,10 @@ si.inputD.addEventListener('keydown', function(e) {
 			si.inputD.value = si.val;
 		}
 
+		if (e.which === 9) {
+			keyCtrlDown = false;
+		}
+
 		// KEY A
 		if (e.which === 65) {
 			// DISABLE ANNOYING CTRL+A HIGHLIGHT
@@ -538,40 +576,37 @@ si.inputD.addEventListener('keydown', function(e) {
 
 si.inputD.addEventListener('keypress', function(e) {
 
-	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
-	if (e.keyCode !== 38 && e.keyCode !== 8) {
-		// console.log(e.keyCode);
+	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP, & 'ALT' ISN'T DOWN
+	if (e.keyCode !== 38 && e.keyCode !== 8 && !keyAltDown) {
 		si.inputD.classList.add('search-hide');
 	}
 
 	// IF NOT IN ARRAY
 	if (rejectArray.indexOf(e.keyCode.toString()) < 0) {
 
-			k = e.which;
+		k = e.which;
 
-			// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
-			if (keyUpEnable) {
-				// ADD CHAR IF 'CTRL' KEY ISN'T DOWN
-				if (!keyCtrlDown) {
-					inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();						
-				}
-				// 'CTRL' + KEY COMBOS
-				else {
-					// 'CTRL + V'
-					if (String.fromCharCode(k).toLowerCase() === 'v') {
-						console.log('ctrl + v, paste');
-					}
-				}
-
-				// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
-				// (NOTE) THIS IS WHERE ALL LETTER ADDING FROM TYPING TAKES PLACE
+		// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
+		if (keyUpEnable) {
+			// ADD CHAR IF 'CTRL' OR 'ALT' KEY AREN'T DOWN
+			if (!keyCtrlDown && !keyAltDown) {
+				inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();						
 			}
-			// UPDATE W/ LAST ADDED LETTER
-			si.val = inputFake.innerHTML;
+			// 'CTRL' + KEY COMBOS
+			else {
+				// 'CTRL + V'
+				if (String.fromCharCode(k).toLowerCase() === 'v') {
+					console.log('ctrl + v, paste');
+				}
+			}
+
+			// ADD LETTER FROM KEYCODE TO END OF FAKE INPUT
+			// (NOTE) THIS IS WHERE ALL LETTER ADDING FROM TYPING TAKES PLACE
+		}
+		// UPDATE W/ LAST ADDED LETTER
+		si.val = inputFake.innerHTML;
 
 	}
-
-
 
 	// KEY ENTER
 	if (e.keyCode == '13' && si.val !== '') {
