@@ -197,12 +197,14 @@ iframe {
   font-size: 24px;
   color: transparent;
   text-shadow: 0px 0px 0 rgba(255,255,255,0.3);
+  opacity: 1;
+  transition: text-shadow 0.2s;
 }
 
 .search-hide {
   /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
   /*color: transparent !important;*/
-  text-shadow: none !important;
+  text-shadow: 0 0 0 rgba(255,255,255,0) !important;
 }
 
 #input-fake {

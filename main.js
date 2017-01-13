@@ -323,33 +323,6 @@ window.onresize = function() {
 
 }
 
-var keyAltDown = false;
-
-// RE-FOCUS SEARCH ON TAB
-document.addEventListener('keydown', function(e) {
-	if (e.keyCode == '9') {
-		e.preventDefault();
-		focusSearch();
-	}
-	// ALT
-	if (e.keyCode == '18') {
-		keyAltDown = true;
-	}
-	// KEY  C
-	if (e.keyCode == '67' && keyAltDown) {
-		colorfy();
-	}
-
-});
-
-document.addEventListener('keyup',function(e) {
-	// ALT
-	if (e.keyCode == '18') {
-		keyAltDown = false;
-	}
-
-});
-
 //
 // MOVE THROUGH LINKS
 //
@@ -506,9 +479,13 @@ si.inputD.addEventListener('keydown', function(e) {
 	// CTRL KEY IS DOWN, WAIT FOR COMBO TO TRIGGER
 	if (keyCtrlDown) {
 
-		// (NOTE) KINDA NOT WORKING?
-		if (e.keyCode === 36) {
+		// KEY 'C'
+		if (e.which === 67) {
 			colorfy();
+			// (NOTE) IT"S BEING ADDED BACK FURTHER DOWN SOMEWHERE, PROB 'keypress'
+			if (si.val.length < 1) {
+				si.inputD.classList.remove('search-hide');	
+			}
 		}
 
 		// si.val = si.val.replace(/&nbsp;/g, ' ');
@@ -576,8 +553,8 @@ si.inputD.addEventListener('keydown', function(e) {
 
 si.inputD.addEventListener('keypress', function(e) {
 
-	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP, & 'ALT' ISN'T DOWN
-	if (e.keyCode !== 38 && e.keyCode !== 8 && !keyAltDown) {
+	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
+	if (e.keyCode !== 38 && e.keyCode !== 8) {
 		si.inputD.classList.add('search-hide');
 	}
 
@@ -588,8 +565,8 @@ si.inputD.addEventListener('keypress', function(e) {
 
 		// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
 		if (keyUpEnable) {
-			// ADD CHAR IF 'CTRL' OR 'ALT' KEY AREN'T DOWN
-			if (!keyCtrlDown && !keyAltDown) {
+			// ADD CHAR IF 'CTRL' ISN'T DOWN
+			if (!keyCtrlDown) {
 				inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();						
 			}
 			// 'CTRL' + KEY COMBOS
