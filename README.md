@@ -24,7 +24,10 @@
 
 - Mini search icons are clickable, and touch swipe within the search box is enabled to change search sites.
 
-- Weather imgs are lazy loaded after weather data comes back from the server, so it may take a few seconds to display. New data is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please. All of the possible weather descriptions I have seen thus far are listed in comments
+- Weather imgs are lazy loaded after weather data comes back from the server, so it may take a few seconds to display. New data is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please. All of the possible weather descriptions I have seen thus far are listed in comments    
+
+- Use 'Ctrl + C' to randomly generate a new base colour
+
 
 ### Customize Options
 - A few vars in ``` main.js ```:
@@ -56,6 +59,13 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 - [FA Icons](http://fontawesome.io/get-started/)
 
 ----
+
+### Bugs
+- 'Ctrl + C' hides placeholder text
+
+- `keyCtrlDown` gets stuck on false sometimes when alt-tabbing, until Ctrl is pressed again (disables typing)
+
+- Sometimes `.deletion` span gets transferred in search (maybe when typing before it has finished deleting?)
 
 ### To-Do
 - paste from clipboard
