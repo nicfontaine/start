@@ -65,7 +65,10 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 - `keyCtrlDown` gets stuck on false sometimes when alt-tabbing, until Ctrl is pressed again (disables typing)
 
-- Sometimes `.deletion` span gets transferred in search (maybe when typing before it has finished deleting?)
+- Sometimes `.deletion` span gets transferred in search (maybe when typing before it has finished deleting?)   
+
+- clicking on placeholder icon brings back previous search
+
 
 ### To-Do
 - paste from clipboard
