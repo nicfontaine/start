@@ -61,9 +61,6 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 ----
 
 ### Bugs
-- 'Ctrl + C' hides placeholder text
-
-- `keyCtrlDown` gets stuck on false sometimes when alt-tabbing, until Ctrl is pressed again (disables typing)
 
 - Sometimes `.deletion` span gets transferred in search (maybe when typing before it has finished deleting?)   
 

@@ -91,6 +91,19 @@ var searchIcons = [
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
 
+document.addEventListener('keydown', function() {
+
+	var keyCtrlRelease;
+	// DEFAULT keyCtrlDown BACK TO false AFTER TYPING DELAY
+	clearTimeout(keyCtrlRelease);
+
+	keyCtrlRelease = setTimeout(function() {
+		console.log('------ 3 seconds for clearing keyCtrlDown');
+		keyCtrlDown = false;
+	},3000);
+
+});
+
 // HIDE CURSOR AFTER DELAY
 var cursorToggleShow = true;
 var cursorTimer;
@@ -315,6 +328,7 @@ window.onresize = function() {
 
 	// DISABLE IF USER IS STILL RESIZING, SO NOT CONSTANTLY FIRING
 	clearTimeout(resizeTimer);
+
 	resizeTimer = setTimeout(function() {
 		console.log('resizing');
 		// REFACTOR GRID
@@ -554,7 +568,8 @@ si.inputD.addEventListener('keydown', function(e) {
 si.inputD.addEventListener('keypress', function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
-	if (e.keyCode !== 38 && e.keyCode !== 8) {
+	// NOT ON backspace, up, OR IF keyCtrlDown
+	if (e.keyCode !== 38 && e.keyCode !== 8 && !keyCtrlDown) {
 		si.inputD.classList.add('search-hide');
 	}
 
@@ -634,6 +649,10 @@ si.inputD.addEventListener('keypress', function(e) {
 
 // JUST FOR ARROW KEYS, TY CHROME AND IE!
 var keyUpEnable = true;
+
+//
+// SEARCH INPUT KEYDOWN
+//
 
 si.inputD.addEventListener('keydown', function(e) {
 
