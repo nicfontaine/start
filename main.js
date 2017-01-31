@@ -182,7 +182,7 @@ var colorfy = function colorfy() {
 	var cpMods = {
 		linkBgHue: cpbh*1.01,
 		linkBgSat: cpbs*1.16,
-		linkBgLight: cpbl*1.19
+		linkBgLight: cpbl*1.27
 	}
 
 	// ASSIGN BODY BG COLOUR
