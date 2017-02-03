@@ -41,7 +41,8 @@ nav {
   position: fixed;
   top: 0; right: 0; left: 0;
   padding: 6px;
-  background: rgba(0,0,0,0.1);
+  /*background: rgba(0,0,0,0.1);*/
+  background: transparent;
   color: rgba(255,255,255,0.4);
   font-size: 12px;
   font-family: 'Jaldi', helvetica, arial, sans-serif;
@@ -58,7 +59,7 @@ nav {
 
 nav span {
   padding: 0 25px;
-  border-right: 3px solid rgba(0,0,0,0.04);
+  /*border-right: 3px solid rgba(0,0,0,0.04);*/
 }
 
 nav span:last-child {
