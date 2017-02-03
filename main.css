@@ -12,7 +12,9 @@ body {
   /*background: #9D8ABA;*/
   margin: 0;
   overflow: hidden;
+  background: #333;
   transition: background 0.4s;
+  -moz-transition: background 0.4s;
 }
 
 .time-large {
