@@ -5,16 +5,14 @@ html {
 }
 
 body {
+  font-family: 'Jaldi', sans-serif;
   text-align: center;
   /*padding: 20px;*/
   padding-right: 0;
   /*background: #9D8ABA;*/
   margin: 0;
   overflow: hidden;
-}
-
-body {
-  font-family: 'Jaldi', sans-serif;
+  transition: background 0.4s;
 }
 
 .time-large {
@@ -346,7 +344,7 @@ ul li a {
   will-change: auto;
   border: 1px solid rgba(255,255,255,0.1);
   z-index: 1;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, background 0.4s;
   -webkit-backface-visibility: hidden;
   transform: translateZ(0) scale(1.0, 1.0);
   opacity: 0.8;
