@@ -11,7 +11,7 @@ body {
   padding-right: 0;
   /*background: #9D8ABA;*/
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: #758961;
   transition: background-color 0.4s;
   -moz-transition: background-color 0.4s;
@@ -21,21 +21,39 @@ body {
   position: absolute;
   right: 0; left: 0;
   top: 54%;
-  transform: translateY(-50%);
   font-size: 26vw;
   color: rgba(255,255,255,0.08);
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: inherit;
 }
 
 #time-large-l {
   left: -100%;
   width: 100%;
   text-align: right;
+  transform: translate(-110%,-50%);
+  opacity: 0;
+  transition: all 0.6s 1.1s;
 }
 
 #time-large-r {
   left: 100%;
   width: 100%;
   text-align: left;
+  opacity: 0;
+  transform: translate(110%,-50%);
+  transition: all 0.6s 1.2s;
+}
+
+#time-large-l.show, #time-large-r.show {
+  transform: translate(0,-50%);
+  opacity: 1;
 }
 
 nav {
@@ -51,11 +69,13 @@ nav {
   font-weight: 600;
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.6s;
+  transition: all 0.6s 0.7s;
+  transform: translateY(-40px);
 }
 
 #nav-weather.show {
   opacity: 1;
+  transform: translateY(0);
 }
 
 nav span {
@@ -75,6 +95,9 @@ nav span:last-child {
   /*opacity: 0.3;*/
   background-size: cover !important;
   /*filter: brightness(80%);*/
+  opacity: 0;
+  animation: fadeOpIn 2s 2s;
+  animation-fill-mode: forwards;
 }
 
 #weather-bg div {
@@ -121,7 +144,7 @@ nav span:last-child {
 .container-main {
   max-width: 600px;
   margin: 0 auto;
-  position: absolute;
+  position: fixed;
   right: 0;
   left: 0;
   top: 53%;
@@ -188,7 +211,7 @@ iframe {
   letter-spacing: 1px;
   padding-left: 87px;
   border-radius: 4px;
-  animation: searchLoad 0.3s ease-in forwards 0.2s;
+  animation: searchLoad 0.3s ease-in forwards 0.3s;
   /*font-weight: 700;*/
   /*letter-spacing: 2px;*/
 
@@ -198,7 +221,7 @@ iframe {
   font-size: 24px;
   color: transparent;
   text-shadow: 0px 0px 0 rgba(255,255,255,0.3);
-  opacity: 1;
+  opacity: 0;
   transition: text-shadow 0.2s;
 }
 
@@ -246,6 +269,7 @@ iframe {
 #deletion {
   background: rgba(0,0,0,0.15);
   transition: width 0.15s linear;
+  transition: width 0s linear;
   display: inline-block;
   overflow: hidden;
   position: absolute;
@@ -268,8 +292,9 @@ iframe {
 }
 
 @keyframes searchLoad {
-  from { width: 22%; }
-  to { width: 100%; }
+  0% { width: 22%; opacity: 0; }
+  20% { opacity: 1; }
+  100% { width: 100%; opacity: 1; }
 }
 
 #search-input:focus {
@@ -350,7 +375,8 @@ ul li a {
   transition: opacity 0.3s, background 0.4s;
   -webkit-backface-visibility: hidden;
   transform: translateZ(0) scale(1.0, 1.0);
-  opacity: 0.8;
+  opacity: 0;
+  display: none;
 }
 
 ul li a.show {
@@ -429,6 +455,14 @@ ul li a:focus:after {
   left: 0;
   right: 0;
   margin-top: 9px;
+  opacity: 0;
+  animation: fadeOpIn 0.7s 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOpIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .no-dot {
@@ -463,6 +497,25 @@ ul li a:focus:after {
   color: rgba(255,255,255,0.6);
 }
 
+/*** BROWSER ***/
+
+#if-browser {
+  display: none;
+  position: absolute;
+  top: 100% !important;
+  z-index: 100;
+  right: 0; left: 0; top: 0; bottom: 0;
+  border: none;
+  transform: translateY(0);
+  transition: transform 0.3s ease-out;
+  width: 100%;
+  height: 100%;
+}
+
+#if-browser.show {
+  transform: translateY(-100%);
+}
+
 @media (max-height: 700px) {
 
   ul li {
@@ -486,7 +539,7 @@ ul li a:focus:after {
 
   body {
     position: absolute;
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 100%;
     height: 100vh;
   }
@@ -507,7 +560,7 @@ ul li a:focus:after {
 
   .container-main {
     /*position: relative;*/
-    position: absolute;
+    position: fixed;
     right: 0; left: 0; top: 0; bottom: 0;
 
     overflow-y: scroll;

@@ -91,9 +91,10 @@ var searchIcons = [
 /****     END EDIT SETTINGS VIA VARIABLES     ****/
 /*************************************************/
 
+var keyCtrlRelease;
+
 document.addEventListener('keydown', function() {
 
-	var keyCtrlRelease;
 	// DEFAULT keyCtrlDown BACK TO false AFTER TYPING DELAY
 	clearTimeout(keyCtrlRelease);
 
@@ -176,7 +177,8 @@ var linkFocusOffTop;
 
 var colorfy = function colorfy() {
 	cpbh = randomInt(0,360);
-	cpbl = randomInt(44,54);
+	// cpbl = randomInt(44,54);
+	cpbl = randomInt(30,58);
 	cpbs = randomInt(17,19);
 
 	var cpMods = {
@@ -247,14 +249,19 @@ var dotSectionDomArray = document.getElementsByClassName('section-no-dots');
 var showInc = 0;
 function timeoutShow() {
 	setTimeout(function() {
-		links[showInc].classList.add('show');
+		// links[showInc].classList.add('show');
+		fadeIn(links[showInc]);
 		showInc++;
 		if (showInc<linksNo) {
 			timeoutShow();
 		}
+		// CAN'T COUNT TILL AFTER ALL TILES ARE DISPLAYED
+		else {
+			countEm(); 
+		}
 	},45);
 }
-timeoutShow();
+setTimeout(function() { timeoutShow(); }, 400);
 
 //
 // LET'S FUCK WIT DIS LINK GRID THING
@@ -271,7 +278,8 @@ var rLength = [];
 // USED TO COUNT THROUGH ROWS, & ASSIGN TO ARRAYS. NOT STATIC
 var rLinkCount;
 
-function countEm() {
+// TRIGGERED AFTER END OF LINK SHOW LOOP
+var countEm = function countEm() {
 	// RESET THESE WHENEVER CALLED
 	rNum = 0;
 	rNumTotal = 1;
@@ -309,8 +317,7 @@ function countEm() {
 	}
 	// LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
 	console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
-}
-countEm();
+};
 
 //
 // WINDOW RESIZING
@@ -528,6 +535,7 @@ si.inputD.addEventListener('keydown', function(e) {
 			// SET si.val W/O LAST WORD
 			si.val = si.val.substring(0,l);
 			// ADD BACK SPACE CHAR TO END, OR SHOW PLACEHOLDER
+			// (NOTE) PLACEHOLDER SHOW INSTANTLY WHEN ctrl + backspace. NEED DELAY
 			si.val.length > 0 ? si.val += '\xa0': si.inputD.classList.remove('search-hide');
 
 			// ADD DELETION SPAN FOR STYLE, THEN DELETE
@@ -535,7 +543,7 @@ si.inputD.addEventListener('keydown', function(e) {
 			si.delD = document.getElementById('deletion');
 			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
 			inputFake.classList.add('input-cursor-inactive');
-			setTimeout(function(){ si.delD.style.width = '0px'; },40);
+			setTimeout(function(){ si.delD.style.width = '0px'; },200);
 			setTimeout(function(){ 
 				inputFake.innerHTML = si.val;
 				inputFake.classList.remove('input-cursor-inactive');
@@ -596,7 +604,8 @@ si.inputD.addEventListener('keypress', function(e) {
 			// (NOTE) THIS IS WHERE ALL LETTER ADDING FROM TYPING TAKES PLACE
 		}
 		// UPDATE W/ LAST ADDED LETTER
-		si.val = inputFake.innerHTML;
+		// MAKE SURE TO REMOVE .deletion SPAN IF STILL THERE
+		si.val = inputFake.textContent || inputFake.innerText;
 
 	}
 
@@ -705,7 +714,7 @@ si.inputD.addEventListener('keydown', function(e) {
 });
 
 function clearSearch() {
-	console.log('clearSearch();');
+	// console.log('clearSearch();');
 	// RESET SEARCH INPUT
 	si.inputD.value = '';
 	si.val = '';
@@ -763,7 +772,7 @@ function searchReassign() {
 
 	// RE-ASSIGN VALUE, W/ DELAY
 	setTimeout(function() {
-		console.log(si.valHolder.replace(/&nbsp;/g, ' '));
+		// console.log(si.valHolder.replace(/&nbsp;/g, ' '));
 		// THERE WAS A VALUE, REASSIGN IT
 		if (si.valHolder.replace(/&nbsp;/g, ' ').length > 0) {
 			si.val = si.valHolder;
@@ -960,8 +969,11 @@ function weatherSwap(e,t) {
 		imgArray[i].className = '';
 	}
 
-	// ASSIGN
-	navTop.className = 'show';
+	// ASSIGN, & SHOW TOP NAV & TIME
+	navTop.classList.add('show');
+	timeLargeL.classList.add('show');
+	timeLargeR.classList.add('show');
+
 	document.getElementById(img).className = 'show';
 	navTempDom.innerHTML = t + '&deg; F';
 
@@ -1014,3 +1026,32 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;                                             
 };
+
+// fade out
+
+function fadeOut(el){
+  el.style.opacity = 1;
+
+  (function fade() {
+    if ((el.style.opacity -= .1) < 0) {
+      el.style.display = "none";
+    } else {
+      requestAnimationFrame(fade);
+    }
+  })();
+}
+
+// fade in
+
+function fadeIn(el, display){
+  el.style.opacity = 0;
+  el.style.display = display || "block";
+
+  (function fade() {
+    var val = parseFloat(el.style.opacity);
+    if (!((val += .1) > 1)) {
+      el.style.opacity = val;
+      requestAnimationFrame(fade);
+    }
+  })();
+}

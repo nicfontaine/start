@@ -82,7 +82,7 @@
 
   <div class='search-container'>
     <div id='input-search-icon'><i class="fa fa-search search-icon" aria-hidden="true"></i></div><input id='search-input' placeholder=''></input>
-    <span id='input-fake' spellcheck='false'></span>
+    <span id='input-fake' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></span>
 
     <div class="section-no-dots"></div>
 
@@ -210,6 +210,8 @@
       	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       	crossorigin="anonymous"></script>
   <script type='text/javascript' src='https://cdn.rawgit.com/monkeecreate/jquery.simpleWeather/master/jquery.simpleWeather.min.js'></script>
+
+  <iframe id='if-browser' src=''></iframe>
 
 <!--  <script type='text/javascript' src='extra/jquery-2.2.4.min.js'></script>
  <script type='text/javascript' src='extra/jquery.simpleWeather.min.js'></script>
