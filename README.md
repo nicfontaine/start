@@ -16,6 +16,9 @@
 ---
 
 ### About
+
+- Use 'Ctrl + C' to randomly generate a new base colour
+
 - Tile nav isn't grid based, so you can add or remove any and change their size, or container width and arrow navigation will stay intact. (NOTE) may get a little weird with odd numbers that leave like 1 tile on a row or something.
 
 - I just threw in [Font Awesome Icons](http://fontawesome.io/get-started/). Use whatever icons you prefer (you'll have to style them), or flip through there and grab whatever works.
@@ -25,8 +28,6 @@
 - Mini search icons are clickable, and touch swipe within the search box is enabled to change search sites.
 
 - Weather imgs are lazy loaded after weather data comes back from the server, so it may take a few seconds to display. New data is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please. All of the possible weather descriptions I have seen thus far are listed in comments    
-
-- Use 'Ctrl + C' to randomly generate a new base colour
 
 
 ### Customize Options
@@ -62,8 +63,6 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 ### Bugs
 
-- Sometimes `.deletion` span gets transferred in search (maybe when typing before it has finished deleting?)   
-
 - clicking on placeholder icon brings back previous search
 
 
@@ -77,8 +76,6 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 - (bug) ctrl-disable gets stuck down? disabling *a* key, or fuxxing w/ backspace
 
 - use other icons
-
-- refactor tile grid on window resize
 
 - `var` for light/dark mode
 
