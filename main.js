@@ -620,7 +620,9 @@ si.inputD.addEventListener('keypress', function(e) {
 			// REMOVE SPACE ENTITIES, REPLACE W/ SPACE
 			// q = si.val.replace(/&nbsp;/g, ' ');
 			// q = si.val.replace(/\s\s+/g, ' ');
-			var q = si.val.replace(/&nbsp;/g, ' ');
+
+			// var q = si.val.replace(/&nbsp;/g, ' ');
+			var q = si.codec(si.val,false);
 			// q = si.val.replace(/\s\s+/g, ' ');
 			window.open(si.link[si.plInc] + q);
 		}
@@ -774,7 +776,9 @@ function searchReassign() {
 	setTimeout(function() {
 		// console.log(si.valHolder.replace(/&nbsp;/g, ' '));
 		// THERE WAS A VALUE, REASSIGN IT
-		if (si.valHolder.replace(/&nbsp;/g, ' ').length > 0) {
+		// if (si.valHolder.replace(/&nbsp;/g, ' ').length > 0) {
+		if (si.codec(si.valHolder,false).length > 0) {
+			
 			si.val = si.valHolder;
 			inputFake.innerHTML = si.valHolder;
 			// HIDE PLACEHOLDER
