@@ -13,8 +13,9 @@ body {
   margin: 0;
   overflow-x: hidden;
   background-color: #758961;
-  transition: background-color 0.4s;
-  -moz-transition: background-color 0.4s;
+	background-color: #111;
+  transition: background-color 0.6s;
+  -moz-transition: background-color 0.6s;
 }
 
 .time-large {
@@ -246,6 +247,10 @@ iframe {
   height: 100%;
   box-sizing: border-box;
   top: 0;
+
+  opacity: 0;
+  animation: fadeOpIn 1s 0.5s;
+  animation-fill-mode: forwards;
 }
 
 #input-fake:after {
@@ -310,9 +315,16 @@ iframe {
   left: 37px;
   transform: translateY(-50%);
   top: 53%;
-  opacity: 0.18;
+  opacity: 0;
   filter: none;
   z-index: 10;
+  animation: fadeInSearchIcon 1s 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInSearchIcon {
+  from { opacity: 0; }
+  to { opacity: 0.18; }
 }
 
 /*.search-icon {
