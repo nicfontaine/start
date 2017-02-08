@@ -128,6 +128,10 @@ document.addEventListener('mousemove', function() {
 	
 });
 
+var inputSearch = document.getElementById('search-input');
+var inputFake = document.getElementById('input-fake');
+var focusToggle = true;
+
 // SEARCH OBJ
 var si = {
 	link: searchUrls,
@@ -137,6 +141,7 @@ var si = {
 	lookupRepeat: 0,
 	icon: searchIcons,
 	inputD: document.getElementById('search-input'),
+	inputFake: document.getElementById('input-fake'),
 	log: [],
 	iconD: document.getElementById('input-search-icon'),
 	swapIcons: searchIconSwap,
@@ -150,7 +155,16 @@ var si = {
 		input.replace(/&nbsp;/g, ' '); // DECODE TO SPACES
 		return out;
 	},
-	deletion: ''
+	deletion: '',
+	inputFocusToggle: function(tf) {
+		tf ? ( // FOCUS
+			inputFake.classList.remove('input-cursor-inactive'),
+			inputSearch.classList.add('focus')
+		) : ( // UNFOCUS
+			inputFake.classList.add('input-cursor-inactive'),
+			inputSearch.classList.remove('focus')
+		);
+	}
 }
 
 // -------------------------------
@@ -159,6 +173,7 @@ var si = {
 si.inputD.placeholder = si.pl[0];
 
 si.inputD.focus();
+inputSearch.classList.add('focus');
 // ONLY ALLOW IF USER CHOOSES THIS FUNCTIONALITY
 if (si.swapIcons) { si.iconD.innerHTML = si.icon[0]; }
 else {
@@ -438,14 +453,14 @@ function focusLink() {
 
 function focusSearch() {
 	si.inputD.focus();
-	inputFake.classList.remove('input-cursor-inactive');
+	si.inputFocusToggle(true);
 }
 
 var cursorMoveEnable = false;
 var searchPreMoveDst = 103;
 var searchPreMoveInc = 0;
 
-var inputFake = document.getElementById('input-fake');
+// var inputFake = document.getElementById('input-fake');
 var rejectArray = ['16', '18', '8', '17'];
 var keyCtrlDown = false;
 
@@ -542,11 +557,12 @@ si.inputD.addEventListener('keydown', function(e) {
 			inputFake.innerHTML = si.val + '<span id="deletion">' + si.deletion + '</span>';
 			si.delD = document.getElementById('deletion');
 			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
-			inputFake.classList.add('input-cursor-inactive');
+
+			si.inputFocusToggle(false);
 			setTimeout(function(){ si.delD.style.width = '0px'; },200);
 			setTimeout(function(){ 
 				inputFake.innerHTML = si.val;
-				inputFake.classList.remove('input-cursor-inactive');
+				si.inputFocusToggle(true);
 			},300);
 
 			// si.val = si.val;
@@ -674,7 +690,8 @@ si.inputD.addEventListener('keydown', function(e) {
 		linkFocus = 0;
 		toggleTab = 'links';
 		focusLink();
-		inputFake.classList.add('input-cursor-inactive');
+
+		si.inputFocusToggle(false);
 	}
 
 	// KEY LEFT

@@ -226,6 +226,14 @@ iframe {
   transition: text-shadow 0.2s;
 }
 
+#search-input.focus {
+  box-shadow: inset 0 -1px 7px rgba(0,0,0,0.01);
+  border-bottom: 2px solid rgba(0,0,0,0.15);
+  padding-bottom: 6px;
+  /*background: #9B8DB0;*/
+  background: rgba(0,0,0,0.1);
+}
+
 .search-hide {
   /*MAKE CAROT TRANSPARENT, TEXT IS NOW SHADOW*/
   /*color: transparent !important;*/
