@@ -67,6 +67,8 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 
 ### To-Do
+- use OpenWeatherMap instead of simpleWeather yahoo api (kinda unreliable)
+
 - paste from clipboard
 
 - update ip address when it changes
