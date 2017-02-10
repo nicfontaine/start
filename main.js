@@ -156,6 +156,7 @@ var si = {
 		return out;
 	},
 	deletion: '',
+	deletionActive: false,
 	inputFocusToggle: function(tf) {
 		tf ? ( // FOCUS
 			inputFake.classList.remove('input-cursor-inactive'),
@@ -168,6 +169,11 @@ var si = {
 }
 
 // -------------------------------
+
+// ONLOAD
+window.onload = function() {
+	si.inputD.value = '';
+}
 
 // INIT INPUT PLACEHOLDER TEXT W/ FIRST SEARCH OF ARRAY
 si.inputD.placeholder = si.pl[0];
@@ -555,6 +561,8 @@ si.inputD.addEventListener('keydown', function(e) {
 
 			// ADD DELETION SPAN FOR STYLE, THEN DELETE
 			inputFake.innerHTML = si.val + '<span id="deletion">' + si.deletion + '</span>';
+			si.deletionActive = true;
+			console.log('deletionActive true');
 			si.delD = document.getElementById('deletion');
 			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
 
@@ -563,9 +571,10 @@ si.inputD.addEventListener('keydown', function(e) {
 			setTimeout(function(){ 
 				inputFake.innerHTML = si.val;
 				si.inputFocusToggle(true);
+				si.deletionActive = false;
+				console.log('deletionActive false');
 			},300);
 
-			// si.val = si.val;
 			si.inputD.value = si.val;
 		}
 
@@ -605,7 +614,7 @@ si.inputD.addEventListener('keypress', function(e) {
 		// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
 		if (keyUpEnable) {
 			// ADD CHAR IF 'CTRL' ISN'T DOWN
-			if (!keyCtrlDown) {
+			if (!keyCtrlDown && !si.deletionActive) {
 				inputFake.innerHTML = si.val + String.fromCharCode(k).toLowerCase();						
 			}
 			// 'CTRL' + KEY COMBOS
