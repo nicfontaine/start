@@ -63,7 +63,9 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 ### Bugs
 
-- clicking on placeholder icon brings back previous search
+- clicking on placeholder icon brings back previous search  
+
+- can enter blank input for search, then search array logs blank search for ^ functionality
 
 
 ### To-Do
