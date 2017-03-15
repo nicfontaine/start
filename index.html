@@ -165,7 +165,17 @@
 
   <div id="dot-container"><div class="no-dot"></div></div>
 
-  <script type="text/javascript" src="https://l2.io/ip.js?var=myip"></script>
+  <script type="application/javascript">
+  var ip = document.getElementById("ip")
+  function getIP(json) {
+    // document.write("My public IP address is: ", json.ip);
+    ip.innerHTML = 'IP: ' + json.ip;
+    console.log('checking ip');
+  }
+  </script>
+  <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+
+  <!-- <script type="text/javascript" src="https://l2.io/ip.js?var=myip"></script>
       <script>
         var ip = document.getElementById("ip")
           function systemip(){
@@ -173,15 +183,13 @@
           console.log('checking ip');
           }
           systemip();
-      </script>
+      </script> -->
 
   <script
       	src="https://code.jquery.com/jquery-2.2.4.min.js"
       	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       	crossorigin="anonymous"></script>
   <script type='text/javascript' src='https://cdn.rawgit.com/monkeecreate/jquery.simpleWeather/master/jquery.simpleWeather.min.js'></script>
-
-  <iframe id='if-browser' src=''></iframe>
 
 <!--  <script type='text/javascript' src='extra/jquery-2.2.4.min.js'></script>
  <script type='text/javascript' src='extra/jquery.simpleWeather.min.js'></script>

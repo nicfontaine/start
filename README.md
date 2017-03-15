@@ -53,7 +53,8 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 ***Scripts***
 
-- [l2.io](https://l2.io/) for IP Addr
+- ~~[l2.io](https://l2.io/) for IP Addr~~
+- [ifify.org(https://www.ifify.org) for IP Addr *(need to turn off adblock)*
 
 ***Vis***
 
