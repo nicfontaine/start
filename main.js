@@ -981,7 +981,7 @@ function weatherSwap(e,t) {
 	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
 		img = 'weather-cloudy';
 	}
-	else if (e === 'Snow' || e === 'Rain and Snow') {
+	else if (e === 'Snow' || e === 'Rain And Snow') {
 		img = 'weather-snow';
 	}
 	else if (e === 'Windy' || e === 'Breezy') {
