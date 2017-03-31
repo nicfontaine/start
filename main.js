@@ -352,7 +352,7 @@ window.onresize = function() {
 		hasResized = true;
 	}
 
-  windowIW = window.innerWidth;
+  // windowIW = window.innerWidth;
 
 	// DISABLE IF USER IS STILL RESIZING, SO NOT CONSTANTLY FIRING
 	clearTimeout(resizeTimer);
@@ -426,7 +426,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
 		else {
 			// linkFocus = linkFocus - rNum*rLength[0];
-			toggleTab = 'search';
+			// toggleTab = 'search';
 			si.inputD.focus();
 		}
 
@@ -531,7 +531,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		}
 
 		// si.val = si.val.replace(/&nbsp;/g, ' ');
-		l = si.val.lastIndexOf('&nbsp;');
+		var l = si.val.lastIndexOf('&nbsp;');
 		// var l = inputFake.innerHTML.lastIndexOf(String.fromCharCode(160));
 
 		// CTRL + BACKSPACE
@@ -598,7 +598,7 @@ si.inputD.addEventListener('keydown', function(e) {
 
 });
 
-si.inputD.addEventListener('keypress', function(e) {
+si.inputD.addEventListener('keypress',function(e) {
 
 	// HIDE PLACEHOLDER WHEN TYPING, BUT DISABLED IF UP
 	// NOT ON backspace, up, OR IF keyCtrlDown
@@ -609,7 +609,7 @@ si.inputD.addEventListener('keypress', function(e) {
 	// IF NOT IN ARRAY
 	if (rejectArray.indexOf(e.keyCode.toString()) < 0) {
 
-		k = e.which;
+		var k = e.which;
 
 		// ONLY ALLOW IF UP KEY IS NOT DISALLOWING
 		if (keyUpEnable) {
@@ -697,7 +697,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		e.preventDefault();
 		si.inputD.blur();
 		linkFocus = 0;
-		toggleTab = 'links';
+		// toggleTab = 'links';
 		focusLink();
 
 		si.inputFocusToggle(false);
