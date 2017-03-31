@@ -1,7 +1,7 @@
 /*********************************************/
 /****     EDIT SETTINGS VIA VARIABLES     ****/
 /*********************************************/
-
+'use strict';
 //
 // BASE COLOUR SETTINGS
 //
@@ -240,15 +240,15 @@ navDateDom.innerHTML = dateD.toDateString();
 function clock() {
 
 	var dateT = new Date();
-	dateH = dateT.getHours();
+	var dateH = dateT.getHours();
 	if (dateH > 12) {
 		dateH-=12;
 	}
-	dateM = dateT.getMinutes();
+	var dateM = dateT.getMinutes();
 	if (dateM.toString().length < 2) {
 		dateM = '0' + dateM.toString();
 	}
-	dateS = dateT.getSeconds();
+	var dateS = dateT.getSeconds();
 	if (dateS.toString().length < 2) {
 		dateS = '0' + dateS.toString();
 	}
