@@ -29,6 +29,8 @@
 
 - Weather imgs are lazy loaded after weather data comes back from the server, so it may take a few seconds to display. New data is polled every 20000ms, background images fade accordingly. Swap w/ semi-transparent, desaturated, compressed pngs however you please. All of the possible weather descriptions I have seen thus far are listed in comments    
 
+- IP address now updates with network change   
+
 
 ### Customize Options
 - A few vars in ``` main.js ```:
@@ -74,8 +76,6 @@ var searchIconArray = ['<i class="fa fa-globe"></i>', ...];
 
 - paste from clipboard
 
-- update ip address when it changes
-    
 - web app manifest & service worker
 
 - (bug) ctrl-disable gets stuck down? disabling *a* key, or fuxxing w/ backspace

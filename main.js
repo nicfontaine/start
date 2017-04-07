@@ -950,7 +950,14 @@ function loadWeather(location, woeid) {
 	  });
 
 		// REFRESH EVERY 20 SEC
-		setTimeout(getWeather,20000);
+		setTimeout(function() {
+			getWeather();
+			$.getJSON("https://jsonip.com/?callback=?", function (data) {
+			  //console.log(data);
+			  //alert(data.ip);
+			  document.getElementById("ip").innerHTML = 'IP: ' + data.ip;
+			});
+		},20000);
 
 		}
 	// INIT, ONCE
