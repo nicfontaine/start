@@ -952,11 +952,7 @@ function loadWeather(location, woeid) {
 		// REFRESH EVERY 20 SEC
 		setTimeout(function() {
 			getWeather();
-			$.getJSON("https://jsonip.com/?callback=?", function (data) {
-			  //console.log(data);
-			  //alert(data.ip);
-			  document.getElementById("ip").innerHTML = 'IP: ' + data.ip;
-			});
+			getIp();
 		},20000);
 
 		}
@@ -966,6 +962,30 @@ function loadWeather(location, woeid) {
 		initWeatherLoad = false;
 	}
 
+}
+
+var ipDom = document.getElementById("ip");
+
+function getIp() {
+	var request = new XMLHttpRequest();
+  request.open('GET', 'https://jsonip.com/?callback=', true);
+
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      var data = JSON.parse(request.responseText);
+
+      ipDom.innerHTML = 'IP: ' + data.ip;
+
+    } else {
+      ipDom.innerHTML = 'IP: ' + '< ipify error >';
+    }
+  };
+
+  request.onerror = function() {
+  	ipDom.innerHTML = 'IP: ' + '< connection error >';
+  };
+
+  request.send();  
 }
 
 function weatherSwap(e,t) {
