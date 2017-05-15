@@ -212,7 +212,8 @@ var colorfy = function colorfy() {
 	}
 
 	// ASSIGN BODY BG COLOUR
-	document.getElementsByTagName('body')[0].style.backgroundColor = colourConstructor(cpbh,cpbs,cpbl);
+	// document.getElementsByTagName('body')[0].style.backgroundColor = colourConstructor(cpbh,cpbs,cpbl);
+	document.getElementById('color-bg').style.backgroundColor = colourConstructor(cpbh,cpbs,cpbl);
 
 	// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
 	var linksColCalc = colourConstructor(cpMods.linkBgHue,cpMods.linkBgSat,cpMods.linkBgLight);

@@ -12,8 +12,17 @@ body {
   /*background: #9D8ABA;*/
   margin: 0;
   overflow-x: hidden;
+}
+
+#color-bg {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
   background-color: #758961;
-	background-color: rgba(17,17,17,1);
+  background-color: rgba(17,17,17,1);
   transition: background-color 0.6s;
   -moz-transition: background-color 0.6s;
 }
