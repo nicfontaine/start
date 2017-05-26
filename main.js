@@ -219,6 +219,8 @@ var colorfy = function colorfy() {
 	var linksColCalc = colourConstructor(cpMods.linkBgHue,cpMods.linkBgSat,cpMods.linkBgLight);
 	for (var i=0; i<linksNo; i++) {
 		links[i].style.background = linksColCalc;
+		// RESET, B/C NIGHT MODE MODIFIES
+		links[i].getElementsByTagName('span')[0].style.color = 'rgba(0,0,0,0.15)';
 	}
 
 	// BUILD THE HSL VALUES & RETURN
@@ -233,7 +235,7 @@ colorfy();
 var colorfyDark = function colorfyDark() {
 
 	// ASSIGN BODY BG COLOUR
-	document.getElementById('color-bg').style.backgroundColor = 'rgba(10,10,10,1)';
+	document.getElementById('color-bg').style.backgroundColor = 'rgba(17,17,17,1)';
 
 	// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
 	for (var i=0; i<linksNo; i++) {
