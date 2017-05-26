@@ -233,12 +233,12 @@ colorfy();
 var colorfyDark = function colorfyDark() {
 
 	// ASSIGN BODY BG COLOUR
-	document.getElementById('color-bg').style.backgroundColor = 'rgba(26,26,26.1)';
+	document.getElementById('color-bg').style.backgroundColor = 'rgba(10,10,10,1)';
 
 	// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
 	for (var i=0; i<linksNo; i++) {
-		links[i].style.background = 'rgba(69,69,69,1)';
-		links[i].getElementsByTagName('span')[0].style.background = 'rgba(255,255,255,0.2)';
+		links[i].style.background = 'rgba(53,53,53,1)';
+		links[i].getElementsByTagName('span')[0].style.color = 'rgba(255,255,255,0.2)';
 	}
 
 };
