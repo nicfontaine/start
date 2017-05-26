@@ -230,6 +230,19 @@ var colorfy = function colorfy() {
 };
 colorfy();
 
+var colorfyDark = function colorfyDark() {
+
+	// ASSIGN BODY BG COLOUR
+	document.getElementById('color-bg').style.backgroundColor = 'rgba(26,26,26.1)';
+
+	// CACHE IT SO WE DON'T CALC IT EVERY TIME IN THE LOOP
+	for (var i=0; i<linksNo; i++) {
+		links[i].style.background = 'rgba(69,69,69,1)';
+		links[i].getElementsByTagName('span')[0].style.background = 'rgba(255,255,255,0.2)';
+	}
+
+};
+
 
 // DATE
 var navDateDom = document.getElementById('date-d');
@@ -532,6 +545,11 @@ si.inputD.addEventListener('keydown', function(e) {
 			if (si.val.length < 1) {
 				si.inputD.classList.remove('search-hide');	
 			}
+		}
+
+		// KEY 'X'
+		else if (e.which === 88) {
+			colorfyDark();
 		}
 
 		// si.val = si.val.replace(/&nbsp;/g, ' ');

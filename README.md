@@ -17,7 +17,7 @@
 
 ### About
 
-- Use 'Ctrl + C' to randomly generate a new base colour
+- Use 'Ctrl + C' to randomly generate a new base colour. 'Ctrl + X' for night mode.
 
 - Tile nav isn't grid based, so you can add or remove any and change their size, or container width and arrow navigation will stay intact. (NOTE) may get a little weird with odd numbers that leave like 1 tile on a row or something.
 
