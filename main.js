@@ -1026,7 +1026,7 @@ function weatherSwap(e,t) {
 	else if (e === 'Rain' || e === 'Showers' || e === 'Heavy Rain') {
 		img = 'weather-rain';
 	}
-	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers') {
+	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers' || e === 'Thunderstorms') {
 		img = 'weather-showers';
 	}
 	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
