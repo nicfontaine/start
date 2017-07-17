@@ -260,9 +260,9 @@ function clock() {
 
 	var dateT = new Date();
 	var dateH = dateT.getHours();
-	if (dateH > 12) {
-		dateH-=12;
-	}
+	// if (dateH > 12) {
+	// 	dateH-=12;
+	// }
 	var dateM = dateT.getMinutes();
 	if (dateM.toString().length < 2) {
 		dateM = '0' + dateM.toString();
