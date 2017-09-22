@@ -461,6 +461,7 @@ ul li a:focus, ul li:hover a {
   /*border: none !important;*/
   /*margin-top: -1px;*/
   transform: translateY(-1px);
+  margin-bottom: 1px;
   opacity: 1;
   border: 1px solid rgba(255,255,255,0.1);
 }
