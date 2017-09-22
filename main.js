@@ -38,7 +38,7 @@ var cpbl = 50;
 var searchPlaceholders = [
 	'url',
 	'duckduckgo',
-	// 'google',
+	'google',
 	'github',
 	'google maps',
 	'youtube',
@@ -54,7 +54,7 @@ var searchPlaceholders = [
 var searchUrls = [
 	'',
 	'https://duckduckgo.com/?q=',
-	// 'https://www.google.com/#q=',
+	'https://www.google.com/#q=',
 	'https://github.com/search?q=',
 	'https://www.google.com/maps/search/',
 	'https://www.youtube.com/results?search_query=',
@@ -79,7 +79,7 @@ var searchIconSwap = true;
 var searchIcons = [
 	'<i class="fa fa-globe" aria-hidden="true"></i>',
 	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
-	// '<i class="fa fa-google" aria-hidden="true"></i>',
+	'<i class="fa fa-google" aria-hidden="true"></i>',
 	'<i class="fa fa-github" aria-hidden="true"></i>',
 	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
 	'<i class="fa fa-youtube" aria-hidden="true"></i>',
@@ -479,6 +479,7 @@ function focusLink() {
 function focusSearch() {
 	si.inputD.focus();
 	si.inputFocusToggle(true);
+	keyCtrlDown = false;
 }
 
 var cursorMoveEnable = false;
@@ -823,7 +824,7 @@ function searchReassign() {
 	si.valHolder = si.val;
 
 	// RE-ASSIGN VALUE, W/ DELAY
-	setTimeout(function() {
+	// setTimeout(function() {
 		// console.log(si.valHolder.replace(/&nbsp;/g, ' '));
 		// THERE WAS A VALUE, REASSIGN IT
 		// if (si.valHolder.replace(/&nbsp;/g, ' ').length > 0) {
@@ -839,10 +840,10 @@ function searchReassign() {
 			clearSearch();
 			si.valHolder = '';
 		}
-	},200);
+	// },200);
 
 	// ALWAYS CLEAR IT, setTimeout WILL RE-ASSIGN
-	clearSearch();
+	// clearSearch();
 
 }
 
