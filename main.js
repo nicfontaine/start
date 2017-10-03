@@ -102,7 +102,7 @@ document.addEventListener('keydown', function() {
 	clearTimeout(keyCtrlRelease);
 
 	keyCtrlRelease = setTimeout(function() {
-		console.log('------ 3 seconds for clearing keyCtrlDown');
+		// console.log('------ 3 seconds for clearing keyCtrlDown');
 		keyCtrlDown = false;
 	},3000);
 
@@ -344,7 +344,7 @@ var countEm = function countEm() {
 		// RESET LINK COUNT WHEN GET TO NEXT LINE
 		else {
 			// LOG EACH ROW
-			console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
+			// console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
 			// MOVE TO NEW ROW, & ADD TO TOTAL ROW COUNT
 			rNum++;
 			rNumTotal++;
@@ -356,7 +356,7 @@ var countEm = function countEm() {
 		}
 	}
 	// LOG IT AGAIN WHEN LOOPING HAS FINISHED, FOR LAST ROW
-	console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
+	// console.log('row: ' + rNum + ', ' + rLength[rNum] + ' total cells ');
 };
 
 //
@@ -514,7 +514,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		// SHOW PLACEHOLDER WHEN DOWN TO NO CHARS
 		if (si.val.length <= 1) {
 			si.inputD.classList.remove('search-hide');
-			console.log('removing');
+			// console.log('removing');
 			si.inputD.value = '';
 		}
 	}
@@ -587,7 +587,7 @@ si.inputD.addEventListener('keydown', function(e) {
 			// ADD DELETION SPAN FOR STYLE, THEN DELETE
 			inputFake.innerHTML = si.val + '<span id="deletion">' + si.deletion + '</span>';
 			si.deletionActive = true;
-			console.log('deletionActive true');
+			// console.log('deletionActive true');
 			si.delD = document.getElementById('deletion');
 			si.delD.style.width = si.delD.clientWidth.toString() + 'px';
 
@@ -597,7 +597,7 @@ si.inputD.addEventListener('keydown', function(e) {
 				inputFake.innerHTML = si.val;
 				si.inputFocusToggle(true);
 				si.deletionActive = false;
-				console.log('deletionActive false');
+				// console.log('deletionActive false');
 			},300);
 
 			si.inputD.value = si.val;
@@ -611,7 +611,7 @@ si.inputD.addEventListener('keydown', function(e) {
 		if (e.which === 65) {
 			// DISABLE ANNOYING CTRL+A HIGHLIGHT
 			e.preventDefault();
-			console.log('key a');
+			// console.log('key a');
 		}
 
 		// KEY V - ENABLE PASTING)
@@ -646,7 +646,7 @@ si.inputD.addEventListener('keypress',function(e) {
 			else {
 				// 'CTRL + V'
 				if (String.fromCharCode(k).toLowerCase() === 'v') {
-					console.log('ctrl + v, paste');
+					// console.log('ctrl + v, paste');
 				}
 			}
 
@@ -661,9 +661,9 @@ si.inputD.addEventListener('keypress',function(e) {
 
 	// KEY ENTER
 	if (e.keyCode == '13' && si.val !== '') {
-		console.log('var si.val = ' + si.val);
+		// console.log('var si.val = ' + si.val);
 		si.inputD.classList.remove('search-hide');
-		console.log('removing search hide');
+		// console.log('removing search hide');
 		// IF NOT FIRST INDEX - URL SEARCH
 		if (si.plInc > 0) {
 			// window.open(si.link[si.plInc] + si.val);
@@ -747,7 +747,7 @@ si.inputD.addEventListener('keydown', function(e) {
 			keyUpEnable = false;
 			si.lookupRepeat++;
 			// UNTIL WE'VE GONE THROUGH ALL LOGGED SEARCHES
-			console.log(si.numSearched - si.lookupRepeat);
+			// console.log(si.numSearched - si.lookupRepeat);
 			if (typeof si.log[si.numSearched-si.lookupRepeat] !== 'undefined') {
 				si.inputD.value = si.log[si.numSearched-si.lookupRepeat];
 				inputFake.innerHTML = si.log[si.numSearched-si.lookupRepeat];
@@ -944,7 +944,7 @@ function weatherImgLazy() {
 $(document).ready(function() {
   navigator.geolocation.getCurrentPosition(function(position) {
     loadWeather(position.coords.latitude+','+position.coords.longitude); //load weather using your lat/lng coordinates
-		console.log('load geolocation coords: ' + position.coords.latitude+','+position.coords.longitude);
+		// console.log('load geolocation coords: ' + position.coords.latitude+','+position.coords.longitude);
   });
 });
 
@@ -960,9 +960,9 @@ function loadWeather(location, woeid) {
 					weatherCurrent = weather.currently;
 					weatherTemp = weather.temp;
 					weatherCity = weather.city + ', ' + weather.region;
-					console.clear();
-					console.log('geo coords: ' + location);
-					console.log('weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
+					// console.clear();
+					// console.log('geo coords: ' + location);
+					// console.log('weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
 
 					// LAZY LOAD WEATHER IMGS WHEN DATA IS PULLED
 					weatherImgLazy();
@@ -1089,7 +1089,7 @@ function handleTouchMove(evt) {
 
   if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
     if ( xDiff > 0 ) {
-    	console.log(xDiff);
+    	// console.log(xDiff);
     	/* left swipe */ 
     	searchSwitch('r');
     } else {
