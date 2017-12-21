@@ -54,8 +54,8 @@ var searchPlaceholders = [
 var searchUrls = [
 	'',
 	'https://duckduckgo.com/?q=',
-	'https://www.google.com/#q=',
-	// 'https://www.google.com/maps/search/',
+	// 'https://www.google.com/#q=',
+	'https://www.google.com/maps/search/',
 	'https://www.youtube.com/results?search_query=',
 	'https://soundcloud.com/search?q=',
 	'https://github.com/search?q=',
