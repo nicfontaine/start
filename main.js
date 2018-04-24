@@ -396,7 +396,6 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 
     // // INC ONLY IF >=1, IF NOT, RESET TO -1
     linkFocus>=1 ? linkFocus-- : linkFocus = linksNo-1;
-
 		focusLink();
 
   }
@@ -406,7 +405,6 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
     e.preventDefault();
 
     linkFocus<linksNo-1 ? linkFocus++ : linkFocus=0;
-
 		focusLink();
 
   }
@@ -717,6 +715,16 @@ var keyUpEnable = true;
 
 si.inputD.addEventListener('keydown', function(e) {
 
+	// Key Home
+	if (e.keyCode == "36") {
+		searchSwitch('h');
+	}
+
+	// Key End
+	if (e.keyCode == "35") {
+		searchSwitch('e');
+	}
+
 	// KEY DOWN
 	if (e.keyCode == '40') {
 		e.preventDefault();
@@ -732,7 +740,6 @@ si.inputD.addEventListener('keydown', function(e) {
 	if (e.keyCode == '37') {
 		e.preventDefault();
 		searchSwitch('l');
-
 	}
 
 	// KEY RIGHT
@@ -803,6 +810,14 @@ function searchSwitch(dir) {
 			si.plInc = 0;
 		}
 
+	}
+
+	else if (dir === "h") {
+		si.plInc = 0;
+	}
+
+	else if (dir === "e") {
+		si.plInc = si.pl.length-1;
 	}
 
 	si.iconD.innerHTML = si.icon[si.plInc];
