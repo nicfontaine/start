@@ -410,7 +410,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   }
 
   // KEY UP
-  if (e.keyCode == '38') {
+  else if (e.keyCode == '38') {
     e.preventDefault();
 
 		if (linkFocus-rLength[0] > -1) {
@@ -428,7 +428,7 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
   }
 
   // KEY DOWN
-  if (e.keyCode == '40') {
+  else if (e.keyCode == '40') {
     e.preventDefault();
 
 		// IF THE NEXT linkFocus WILL BE LESS THAN THE LAST INDEX OF rLength
@@ -442,19 +442,26 @@ document.getElementById('ul-links').addEventListener('keydown', function (e) {
 		// SO YOU CAN STILL GO DOWN, EVEN W/ ONE WIDE TILE
 
 		else {
-			// linkFocus = linkFocus - rNum*rLength[0];
-			// toggleTab = 'search';
-			si.inputD.focus();
+			focusSearch();
 		}
 
   }
 
 	// KEY TAB, ANNOYING. LETS DISABLE IT
 	// INTERESTING THAT IT DOESN'T DISABLE CTRL+TAB BROWSER NAVIGATION
-	if (e.keyCode == '9') {
+	else if (e.keyCode == '9') {
 		e.preventDefault();
 	}
 
+});
+
+document.getElementById("ul-links").addEventListener("keydown", function(e) {
+	// Key /
+	if (e.keyCode == "191") {
+		e.preventDefault();
+		focusSearch();
+		clearSearch();
+	}
 });
 
 
