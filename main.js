@@ -1,13 +1,14 @@
 /*********************************************/
 /****     EDIT SETTINGS VIA VARIABLES     ****/
 /*********************************************/
+/*jslint white: true */
 'use strict';
 //
 // BASE COLOUR SETTINGS
 //
 
-function randomInt(min,max) {
-  return Math.floor(Math.random()*(max-min+1)+min);
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // HUE, 0-360
@@ -36,33 +37,33 @@ var cpbl = 50;
 // (NOTE) YOU CAN MOVE 'url' TO ANY INDEX OR REMOVE, JUST LEAVE IT'S NAME...
 // (NOTE) ...IT HAS A SPECIFIC CASE THAT SEARCHES FOR IT BY NAME
 var searchPlaceholders = [
-	'url',
-	'duckduckgo',
-	// 'google',
-	'google maps',
-	'youtube',
-	'soundcloud',
-	'github',
-	'/r/',
-	'stackoverflow',
-	'aur',
-	'wikipedia'
+  'url',
+  'duckduckgo',
+  // 'google',
+  'google maps',
+  'youtube',
+  'soundcloud',
+  'github',
+  '/r/',
+  'stackoverflow',
+  'aur',
+  'wikipedia'
 ];
 
 // URL SLUGS HERE (THEY CORRESPOND TO TITLES ABOVE)
 // (NOTE) RUN A SEARCH SOMEWHERE, GRAB IT'S URL, & CUT THE QUERY STRING (IF IT USES ONE..)
 var searchUrls = [
-	'',
-	'https://duckduckgo.com/?q=',
-	// 'https://www.google.com/#q=',
-	'https://www.google.com/maps/search/',
-	'https://www.youtube.com/results?search_query=',
-	'https://soundcloud.com/search?q=',
-	'https://github.com/search?q=',
-	'https://www.reddit.com/r/',
-	'https://stackoverflow.com/search?q=',
-	'https://aur.archlinux.org/packages/?O=0&K=',
-	'https://en.wikipedia.org/wiki/'
+  '',
+  'https://duckduckgo.com/?q=',
+  // 'https://www.google.com/#q=',
+  'https://www.google.com/maps/search/',
+  'https://www.youtube.com/results?search_query=',
+  'https://soundcloud.com/search?q=',
+  'https://github.com/search?q=',
+  'https://www.reddit.com/r/',
+  'https://stackoverflow.com/search?q=',
+  'https://aur.archlinux.org/packages/?O=0&K=',
+  'https://en.wikipedia.org/wiki/'
 ];
 
 // SOME EXTRA URL SLUGS
@@ -77,17 +78,17 @@ var searchUrls = [
 var searchIconSwap = true;
 
 var searchIcons = [
-	'<i class="fa fa-globe" aria-hidden="true"></i>',
-	'<i class="fa fa-search search-icon" aria-hidden="true"></i>',
-	// '<i class="fa fa-google" aria-hidden="true"></i>',
-	'<i class="fa fa-map-marker" aria-hidden="true"></i>',
-	'<i class="fa fa-youtube" aria-hidden="true"></i>',
-	'<i class="fa fa-soundcloud" aria-hidden="true"></i>',
-	'<i class="fa fa-github" aria-hidden="true"></i>',
-	'<i class="fa fa-reddit" aria-hidden="true"></i>',
-	'<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
-	'<i class="fa fa-linux" aria-hidden="true"></i>',
-	'<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
+  '<i class="fa fa-globe" aria-hidden="true"></i>',
+  '<i class="fa fa-search search-icon" aria-hidden="true"></i>',
+  // '<i class="fa fa-google" aria-hidden="true"></i>',
+  '<i class="fa fa-map-marker" aria-hidden="true"></i>',
+  '<i class="fa fa-youtube" aria-hidden="true"></i>',
+  '<i class="fa fa-soundcloud" aria-hidden="true"></i>',
+  '<i class="fa fa-github" aria-hidden="true"></i>',
+  '<i class="fa fa-reddit" aria-hidden="true"></i>',
+  '<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
+  '<i class="fa fa-linux" aria-hidden="true"></i>',
+  '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
 ];
 
 /*************************************************/
@@ -95,6 +96,9 @@ var searchIcons = [
 /*************************************************/
 
 var keyCtrlRelease;
+// var inputFake = document.getElementById('input-fake');
+var rejectArray = ['16', '18', '8', '17'];
+var keyCtrlDown = false;
 
 document.addEventListener('keydown', function() {
 
@@ -490,10 +494,6 @@ function focusSearch() {
 var cursorMoveEnable = false;
 var searchPreMoveDst = 103;
 var searchPreMoveInc = 0;
-
-// var inputFake = document.getElementById('input-fake');
-var rejectArray = ['16', '18', '8', '17'];
-var keyCtrlDown = false;
 
 si.inputD.addEventListener('keyup', function(e) {
 	// TOGGLE WHENEVER KEY IS RELEASED
