@@ -58,7 +58,7 @@ var searchUrls = [
   // 'https://www.google.com/#q=',
   'https://www.google.com/maps/search/',
   'https://www.youtube.com/results?search_query=',
-  'https://soundcloud.com/search?q=',
+  'https://soundcloud.com/search/people?q=',
   'https://github.com/search?q=',
   'https://www.reddit.com/r/',
   'https://stackoverflow.com/search?q=',
