@@ -39,15 +39,16 @@ var cpbl = 50;
 var searchPlaceholders = [
   'url',
   'duckduckgo',
+  'npm',
+  'stackoverflow',
+  'wikipedia',
   // 'google',
-  'google maps',
   'youtube',
   'soundcloud',
+  'google maps',
   'github',
   '/r/',
-  'stackoverflow',
-  'aur',
-  'wikipedia'
+  'aur'
 ];
 
 // URL SLUGS HERE (THEY CORRESPOND TO TITLES ABOVE)
@@ -56,14 +57,15 @@ var searchUrls = [
   '',
   'https://duckduckgo.com/?q=',
   // 'https://www.google.com/#q=',
-  'https://www.google.com/maps/search/',
+  'https://www.npmjs.com/search?q=',
+  'https://stackoverflow.com/search?q=',
+  'https://en.wikipedia.org/wiki/',
   'https://www.youtube.com/results?search_query=',
   'https://soundcloud.com/search/people?q=',
+  'https://www.google.com/maps/search/',
   'https://github.com/search?q=',
   'https://www.reddit.com/r/',
-  'https://stackoverflow.com/search?q=',
-  'https://aur.archlinux.org/packages/?O=0&K=',
-  'https://en.wikipedia.org/wiki/'
+  'https://aur.archlinux.org/packages/?O=0&K='
 ];
 
 // SOME EXTRA URL SLUGS
@@ -86,6 +88,7 @@ var searchIcons = [
   '<i class="fa fa-soundcloud" aria-hidden="true"></i>',
   '<i class="fa fa-github" aria-hidden="true"></i>',
   '<i class="fa fa-reddit" aria-hidden="true"></i>',
+  '<i class="fa fa-code"></i>',
   '<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
   '<i class="fa fa-linux" aria-hidden="true"></i>',
   '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
@@ -965,7 +968,8 @@ function weatherImgLazy() {
 /* Where in the world are you? */
 $(document).ready(function() {
   navigator.geolocation.getCurrentPosition(function(position) {
-    loadWeather(position.coords.latitude+','+position.coords.longitude); //load weather using your lat/lng coordinates
+  	let coords = position.coords.latitude + ',' + position.coords.longitude
+    loadWeather(coords); //load weather using your lat/lng coordinates
 		// console.log('load geolocation coords: ' + position.coords.latitude+','+position.coords.longitude);
   });
 });
@@ -974,35 +978,30 @@ var initWeatherLoad = true;
 
 function loadWeather(location, woeid) {
 	function getWeather() {
-	  $.simpleWeather({
-	    location: location,
-	    woeid: woeid,
-	    unit: 'f',
-				success: function(weather) {
-					weatherCurrent = weather.currently;
-					weatherTemp = weather.temp;
-					weatherCity = weather.city + ', ' + weather.region;
-					// console.clear();
-					// console.log('geo coords: ' + location);
-					// console.log('weather: "' + weatherCurrent + '", temp: "' + weatherTemp + '"');
 
-					// LAZY LOAD WEATHER IMGS WHEN DATA IS PULLED
-					weatherImgLazy();
-					weatherSwap(weatherCurrent,weatherTemp);						
-				},
-				error: function(error) {
-      		// SOME ERROR NOTIFICATION HERE
-					console.log('weather error');
-    		}
-	  });
+		let URL = "https://api.weatherapi.com/v1/current.json?key=" + wApiKey +
+		"&q="	+ location
+		var req = new XMLHttpRequest()
+		req.open("GET", URL, true)
+		req.onload = () => {
+			let weather = JSON.parse(req.response)
+  		weatherCurrent = weather.current.condition.text
+  		weatherTemp = weather.current.temp_f;
+  		weatherCity = weather.location.name + ', ' + weather.location.region;
+  		// LAZY LOAD WEATHER IMGS WHEN DATA IS PULLED
+  		weatherImgLazy();
+  		weatherSwap(weatherCurrent,weatherTemp);
+		}
+		req.onerror = (error) => { console.log("Weather API failed") }
+		req.send()
 
 		// REFRESH EVERY 20 SEC
 		setTimeout(function() {
 			getWeather();
-			getIp();
+			getIP();
 		},20000);
 
-		}
+	}
 	// INIT, ONCE
 	if (initWeatherLoad) {
 		getWeather();
@@ -1013,52 +1012,55 @@ function loadWeather(location, woeid) {
 
 var ipDom = document.getElementById("ip");
 
-function getIp() {
-	var request = new XMLHttpRequest();
-  request.open('GET', 'https://jsonip.com/?callback=', true);
-
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400) {
-      var data = JSON.parse(request.responseText);
-
-      ipDom.innerHTML = 'IP: ' + data.ip;
-
-    } else {
-      ipDom.innerHTML = 'IP: ' + '< ipify error >';
-    }
-  };
-
-  request.onerror = function() {
+function getIP() {
+	var req = new XMLHttpRequest()
+	req.open("GET", "https://api.ipify.org?format=json", true)
+	// req.setRequestHeader('Content-Type', 'application/json')
+	req.onload = function() {
+	  let body = JSON.parse(req.response)
+	  if (req.status >= 200 && req.status < 400) {
+	    ipDom.innerHTML = 'IP: ' + body.ip;
+	  } else {
+	    ipDom.innerHTML = 'IP: ' + '< ipify error >';
+	  }
+	}
+  req.onerror = function() {
   	ipDom.innerHTML = 'IP: ' + '< connection error >';
   };
-
-  request.send();  
+	req.send()
 }
 
-function weatherSwap(e,t) {
+// Start
+getIP()
+// ASSIGN, & SHOW TOP NAV & TIME
+navTop.classList.add('show');
+timeLargeL.classList.add('show');
+timeLargeR.classList.add('show');
+
+function weatherSwap(e, t) {
 	var img = '',
 		imgArray = weatherImgArray,
 		imgLen = imgArray.length,
 		i = 0;
 
-		// Sunny, Partly Cloudy, Mostly Cloudy, Breezy, Cloudy, Windy, Thunderstorms, Rain and Snow, Snow, Scattered Thunderstorms, Rain, Scattered Showers, Mostly Sunny
+	e = e.toLowerCase()
 
-	if (e === 'Sunny' || e === 'Mostly Sunny' || e === 'Clear' || e === 'Mostly Clear' || e === 'Partly Cloudy') {
+	if (e.indexOf("sunny") > -1 || e.indexOf("clear") > -1) {
 		img = 'weather-sunny';
 	}
-	else if (e === 'Rain' || e === 'Showers' || e === 'Heavy Rain') {
+	else if (e.indexOf("rain") > -1 || e.indexOf("drizzle") > -1) {
 		img = 'weather-rain';
 	}
-	else if (e === 'Scattered Thunderstorms' || e === 'Scattered Showers' || e === 'Thunderstorms') {
+	else if (e.indexOf("thunder") > -1 || e.indexOf("shower") > -1) {
 		img = 'weather-showers';
 	}
-	else if (e === 'Mostly Cloudy' || e === 'Cloudy') {
+	else if (e.indexOf("cloudy") > -1 || e.indexOf("fog") > -1 || e.indexOf("mist") > -1 || e.indexOf("overcast") > -1) {
 		img = 'weather-cloudy';
 	}
-	else if (e === 'Snow' || e === 'Rain And Snow') {
+	else if (e.indexOf("snow") > -1 || e.indexOf("ice") > -1 || e.indexOf("blizzard") > -1 || e.indexOf("sleet") > -1) {
 		img = 'weather-snow';
 	}
-	else if (e === 'Windy' || e === 'Breezy') {
+	else if (e.indexOf("wind") > -1 || e.indexOf("breezy") > -1) {
 		img = 'weather-windy';
 	}
 	else {
@@ -1072,11 +1074,6 @@ function weatherSwap(e,t) {
 	for (i=0; i<imgLen; i++) {
 		imgArray[i].className = '';
 	}
-
-	// ASSIGN, & SHOW TOP NAV & TIME
-	navTop.classList.add('show');
-	timeLargeL.classList.add('show');
-	timeLargeR.classList.add('show');
 
 	document.getElementById(img).className = 'show';
 	navTempDom.innerHTML = t + '&deg; F';
