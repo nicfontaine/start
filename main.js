@@ -966,7 +966,7 @@ function weatherImgLazy() {
 // };
 
 /* Where in the world are you? */
-$(document).ready(function() {
+window.addEventListener("load", function() {
   navigator.geolocation.getCurrentPosition(function(position) {
   	let coords = position.coords.latitude + ',' + position.coords.longitude
     loadWeather(coords); //load weather using your lat/lng coordinates
