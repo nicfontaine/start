@@ -83,15 +83,15 @@ var searchIcons = [
   '<i class="fa fa-globe" aria-hidden="true"></i>',
   '<i class="fa fa-search search-icon" aria-hidden="true"></i>',
   // '<i class="fa fa-google" aria-hidden="true"></i>',
-  '<i class="fa fa-map-marker" aria-hidden="true"></i>',
-  '<i class="fa fa-youtube" aria-hidden="true"></i>',
-  '<i class="fa fa-soundcloud" aria-hidden="true"></i>',
-  '<i class="fa fa-github" aria-hidden="true"></i>',
-  '<i class="fa fa-reddit" aria-hidden="true"></i>',
   '<i class="fa fa-code"></i>',
   '<i class="fa fa-stack-overflow" aria-hidden="true"></i>',
-  '<i class="fa fa-linux" aria-hidden="true"></i>',
-  '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>'
+  '<i class="fa fa-wikipedia-w" aria-hidden="true"></i>',
+  '<i class="fa fa-youtube" aria-hidden="true"></i>',
+  '<i class="fa fa-soundcloud" aria-hidden="true"></i>',
+  '<i class="fa fa-map-marker" aria-hidden="true"></i>',
+  '<i class="fa fa-github" aria-hidden="true"></i>',
+  '<i class="fa fa-reddit" aria-hidden="true"></i>',
+  '<i class="fa fa-linux" aria-hidden="true"></i>'
 ];
 
 /*************************************************/
@@ -967,20 +967,21 @@ function weatherImgLazy() {
 
 /* Where in the world are you? */
 window.addEventListener("load", function() {
-  navigator.geolocation.getCurrentPosition(function(position) {
-  	let coords = position.coords.latitude + ',' + position.coords.longitude
-    loadWeather(coords); //load weather using your lat/lng coordinates
-		// console.log('load geolocation coords: ' + position.coords.latitude+','+position.coords.longitude);
-  });
-});
+	let error = function(err) {
+		console.log("navigator.geolocation.getCurrentPosition() error: " + err.message + " " + err.code)
+	}
+  navigator.geolocation.getCurrentPosition(loadWeather, error)
+})
 
 var initWeatherLoad = true;
 
-function loadWeather(location, woeid) {
+function loadWeather(location) {
+	console.log("loadWeather()")
+	var coords = location.coords.latitude + ',' + location.coords.longitude
 	function getWeather() {
 
 		let URL = "https://api.weatherapi.com/v1/current.json?key=" + wApiKey +
-		"&q="	+ location
+		"&q="	+ coords
 		var req = new XMLHttpRequest()
 		req.open("GET", URL, true)
 		req.onload = () => {
